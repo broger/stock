@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  nombre: 
+  parent_id: 
+  posicion_pila: 
+  url: 
+  tooltip: 
+  ayuda: MyString
+
+two:
+  nombre: 
+  parent_id: 
+  posicion_pila: 
+  url: 
+  tooltip: 
+  ayuda: MyString

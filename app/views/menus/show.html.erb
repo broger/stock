@@ -1,0 +1,33 @@
+<p>
+  <b>Nombre:</b>
+  <%=h @menu.nombre %>
+</p>
+
+<p>
+  <b>Parent:</b>
+  <%=h @menu.parent_id %>
+</p>
+
+<p>
+  <b>Posicion pila:</b>
+  <%=h @menu.posicion_pila %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @menu.url %>
+</p>
+
+<p>
+  <b>Tooltip:</b>
+  <%=h @menu.tooltip %>
+</p>
+
+<p>
+  <b>Ayuda:</b>
+  <%=h @menu.ayuda %>
+</p>
+
+
+<%= link_to 'Edit', edit_menu_path(@menu) %> |
+<%= link_to 'Back', menus_path %>

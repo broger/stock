@@ -1,0 +1,17 @@
+<h1>Provincias</h1>
+<table>
+  <tr> <th>Nombre</th> </tr>
+
+<% @provincias.each do |provincia| %>
+  <tr>
+    <td><%=h provincia.nombre %></td>
+    <td><%= link_to 'Show', provincia %></td>
+    <td><%= link_to 'Edit', edit_provincia_path(provincia) %></td>
+    <td><%= link_to 'Destroy', provincia, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New provincia', new_provincia_path %>

@@ -1,0 +1,18 @@
+<p>
+  <b>Nombre:</b>
+  <%=h @rol.nombre %>
+</p>
+
+<p>
+  <b>Activo:</b>
+  <%=h @rol.activo %>
+</p>
+
+<p>
+  <b>Administrador:</b>
+  <%=h @rol.administrador %>
+</p>
+
+
+<%= link_to 'Edit', edit_rol_path(@rol) %> |
+<%= link_to 'Back', roles_path %>

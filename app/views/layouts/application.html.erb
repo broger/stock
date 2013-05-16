@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <link rel="shortcut icon" href="http://localhost/opt/ioscordev/images/gobierno/escudo_icono32x32.ico" type="image/x-icon" />
+
+    <title>SISTEMA STOCK</title>
+     <!--link type="image/png" href="<%= image_tag('16x16/emotion_tongue.png')%>" rel="icon" /-->
+     <%= stylesheet_link_tag :all %>
+     <%= javascript_include_tag :all %>
+     <%#= csrf_meta_tag %>
+
+  </head>
+
+  <body>
+
+     <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+              <div class="container" style="width: auto;">
+                <a class="brand" href="#">Stock-Control &nbsp;&nbsp;&nbsp;&nbsp;</a>
+                 <% cache([current_user,"menu"]) do %>
+                     <ul class="nav" >
+                                <%  @menu_raices = Menu.roots
+                                                @menu_raices.each do |r| %>
+                                                        <%=  hacer_menu(current_user, r,true,false) %>
+                                 <% end %>
+
+                     </ul>
+                <% end %>
+
+                <% cache([current_user,"logindata"]) do %>
+                <div class="btn-group">
+                    <a href="#" class="btn"><i class="icon-user"></i> Administrador</a>
+                    <a class="btn dropdown-toggle" href="#"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="http://localhost:3000/users/1/cambiarpassword"><i class="icon-pencil"></i> Cambiar contraseña</a>
+                      </li><li><a href="/logout" class="navbar-link"><i class="icon-off"></i> Salir</a></li>
+                    </ul>
+                </div>
+                <p class="navbar-text pull-right"> Usuario: <a href="http://twitter.github.com/bootstrap/examples/fluid.html#"><%=current_user.name if current_user %></a>&nbsp;<i class="icon-off"><a href="/logout"></a></i></p>
+                <% end %>
+                
+              </div>
+
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+      <div class="container-fluid">
+          <div class="row">
+            <div class="span12">
+              <%if flash[:notice]%>
+                  <div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
+              <%end%>
+              <%if flash[:error]%>
+                  <div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:error] %></div>
+              <%end%>
+            </div>
+          </div>
+        <div <div class="container-fluid">
+               <%= yield %>
+        </div>
+        <hr>
+      <footer >
+        <p>© Company 2013</p>
+      </footer>
+
+         </div>
+</body></html>
+
+<script type="text/javascript">
+
+     
+</script>
+
+
+<style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      @media("max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+
+</style>

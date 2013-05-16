@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>CABEZERA DE LA PAGINA DE INICIO (layout => 'sin_sesion')</title>
+  </head>
+  <body>
+    <div id="main">
+      <div id="header">
+        <div id="logo">CABEZERA DE LA PAGINA DE INICIO (layout => 'sin_sesion')</div>
+        <div id="session-data">
+
+        </div>
+      </div>
+
+      <div id="home">
+
+        <div id="container">
+          <%if flash[:notice]%>
+              <div  id="notice" class="ui-state-highlight ui-corner-all" style=" padding: 0 .7em;">
+                <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+                  <%= flash[:notice] %>
+                </p>
+              </div>
+              <br/>
+            <%end%>
+            <%if flash[:error]%>
+               <div id="error" class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+                <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><%= flash[:error]%>  </p>
+               </div>
+               <br/>
+            <%end%>
+          <div id="content">
+            <div id="wrapper">
+
+                      <%= yield %>
+
+
+            </div>
+          </div>
+
+          <div id="footer" style="color:gray;text-align:right;border-top: lightgray 1px solid;">
+            <b>Diseñado por Gerardo Gabriel Brollo</b><br/>
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+
+
+  </body>
+</html>
+

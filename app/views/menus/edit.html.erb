@@ -1,0 +1,36 @@
+<h1>Editing menu</h1>
+
+<% form_for(@menu) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :parent_id %><br />
+    <%= f.text_field :parent_id %>
+  </p>
+  <p>
+    <%= f.label :posicion_pila %><br />
+    <%= f.text_field :posicion_pila %>
+  </p>
+  <p>
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    <%= f.label :tooltip %><br />
+    <%= f.text_field :tooltip %>
+  </p>
+  <p>
+    <%= f.label :ayuda %><br />
+    <%= f.text_field :ayuda %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @menu %> |
+<%= link_to 'Back', menus_path %>

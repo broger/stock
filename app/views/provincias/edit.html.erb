@@ -1,0 +1,16 @@
+<h1>Editing provincia</h1>
+
+<% form_for(@provincia) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @provincia %> |
+<%= link_to 'Back', provincias_path %>

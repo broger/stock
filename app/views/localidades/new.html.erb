@@ -1,0 +1,19 @@
+<h1>New localidad</h1>
+
+<% form_for(@localidad) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :provincia_id %><br />
+    <%= f.text_field :provincia_id %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', localidades_path %>

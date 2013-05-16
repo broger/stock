@@ -1,0 +1,24 @@
+<h1>Editing rol</h1>
+
+<% form_for(@rol) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :activo %><br />
+    <%= f.text_field :activo %>
+  </p>
+  <p>
+    <%= f.label :administrador %><br />
+    <%= f.check_box :administrador %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @rol %> |
+<%= link_to 'Back', roles_path %>

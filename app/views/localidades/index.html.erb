@@ -1,0 +1,22 @@
+<h1>Listing localidads</h1>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+    <th>Provincia</th>
+  </tr>
+
+<% @localidades.each do |localidad| %>
+  <tr>
+    <td><%=h localidad.nombre %></td>
+    <td><%=h localidad.provincia_id %></td>
+    <td><%= link_to 'Show', localidad %></td>
+    <td><%= link_to 'Edit', edit_localidad_path(localidad) %></td>
+    <td><%= link_to 'Destroy', localidad, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New localidad', new_localidad_path %>

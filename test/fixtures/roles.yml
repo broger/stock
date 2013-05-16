@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  nombre: 
+  activo: 
+  administrador: false
+
+two:
+  nombre: 
+  activo: 
+  administrador: false
