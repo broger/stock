@@ -12,6 +12,9 @@ ActiveSupport::Inflector.inflections do |inflect|
     inflect.irregular 'roles_user','roles_users'
     inflect.irregular 'menu','menus'
     inflect.irregular 'menus_rol','menus_roles'
+    inflect.irregular 'unidad','unidades'
+	inflect.irregular 'proveedor','proveedores'
+  inflect.irregular 'seccion','secciones'
 
 
 end

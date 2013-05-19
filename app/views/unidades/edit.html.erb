@@ -1,0 +1,20 @@
+<h1>Editing unidad</h1>
+
+<% form_for(@unidad) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :abreviatura %><br />
+    <%= f.text_field :abreviatura %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @unidad %> |
+<%= link_to 'Back', unidades_path %>

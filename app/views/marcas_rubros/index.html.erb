@@ -1,0 +1,22 @@
+<h1>Listing marcas_rubros</h1>
+
+<table>
+  <tr>
+    <th>Marca</th>
+    <th>Rubro</th>
+  </tr>
+
+<% @marcas_rubros.each do |marcas_rubro| %>
+  <tr>
+    <td><%=h marcas_rubro.marca_id %></td>
+    <td><%=h marcas_rubro.rubro_id %></td>
+    <td><%= link_to 'Show', marcas_rubro %></td>
+    <td><%= link_to 'Edit', edit_marcas_rubro_path(marcas_rubro) %></td>
+    <td><%= link_to 'Destroy', marcas_rubro, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New marcas_rubro', new_marcas_rubro_path %>

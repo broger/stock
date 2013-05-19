@@ -1,0 +1,20 @@
+<h1>Editing subcategoria</h1>
+
+<% form_for(@subcategoria) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :categoria_id %><br />
+    <%= f.text_field :categoria_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @subcategoria %> |
+<%= link_to 'Back', subcategorias_path %>

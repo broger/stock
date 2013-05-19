@@ -1,0 +1,20 @@
+<h1>Editing marcas_rubro</h1>
+
+<% form_for(@marcas_rubro) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :marca_id %><br />
+    <%= f.text_field :marca_id %>
+  </p>
+  <p>
+    <%= f.label :rubro_id %><br />
+    <%= f.text_field :rubro_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @marcas_rubro %> |
+<%= link_to 'Back', marcas_rubros_path %>

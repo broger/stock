@@ -2,56 +2,69 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
   <head>
-    <title>CABEZERA DE LA PAGINA DE INICIO (layout => 'sin_sesion')</title>
+    <title>Control-Stock</title>
+    <%= javascript_include_tag :all %>
+    <%= stylesheet_link_tag :all %>
   </head>
   <body>
-    <div id="main">
-      <div id="header">
-        <div id="logo">CABEZERA DE LA PAGINA DE INICIO (layout => 'sin_sesion')</div>
-        <div id="session-data">
-
-        </div>
-      </div>
-
-      <div id="home">
-
-        <div id="container">
-          <%if flash[:notice]%>
-              <div  id="notice" class="ui-state-highlight ui-corner-all" style=" padding: 0 .7em;">
-                <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-                  <%= flash[:notice] %>
-                </p>
-              </div>
-              <br/>
-            <%end%>
-            <%if flash[:error]%>
-               <div id="error" class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
-                <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><%= flash[:error]%>  </p>
-               </div>
-               <br/>
-            <%end%>
-          <div id="content">
-            <div id="wrapper">
-
-                      <%= yield %>
-
-
-            </div>
-          </div>
-
-          <div id="footer" style="color:gray;text-align:right;border-top: lightgray 1px solid;">
-            <b>Diseñado por Gerardo Gabriel Brollo</b><br/>
+   
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Stock-Control &nbsp;&nbsp;&nbsp;&nbsp;</a>
+          <div class="nav-collapse collapse">
           </div>
         </div>
-
-
       </div>
-
-
     </div>
-
-
-
+    <br />
+    <br />
+    <br />
+    <div class="container">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <%=  yield %>
+          </div>
+        </div>
+        <div class="span9">
+          <div class="hero-unit">
+            <h1>Bienvenido</h1>
+            <p>
+              Sistema de Control de Stock.
+            </p>
+            <p>
+              Nuevas Actualizaciones.
+            </p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -3,6 +3,7 @@ class CreateLocalidads < ActiveRecord::Migration
     create_table :localidads do |t|
       t.string :nombre
       t.integer :provincia_id
+	  t.integer :codigo_postal
 
       t.timestamps
     end

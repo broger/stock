@@ -1,4 +1,30 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :estados
+
+  map.resources :secciones
+
+  map.resources :marcas_rubros
+
+  map.resources :marcas_rubros
+
+  map.resources :rubros
+
+  map.resources :productos
+
+  map.resources :proveedors
+
+  map.resources :depositos
+
+  map.resources :unidades
+
+  map.resources :subcategorias
+
+  map.resources :marca_categorias
+
+  map.resources :categorias
+
+  map.resources :marcas
+
 
   map.resources :roles_users
 

@@ -1,0 +1,36 @@
+<% form_for(@seccion) do |f| %>
+  <%= f.error_messages %>
+
+<table>
+   <tr style=" text-align: right">
+                   <th>Rubro </th>
+                   <td style=" text-align: left"><%= f.select :rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                 </tr>
+     <tr style=" text-align: right">
+                   <th>Nombre </th>
+                   <td style=" text-align: left"><%=  f.text_field :nombre %></td>
+     </tr>
+</table>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+
+<% end %>
+
+<%= link_to 'Atras', secciones_path %>
+
+
+<script type="text/javascript">
+
+      $(document).ready(function(){
+           $(".new_seccion").validate({
+            rules: {
+                    "seccion[nombre]": {required: true, minlength: 3, maxlength:60},
+                    "seccion[rubro_id]": {required: true}
+                    }
+          });
+
+      });
+
+</script>
+  

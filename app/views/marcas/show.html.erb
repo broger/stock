@@ -1,0 +1,9 @@
+<p>
+  <b>Nombre: </b>
+  <%=h @marca.nombre %>
+</p>
+
+
+<%= link_to 'Editar', edit_marca_path(@marca) %> |
+<%= link_to 'Atras', marcas_path %> |
+<%= link_to 'Nueva marca', new_marca_path %>

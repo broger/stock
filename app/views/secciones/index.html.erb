@@ -1,0 +1,21 @@
+<h1>Listing secciones</h1>
+
+<table>
+  <tr>
+    <th>Nombre</th>
+  </tr>
+
+<% @secciones.each do |seccion| %>
+  <tr>
+    <td><%=h seccion.nombre %></td>
+    <td><%= link_to 'Show', seccion %></td>
+    <td><%= link_to 'Edit', edit_seccion_path(seccion) %></td>
+    <td><%= link_to 'Destroy', seccion, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+
+</table>
+
+<br />
+
+<%= link_to 'New seccion', new_seccion_path %>

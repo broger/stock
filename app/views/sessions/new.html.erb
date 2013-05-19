@@ -1,11 +1,25 @@
-<h1>Log In</h1>
-
 <% form_tag session_path do -%>
-<p><%= label_tag 'login' %><br />
-<%= text_field_tag 'login', @login %></p>
+<fieldset>
+    <legend>Ingrese sus datos</legend>
+        <% if flash[:error] %>
+      <div class="alert alert-block alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>Error!</h4>
+        <%= flash[:error] %>
+      </div>
+    <% end %>
 
-<p><%= label_tag 'password' %><br/>
-<%= password_field_tag 'password', nil %></p>
+    <% if flash[:notice] %>
+      <div >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+  <label  for="login">Nombre de usuario</label>
+  <%= text_field_tag 'login', @login, :placeholder => "Nombre de usuario" %>
+  <label class="control-label" for="password">Contraseña</label>
+  <%= password_field_tag 'password', nil, :placeholder => "Contraseña" %>
+  <br />
 
 <!-- Uncomment this if you want this functionality
 <p><%= label_tag 'remember_me', 'Remember me' %>
@@ -13,4 +27,10 @@
 -->
 
 <p><%= submit_tag 'Ingresar' %></p>
+  </fieldset>
 <% end -%>
+
+
+
+
+
