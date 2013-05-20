@@ -1,3 +1,13 @@
-\nbproject
+database.yml
+log/*.log
+tmp/**/*
+nbproject/**/*
+db/schema.rb
+**/*.rb.swp
+nbproject/*.xml
+**/*.html.erb~
+nohup.out
+
+
 
 
