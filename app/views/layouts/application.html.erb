@@ -1,71 +1,112 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<html lang="en">
+
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>SISTEMA STOCK</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
     <link rel="shortcut icon" href="http://localhost/opt/ioscordev/images/gobierno/escudo_icono32x32.ico" type="image/x-icon" />
 
-    <title>SISTEMA STOCK</title>
+ 
      <!--link type="image/png" href="<%= image_tag('16x16/emotion_tongue.png')%>" rel="icon" /-->
-     <%= stylesheet_link_tag :all %>
+     <%= stylesheet_link_tag 'bootstrap', 'bootstrap-responsive', 'bootstrap-responsive', 'bootstrap-responsive.min' %>
      <%= javascript_include_tag :all %>
      <%#= csrf_meta_tag %>
+
+
+
+
 
   </head>
 
   <body>
 
+     <!-- MENU -->
      <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-              <div class="container" style="width: auto;">
-                <a class="brand" href="#">Stock-Control &nbsp;&nbsp;&nbsp;&nbsp;</a>
-                 <% cache([current_user,"menu"]) do %>
-                     <ul class="nav" >
-                                <%  @menu_raices = Menu.roots
-                                                @menu_raices.each do |r| %>
-                                                        <%=  hacer_menu(current_user, r,true,false) %>
-                                 <% end %>
+            <div class="navbar-inner">
+                    <div class="container-fluid">
+                          <div class="container" style="width: auto;">
+                                  <a class="brand" href="#">Stock-Control &nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                   <% cache([current_user,"menu"]) do %>
+                                       <ul class="nav" >
+                                                  <%  @menu_raices = Menu.roots
+                                                                  @menu_raices.each do |r| %>
+                                                                          <%=  hacer_menu(current_user, r,true,false) %>
+                                                   <% end %>
 
-                     </ul>
-                <% end %>
+                                       </ul>
+                                  <% end %>
 
-                <% cache([current_user,"logindata"]) do %>
-               
-                <p class="navbar-text pull-right">
-                  <a href="http://twitter.github.com/bootstrap/examples/fluid.html#"><i class="icon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;<a href="/logout"><i class="icon-off"></i></a>
-                </p>
-                <% end %>
-                
-              </div>
+                                  <% cache([current_user,"logindata"]) do %>
 
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-      <div class="container-fluid">
-          <div class="row">
-            <div class="span12">
-              <%if flash[:notice]%>
-                  <div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
-              <%end%>
-              <%if flash[:error]%>
-                  <div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:error] %></div>
-              <%end%>
+                                  <p class="navbar-text pull-right">
+                                    <a href="http://twitter.github.com/bootstrap/examples/fluid.html#"><i class="icon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;<a href="/logout"><i class="icon-off"></i></a>
+                                  </p>
+                                  <% end %>
+                          </div>
+                    </div><!--/.nav-collapse -->
             </div>
-          </div>
-        <div <div class="container-fluid" style="height: 460px">
-               <%= yield %>
-        </div>
-        <hr>
-      <footer >
-        <p>© Company 2013</p>
-      </footer>
+     </div>
 
-         </div>
+
+     <!-- CONTENIDO DE LA APLICACION -->
+     <div class="container-fluid">
+       <div class="row-fluid" style="padding-bottom:200px">
+                <!-- Notice -->
+                <div class="span12">
+                    <%if flash[:notice]%>
+                        <div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
+                    <%end%>
+                    <%if flash[:error]%>
+                        <div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:error] %></div>
+                    <%end%>
+                </div>
+                <!-- Panel Lateral -->
+                <div class="span2">
+                        <div class="well sidebar-nav">
+                          <ul class="nav nav-list" style="font-size:13px">
+                                <li class="nav-header">Accesos Directos</li>
+                                <li class="active"><a href="#">vender</a></li>
+                                <li><a href="#">consutar productos</a></li>
+                                <li><a  id ="calculadora" href="<%= calculadora_menus_path %>">calculadora</a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="#"></a></li>
+                              </ul>
+                        </div>
+                  
+                </div>
+                <!-- CONTENIDO -->
+                <div class="span9" style="padding-left:4%">
+                         <%= yield %>
+
+                </div>
+                <hr />
+           </div>
+           <footer>
+               <p>© Sistema Stock 2013</p>
+           </footer>
+     </div>
 </body></html>
 
 <script type="text/javascript">
+        $('#calculadora').fancybox();
 
-     
 </script>
 
 
@@ -78,6 +119,12 @@
         padding: 9px 0;
       }
 
- 
-
-</style>
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    </style>

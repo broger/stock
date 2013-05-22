@@ -30,12 +30,12 @@ ActiveRecord::Schema.define(:version => 20130412141651) do
     t.datetime "updated_at"
   end
 
-  create_table "localidades", :force => true do |t|
+  create_table "localidads", :force => true do |t|
     t.string   "nombre"
     t.integer  "provincia_id"
+    t.integer  "codigo_postal"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "codigo_postal"
   end
 
   create_table "marcas", :force => true do |t|
@@ -54,12 +54,12 @@ ActiveRecord::Schema.define(:version => 20130412141651) do
   create_table "menus", :force => true do |t|
     t.string   "nombre"
     t.integer  "parent_id"
+    t.integer  "posicion"
     t.string   "url"
     t.string   "tooltip"
     t.string   "ayuda"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "posicion"
   end
 
   create_table "menus_roles", :force => true do |t|

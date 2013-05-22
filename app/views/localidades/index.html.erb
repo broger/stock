@@ -1,22 +1,62 @@
-<h1>Listing localidads</h1>
+<h4>Localidades</h4>
 
-<table>
+
+<table class="condensed-table">
+  <thead>
   <tr>
     <th>Nombre</th>
     <th>Provincia</th>
+    <th></th>
   </tr>
-
-<% @localidades.each do |localidad| %>
-  <tr>
-    <td><%=h localidad.nombre %></td>
-    <td><%=h localidad.provincia_id %></td>
-    <td><%= link_to 'Show', localidad %></td>
-    <td><%= link_to 'Edit', edit_localidad_path(localidad) %></td>
-    <td><%= link_to 'Destroy', localidad, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  </thead>
+  <tbody>
+  <% @localidades.each do |localidad| %>
+      <tr>
+        <td><%=h localidad.nombre %></td>
+        <td><%=h localidad.provincia_id %></td>
+        <td><%= link_to 'Show', localidad %>
+            <%= link_to 'Edit', edit_localidad_path(localidad) %>
+            <%= link_to 'Destroy', localidad, :confirm => 'Esta seguro de Eliminar?', :method => :delete %></td>
+      </tr>
+  <% end %>
+  </tbody>
 </table>
 
 <br />
+<br />
+
+<table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Language</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Some</td>
+            <td>One</td>
+            <td>English</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Joe</td>
+            <td>Sixpack</td>
+            <td>English</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Stu</td>
+            <td>Dent</td>
+            <td>Code</td>
+          </tr>
+        </tbody>
+      </table>
 
 <%= link_to 'New localidad', new_localidad_path %>
+
+
+ 

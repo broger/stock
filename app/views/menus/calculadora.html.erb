@@ -1,0 +1,95 @@
+   <form id="form1" runat="server">
+    <div>
+     <input id="lblresumen" type="text" disabled="disabled"  /> <br />
+    <input id="txtmostrar" type="text"/><br />
+    <input id="btn1" type="button" value="1"  onclick="estapresionado('1')" />
+    <input id="btn2" type="button" value="2" onclick="estapresionado('2')"/>
+    <input id="btn3" type="button" value="3"  onclick="estapresionado('3')"/>
+    <input id="btndividir" type="button" value="/"  onclick="asignaroperador('4')"/><br />
+    <input id="btn4" type="button" value="4"  onclick="estapresionado('4')"/>
+    <input id="btn5" type="button" value="5"  onclick="estapresionado('5')"/>
+    <input id="btn6" type="button" value="6"  onclick="estapresionado('6')"/>
+    <input id="btnmultiplicar" type="button" value="*"   onclick="asignaroperador('3')"/><br />
+    <input id="btn7" type="button" value="7"  onclick="estapresionado('7')"/>
+    <input id="btn8" type="button" value="8"  onclick="estapresionado('8')"/>
+    <input id="btn9" type="button" value="9"  onclick="estapresionado('9')"/>
+    <input id="btnrestar" type="button" value="-" onclick="asignaroperador('2')"/><br />
+     <input id="btn0" type="button" value="0" onclick="estapresionado('0')"/>
+    <input id="btnsumar" type="button" value="+" onclick="asignaroperador('1')"/>
+    <input id="btnigual" type="button" value="=" onclick="resultado('=')"/>
+
+    </div>
+    </form>
+
+<script type="text/javascript">
+// declarando variables Globales
+      var valor1 = 0;
+       var valor2 = 0;
+       var operacion
+// funcion que agrega al textbox  los numeros que vamos presionando
+       function estapresionado(valor) {
+           if (document.getElementById("txtmostrar").value == "0" || valor1 == 0) {
+               valor1 = valor;
+           } else
+           {
+               valor1 += valor;
+           }
+           document.getElementById("txtmostrar").value = valor1;
+       }
+// función que  asigna el operador seleccionado
+       function asignaroperador(codigo) {
+           print(valor1);
+           if (valor1 == 0) {
+               resultado = parseInt(document.getElementById("txtmostrar").value);
+           }
+           valor2 = parseInt(valor1);
+           valor1 = 0;
+           operacion = codigo;
+           printsimbolo(operacion); // imprimiendo simbolo en lblresumen
+       }
+
+// imprimiendo los numeros en el label para saber que operaciones hemos hecho
+       function print(s) {
+           document.getElementById("lblresumen").value += s;
+       }
+// imprimiendo el simbolo de suma, resta , multiplicacion y divicion
+       function printsimbolo() {
+           switch (parseInt(operacion)) {
+               case 1:
+                   document.getElementById("lblresumen").value += "+";
+                   break;
+               case 2:
+                   document.getElementById("lblresumen").value += "-";
+                   break;
+               case 3:
+                   document.getElementById("lblresumen").value += "*";
+                   break;
+               case 4:
+                   document.getElementById("lblresumen").value += "/";
+                   break;
+           }
+       }
+       // funcion que nos facilitara el resultado cuando presionamos el boton igual
+       function resultado()
+       {
+           print(valor1);
+           valor1= parseInt(valor1);
+           switch (parseInt(operacion)) {
+               case 1:
+                   valor1 += valor2;
+                   break;
+               case 2:
+                   valor1 = valor2 - valor1;
+                   break;
+               case 3:
+                   valor1 *= valor2;
+                   break;
+               case 4:
+                   valor1 = valor2 / valor1;
+                   break;
+           }
+           document.getElementById("lblresumen").value += "=";
+           document.getElementById("txtmostrar").value = valor1;
+           valor2 = parseInt(valor1); // valor 2 toma el valor de valor 1
+       }
+</script>

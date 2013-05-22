@@ -30,7 +30,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :menus_roles
 
-  map.resources :menus
+  map.resources :menus, :collection => { :calculadora=>:get }
+  
 
   map.resources :roles
 
