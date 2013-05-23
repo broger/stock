@@ -4,12 +4,12 @@
 
 <div>
     <%= form_tag(localidades_path, :method => 'get',:id=>'buscar') %>
-  <div><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...'%>&nbsp;<div style="display: none;"><%= submit_tag "Buscar" %></div></div>
-         <div id="tips" style="color:gray; height:10px; padding-bottom: 20px"><small><strong>Tip:</strong> Puede ingresar alguna porci&oacute;n del nombre de la localidad.</small></div>
+  <div><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...'%>&nbsp;<div style="display: none;"><%= submit_tag "Buscar" %></div></div>&nbsp; <div id="cargando"   style="display: none;"> Cargando...<%= image_tag('cargando.gif')%></div>
+         <div id="tips" style="color:gray; height:10px; padding: 0 0 20px 0"><small><strong>Tip:</strong> Puede ingresar alguna porci&oacute;n del nombre de la localidad.</small></div>
 
  </div>
 
- <%unless @localidades.blank? %>
+ <% unless @localidades.blank? %>
         <table class="table" >
           <thead>
           <tr>
@@ -47,4 +47,19 @@
  <%= link_to 'Nueva Localidad', new_localidad_path ,:class=>'btn btn-primary' %>
 
 
+<script type="text/javascript">
+
+ $(document).ready(function () {
+     $('#txtbuscar').focus();
+
+ $('#buscar').submit(controlar_bene);
+});
+
+    function controlar_bene(){
+              if ( $('#txtbuscar') != '' && $('#buscar').valid()){
+                $('#cargando').show();
+              }
+    }
+
  
+</script>
