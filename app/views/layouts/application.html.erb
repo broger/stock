@@ -14,9 +14,28 @@
     <link rel="shortcut icon" href="http://localhost/opt/ioscordev/images/gobierno/escudo_icono32x32.ico" type="image/x-icon" />
 
  
-     <!--link type="image/png" href="<%= image_tag('16x16/emotion_tongue.png')%>" rel="icon" /-->
-     <%= stylesheet_link_tag 'bootstrap', 'bootstrap-responsive', 'bootstrap-responsive', 'bootstrap-responsive.min' %>
-     <%= javascript_include_tag :all %>
+     <!--link type="image/png" href="<%#= image_tag('16x16/emotion_tongue.png')%>" rel="icon" /-->
+     <%= stylesheet_link_tag 'bootstrap', 'bootstrap-responsive', 'bootstrap-responsive', 'bootstrap-responsive.min',
+                             'fancybox', 'jquery.fancybox-1.3.1' %>
+     <%= javascript_include_tag  'jquery-1.4.2.min',
+			'jquery-ui-1.8.6.custom.min',
+			'jrails',
+			'fg.menu',
+			'jquery.validate','messages_es',
+			'jquery.ui.datepicker-es.js',
+			'jquery.mousewheel-3.0.2.pack',
+			'jquery.fancybox-1.3.1',
+			'jquery.qtip-1.0.0-rc3',
+			'swfobject',
+			'jquery.uploadify.v2.1.4',
+			'date',
+			'ddsmoothmenu',
+			'jquery.decimalMask.1.1.1.min',
+			'application', 'superfish',
+      'jquery.maskedinput-1.2.2','jquery.MultiFile',
+      'jquery.autocomplete','jquery.simpleImageCheck-0.4.min',
+      'paging.js', 'bootstrap-modal'%>
+      
      <%#= csrf_meta_tag %>
 
 
@@ -71,8 +90,9 @@
                                 <li class="nav-header">Accesos Directos</li>
                                 <li class="active"><a href="#">vender</a></li>
                                 <li><a href="#">consutar productos</a></li>
-                                <li><a  id ="calculadora" href="<%= calculadora_menus_path %>">calculadora</a></li>
-                                <li><a href="#"></a></li>
+                                <li><a  id ="calculadora" class ="fancybox" href="<%= calculadora_menus_path %>" >calculadora</a></li>
+                                <li><a href="<%= calculadora_menus_path %>">calculadora modal</a></li>
+                                <li><a href="<%= calculadora_menus_path %>" target="_blank" > calculadoradd</a></li>
                                 <li><a href="#"></a></li>
                                 <li><a href="#"></a></li>
                                 <li><a href="#"></a></li>
@@ -102,7 +122,7 @@
 </body></html>
 
 <script type="text/javascript">
-        $('#calculadora').fancybox();
+      ()
 
 </script>
 
@@ -124,4 +144,5 @@
           padding-right: 5px;
         }
       }
-    </style>
+      
+</style>

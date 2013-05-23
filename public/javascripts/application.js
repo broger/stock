@@ -1,156 +1,294 @@
-// NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
-// IT'S ALL JUST JUNK FOR OUR DOCS!
-// ++++++++++++++++++++++++++++++++++++++++++
+// Place your application-specific JavaScript functions and classes here
+// This file is automatically included by javascript_include_tag :defaults
 
-!function ($) {
+$(document).ready(function(){
 
-  $(function(){
+        $('.fg-button').hover(
+    		function(){ $(this).removeClass('ui-state-default').addClass('ui-state-focus'); },
+    		function(){ $(this).removeClass('ui-state-focus').addClass('ui-state-default'); }
+    	);
 
-    var $window = $(window)
+//	$('#menu').menu({
+//            content: $('#menu').next().html(),
+//            flyOut: true
+//        });
 
-    // Disable certain links in docs
-    $('section [href^=#]').click(function (e) {
-      e.preventDefault()
-    })
+        //$("#tabs").tabs();
 
-    // side bar
-    setTimeout(function () {
-      $('.bs-docs-sidenav').affix({
-        offset: {
-          top: function () { return $window.width() <= 980 ? 290 : 210 }
-        , bottom: 270
-        }
-      })
-    }, 100)
+       $('input:submit , .boton ').button();
 
-    // make code pretty
-    window.prettyPrint && prettyPrint()
-
-    // add-ons
-    $('.add-on :checkbox').on('click', function () {
-      var $this = $(this)
-        , method = $this.attr('checked') ? 'addClass' : 'removeClass'
-      $(this).parents('.add-on')[method]('active')
-    })
-
-    // add tipsies to grid for scaffolding
-    if ($('#gridSystem').length) {
-      $('#gridSystem').tooltip({
-          selector: '.show-grid > [class*="span"]'
-        , title: function () { return $(this).width() + 'px' }
-      })
-    }
-
-    // tooltip demo
-    $('.tooltip-demo').tooltip({
-      selector: "a[data-toggle=tooltip]"
-    })
-
-    $('.tooltip-test').tooltip()
-    $('.popover-test').popover()
-
-    // popover demo
-    $("a[data-toggle=popover]")
-      .popover()
-      .click(function(e) {
-        e.preventDefault()
+       $('input[datatype=lupita]').dblclick(function(e) {
+       if ($(this).attr("id") == "post_desc_tipo_norma")
+       {
+         var str = 'input[datacontainer=' + $(this).attr('datacontainer') + ']'
+         $(str).each(function(){
+           $(this).val('')
+         });
+       }
+       $(this).val('');
       })
 
-    // button state demo
-    $('#fat-btn')
-      .click(function () {
-        var btn = $(this)
-        btn.button('loading')
-        setTimeout(function () {
-          btn.button('reset')
-        }, 3000)
-      })
+       //$("#radio").buttonset();
 
-    // carousel demo
-    $('#myCarousel').carousel()
 
-    // javascript build logic
-    var inputsComponent = $("#components.download input")
-      , inputsPlugin = $("#plugins.download input")
-      , inputsVariables = $("#variables.download input")
+});
 
-    // toggle all plugin checkboxes
-    $('#components.download .toggle-all').on('click', function (e) {
-      e.preventDefault()
-      inputsComponent.attr('checked', !inputsComponent.is(':checked'))
-    })
 
-    $('#plugins.download .toggle-all').on('click', function (e) {
-      e.preventDefault()
-      inputsPlugin.attr('checked', !inputsPlugin.is(':checked'))
-    })
-
-    $('#variables.download .toggle-all').on('click', function (e) {
-      e.preventDefault()
-      inputsVariables.val('')
-    })
-
-    // request built javascript
-    $('.download-btn .btn').on('click', function () {
-
-      var css = $("#components.download input:checked")
-            .map(function () { return this.value })
-            .toArray()
-        , js = $("#plugins.download input:checked")
-            .map(function () { return this.value })
-            .toArray()
-        , vars = {}
-        , img = ['glyphicons-halflings.png', 'glyphicons-halflings-white.png']
-
-    $("#variables.download input")
-      .each(function () {
-        $(this).val() && (vars[ $(this).prev().text() ] = $(this).val())
-      })
-
-      $.ajax({
-        type: 'POST'
-      , url: /\?dev/.test(window.location) ? 'http://localhost:3000' : 'http://bootstrap.herokuapp.com'
-      , dataType: 'jsonpi'
-      , params: {
-          js: js
-        , css: css
-        , vars: vars
-        , img: img
-      }
-      })
-    })
-  })
-
-// Modified from the original jsonpi https://github.com/benvinegar/jquery-jsonpi
-$.ajaxTransport('jsonpi', function(opts, originalOptions, jqXHR) {
-  var url = opts.url;
-
-  return {
-    send: function(_, completeCallback) {
-      var name = 'jQuery_iframe_' + jQuery.now()
-        , iframe, form
-
-      iframe = $('<iframe>')
-        .attr('name', name)
-        .appendTo('head')
-
-      form = $('<form>')
-        .attr('method', opts.type) // GET or POST
-        .attr('action', url)
-        .attr('target', name)
-
-      $.each(opts.params, function(k, v) {
-
-        $('<input>')
-          .attr('type', 'hidden')
-          .attr('name', k)
-          .attr('value', typeof v == 'string' ? v : JSON.stringify(v))
-          .appendTo(form)
-      })
-
-      form.appendTo('body').submit()
-    }
-  }
+$(function () {
+  $('#aportes th a').live('click', function () {
+    //$.getScript(this.href);
+    $('#aportes').load(this.href)
+    return false;
+  });
 })
 
-}(window.jQuery)
+
+$(function () {
+  $('#aportes th a, #aportes .pagination a').live('click',
+    function () {
+     // $.getScript(this.href);
+      $('#aportes').load(this.href)
+      return false;
+    }
+  );
+});
+
+
+
+$(function () {
+  $('#tratamientos th a').live('click', function () {
+    //$.getScript(this.href);
+    $('#tratamientos').load(this.href)
+    return false;
+  });
+})
+
+
+$(function () {
+  $('#tratamientos th a, #tratamientos .pagination a').live('click',
+    function () {
+     // $.getScript(this.href);
+      $('#tratamientos').load(this.href)
+      return false;
+    }
+  );
+});
+
+
+$(function () {
+  $('#aceptados th a').live('click', function () {
+    //$.getScript(this.href);
+    $('#aceptados').load(this.href)
+    return false;
+  });
+})
+
+
+$(function () {
+  $('#aceptados th a, #aceptados .pagination a').live('click',
+    function () {
+     // $.getScript(this.href);
+      $('#aceptados').load(this.href)
+      return false;
+    }
+  );
+});
+
+$(function () {
+  $('#enviados th a').live('click', function () {
+    //$.getScript(this.href);
+    $('#enviados').load(this.href)
+    return false;
+  });
+})
+
+
+$(function () {
+  $('#enviados th a, #enviados .pagination a').live('click',
+    function () {
+     // $.getScript(this.href);
+      $('#enviados').load(this.href)
+      return false;
+    }
+  );
+});
+
+// inicio paginacion ajax acreditaciones en registro_interno_creditos
+$(function () {
+  $('#acreditados th a').live('click', function () {
+    $('#acreditados').load(this.href)
+    return false;
+  });
+})
+
+$(function () {
+  $('#acreditados th a, #acreditados .pagination a').live('click',
+    function () {
+      $('#acreditados').load(this.href)
+    //$.getScript(this.href);
+      return false;
+    }
+  );
+});
+// fin paginacion ajax acreditaciones en registro_interno_creditos
+
+//inicio paginacion ajax
+$(function () {
+  $('#resultado_busq_ajax th a, #resultado_busq_ajax .pagination a').live('click',
+    function () {
+      $.getScript(this.href);
+      return false;
+    });	
+});
+//fin paginacion ajax
+
+function format_error(div_id, html) {
+            var newHtml = "<div class='ui-state-error ui-corner-all' style='padding: 0 .7em; '>";
+            newHtml += "<p><span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'>";
+            newHtml += "</span>";
+            newHtml += html;
+            newHtml += "</p></div>";
+            $('#'+div_id).html(newHtml);
+            $('#'+div_id).show().delay(1000).hide(300);
+}
+
+
+function format_ok(div_id, html) {
+            var newHtml = "<div class='ui-state-highlight ui-corner-all' style='padding: 0 .7em; '>";
+            newHtml += "<p><span class='ui-icon ui-icon-info' style='float: left; margin-right: .3em;'>";
+            newHtml += "</span>";
+            newHtml += html;
+            newHtml += "</p></div>";
+            $('#'+div_id).html(newHtml);
+            $('#'+div_id).show().delay(1000).hide(300);
+}
+
+
+function comprobarSiBisisesto(anio){
+      if ( ( anio % 100 != 0) && ((anio % 4 == 0) || (anio % 400 == 0))) {
+          return true;
+          }
+      else {
+          return false;
+          }
+}
+
+
+function fecha_valida(value){
+            if (value != undefined && value != "" ){
+                var resultado = true
+                var dia  =  parseInt(value.substring(0,2),10);
+                var mes  =  parseInt(value.substring(3,5),10);
+                var anio =  parseInt(value.substring(6),10);
+                var numDias = 0;
+                switch(mes){
+                    case 1:
+                    case 3:
+                    case 5:
+                    case 7:
+                    case 8:
+                    case 10:
+                    case 12:
+                        numDias=31;
+                        break;
+                    case 4: case 6: case 9: case 11:
+                        numDias=30;
+                        break;
+                    case 2:
+                        if (comprobarSiBisisesto(anio)){ numDias=29 }else{ numDias=28};
+                        break;
+                    default:
+                        resultado = false;
+                }
+                if (dia>numDias || dia==0){
+                    resultado = false;
+                }
+                if (anio<1800){
+                    resultado = false;
+                }
+           }else{
+             resultado = false;
+           }
+           return resultado
+};
+
+function anio_valido(value){
+  if (value != undefined && value != "" ){
+	  var resultado = true
+	  var mydate=new Date()
+	  var year=mydate.getYear();
+	  year+=1900
+     var patron=/^(([1-9]{1}[8-9]{1}[0-9]{2})|([2-9]{1}[0-9]{1}[0-9]{2}))$/;
+     if(value.match(patron)){
+		  if (value > year){
+			 resultado=false
+		  }
+     }else{
+   		 resultado=false
+     }
+  }else{
+    resultado = false;
+  }
+	  return resultado
+};
+function mes_valido(value){
+  var resultado = true;
+  if (value != undefined && value != "" ){
+	  var patron=/^((0[1-9]{1})|([1-9]){1}|(1[0-2]{1,2}))$/;
+	  if(value.match(patron)){
+       resultado = true;
+     }else{
+       resultado = false;
+     }
+  }else{
+    resultado = false;
+  }
+	  return resultado
+};
+
+
+
+
+
+
+
+/*
+jQuery.ajaxSetup({
+  'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
+   });
+
+  jQuery(document).ready(function($) {
+        $('div.ajax-pagination a').live('click', function() {
+        $('#aportes').load(this.href)
+        return false
+        });
+
+
+      $('div.aporte a').live('click', function() {
+        $('#aportes').load(this.href)
+        return false
+      })
+  });
+
+
+
+/*
+$(document).ready(function () {
+    $("#edit_localidad").validate({
+
+        rules: {
+              "localidad[descripcion]": {required: true, minlength: 6}
+               }
+    });
+});
+
+*/
+/*
+ddsmoothmenu.init({
+	mainmenuid: "menu", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	customtheme: ["#459E00", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})
+*/
