@@ -5,7 +5,12 @@ class LocalidadesController < ApplicationController
   # GET /localidads
   # GET /localidads.xml
   def index
-    @localidades = Localidad.all
+    if params[:txtbuscar].blank?
+       @localidades = Localidad.paginate(:page => params[:page],:order => "nombre")
+    else
+       @localidades = Localidad.paginate(:page => params[:page],:conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,62 +1,50 @@
-<h4>Localidades</h4>
+<h3 style="margin-top:0px; margin-bottom: 15px">Localidades</h3>
 
 
-<table class="condensed-table">
-  <thead>
-  <tr>
-    <th>Nombre</th>
-    <th>Provincia</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @localidades.each do |localidad| %>
-      <tr>
-        <td><%=h localidad.nombre %></td>
-        <td><%=h localidad.provincia_id %></td>
-        <td><%= link_to 'Show', localidad %>
-            <%= link_to 'Edit', edit_localidad_path(localidad) %>
-            <%= link_to 'Destroy', localidad, :confirm => 'Esta seguro de Eliminar?', :method => :delete %></td>
-      </tr>
-  <% end %>
-  </tbody>
+
+<div>
+    <%= form_tag(localidades_path, :method => 'get',:id=>'buscar') %>
+  <div><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...'%>&nbsp;<div style="display: none;"><%= submit_tag "Buscar" %></div></div>
+         <div id="tips" style="color:gray; height:10px; padding-bottom: 20px"><small><strong>Tip:</strong> Puede ingresar alguna porci&oacute;n del nombre de la localidad.</small></div>
+
+ </div>
+
+ <%unless @localidades.blank? %>
+        <table class="table" >
+          <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Provincia</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @localidades.each do |localidad| %>
+            <tr>
+                <td><%=h localidad.nombre %></td>
+                <td><%=h localidad.provincia_id %></td>
+                <td style="text-align:right">
+                       <%= link_to image_tag('iconos/22x22/zoom.png'), localidad, :title=>'Ver', :class=>'qtip' %>
+                          <%= link_to image_tag('iconos/22x22/page_edit.png'), edit_localidad_path(localidad), :title=>'Editar',:class=>'qtip' %>
+                          <%= link_to image_tag('iconos/22x22/cross.png'), localidad, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+  <%else%>
+            <tr>
+              <td><div><h3><font color="red">No se encontraron resultados</font></h3></div></td>
+            </tr>
+   <%end%>
 </table>
+ <div style="text-align:center">
+    <%= will_paginate @localidades, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+  </div>
 
 <br />
 <br />
 
-<table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Language</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Some</td>
-            <td>One</td>
-            <td>English</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Joe</td>
-            <td>Sixpack</td>
-            <td>English</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Stu</td>
-            <td>Dent</td>
-            <td>Code</td>
-          </tr>
-        </tbody>
-      </table>
-
-<%= link_to 'New localidad', new_localidad_path %>
+ <%= link_to 'Nueva Localidad', new_localidad_path ,:class=>'btn btn-primary' %>
 
 
  
