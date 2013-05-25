@@ -1,20 +1,21 @@
-<h1>Editing localidad</h1>
+<h3>Editar Localidad</h3>
+<hr />
 
 <% form_for(@localidad) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :nombre %><br />
+<p>
+    <%= f.label :nombre %>
     <%= f.text_field :nombre %>
   </p>
   <p>
-    <%= f.label :provincia_id %><br />
-    <%= f.text_field :provincia_id %>
+    <%= f.label :Provincia %>
+    <%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %>
   </p>
+  <br />
   <p>
-    <%= f.submit 'Update' %>
+<%= f.submit 'Actualizar', :class=>"btn btn-primary" %> &nbsp; <%= link_to 'ver', @localidad %> |
+<%= link_to 'volver', localidades_path %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @localidad %> |
-<%= link_to 'Back', localidads_path %>
