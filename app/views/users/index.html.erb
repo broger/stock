@@ -1,0 +1,80 @@
+<h3 style="margin-top:0px; margin-bottom: 15px">Usuarios</h3>
+
+
+    <%= form_tag(users_path, :method => 'get',:id=>'buscar') %>
+
+  <table>
+     <tr>
+       <td><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...', :class=>"textbox1"%></td>
+       <td>&nbsp;<%= submit_tag "Buscar", :class=>"btn btn-mini"%></td>
+       <td><div id="cargando"   style="display: none;">&nbsp;<%= image_tag('iconos/cargando.gif')%></div></td>
+     </tr>
+
+  </table>
+<div id="tips" style="color:gray; height:10px; margin: 0 0 25px 2px; font-size: 10px">&nbsp;<strong>Tip:</strong> Puede ingresar alguna porci&oacute;n del nombre de la localidad.</div>
+
+  
+ <% unless @usuarios.blank? %>
+  <table class="table" style="font-size :13px" >
+          <thead>
+            <tr style="height:12px">
+              <th>Login</th>
+              <th>Nonbre</th>
+              <th>Email</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @usuarios.each do |usuario| %>
+            <tr style="height:9px">
+                <td><%=h usuario.login %></td>
+                <td><%=h usuario.name %></td>
+                <td><%=h usuario.email %></td>
+                <td style="text-align:right">
+                      <%= link_to image_tag('iconos/16x16/pencil.png'), edit_user_path(usuario), :title=>'Editar',:class=>'qtip' %>
+                      <%= link_to image_tag('iconos/16x16/remove.png'), usuario, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+  <%else%>
+            <tr>
+              <td><div><h3><font color="red">No se encontraron resultados</font></h3></div></td>
+            </tr>
+   <%end%>
+</table>
+ <div style="text-align:center">
+    <%= will_paginate @usuarios, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+  </div>
+
+<br />
+<br />
+
+ <%= link_to 'Nuevo Usuario', new_users_path ,:class=>'btn btn-primary' %>
+
+
+<script type="text/javascript">
+
+ $(document).ready(function () {
+     $('#txtbuscar').focus();
+     console.log();
+ $('#buscar').submit(controlar_bene);
+});
+
+    function controlar_bene(){
+              if ( $('#txtbuscar') != '' && $('#buscar').valid()){
+                $('#cargando').show();
+              }
+    }
+
+ 
+</script>
+
+<style type="text/css">
+ input[type="text"] {
+   height: 15px;
+   font-size: 13px;
+   line-height: 15px;
+   margin-bottom: 0px;
+}
+</style>

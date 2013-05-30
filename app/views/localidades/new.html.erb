@@ -1,4 +1,4 @@
-<h1>New localidad</h1>
+<h1>Nueva Localidad</h1>
 
 <% form_for(@localidad) do |f| %>
   <%= f.error_messages %>
@@ -9,7 +9,8 @@
   </p>
   <p>
     <%= f.label :provincia_id %><br />
-    <%= f.text_field :provincia_id %>
+    <%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %>
+
   </p>
   <p>
     <%= f.submit 'Create' %>

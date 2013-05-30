@@ -1,0 +1,60 @@
+<h3>Editar Usuario</h3>
+<hr />
+
+<% form_for(@usuario) do |f| %>
+<%= f.error_messages :header_message => "No se pudo guardar el usuario", :message => "Hubo problemas en los siguientes datos:" %>
+
+
+  <p>
+    <%= f.label :login %>
+    <%= f.text_field :login %>
+  </p>
+
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </p>
+
+  <table>
+   <% unless @roles.blank? %>
+                          <% @roles.each do |p|%>
+                             <tr style=" text-align: right">
+                               <th style=" text-align: right"><%= p.nombre %></th>
+                               <td style=" text-align: left"><%=check_box_tag "usuario[rol_ids][]",p.id,@usuario.roles.include?(p) %></td>
+                             </tr>
+                          <%end%>
+   <% end %>
+  </table>
+  <p></p>
+  <br />
+  <p>
+
+<%= f.submit 'Actualizar', :class=>"btn btn-primary" %> &nbsp; <%= link_to 'ver', @usuario %> |
+<%= link_to 'volver', users_path %>
+  </p>
+<% end %>
+
+
+
+                    
+
+               
+              
+      
+<script type="text/javascript">
+$(document).ready(function(){
+    
+   
+		
+
+});
+
+
+</script>
+
+

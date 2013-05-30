@@ -1,31 +1,30 @@
-<h1>Listing productos</h1>
+<h3>Productos</h3>
 
-<div class="filtros" style="display: none">
+<div class="filtros" style="display: none" >
   <table>
      <tr>
-       <td><%= select_tag :tipo_tramite_id,'<option></option>' + options_from_collection_for_select(Categoria.find(:all, :order => "nombre"),'id','nombre') if Categoria.count > 1 %>
-   </td>
-       <td><div style="display: none;"><%= submit_tag "Buscar" %></div></td>
+       <td><%= select_tag :tipo_tramite_id,'<option></option>' + options_from_collection_for_select(Categoria.find(:all, :order => "nombre"),'id','nombre') if Categoria.count > 1 %></td>
+       <td></td>
        <td><div id="cargando"   style="display: none;">&nbsp;<%= image_tag('iconos/cargando.gif')%></div></td>
      </tr>
 
   </table>
  </div>
 
+
 <div class="search_simple">
   <table>
      <tr>
        <td><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...'%></td>
-       <td><div style="display: none;"><%= submit_tag "Buscar" %></div></td>
+       <td><div class="textbox1">&nbsp;<%= submit_tag "Buscar" , :class=>"btn btn-mini"%>&nbsp;</div></td>
        <td><div id="cargando"   style="display: none;">&nbsp;<%= image_tag('iconos/cargando.gif')%></div></td>
        <td>
-           <div id="ver_filtros" onclick="ver_filtros()">ver filtros</div>
-           <div id="ocultar_filtros" onclick="ocultar_filtros()" style="display:none">ocultar filtros</div>
+           <div class="link_filtros" id="ver_filtros" onclick="ver_filtros()">ver filtros</div>
+           <div class="link_filtros" id="ocultar_filtros" onclick="ocultar_filtros()" style="display:none">ocultar filtros</div>
        </td>
      </tr>
   </table>
    <div id="tips" style="color:gray; height:10px; padding: 0 0 20px 0"><small><strong>Tip:</strong> Puede ingresar alguna porci&oacute;n del nombre de la localidad.</small></div>
-
 
 
 
@@ -73,3 +72,15 @@
 
 </script>
 
+<style type="text/css">
+ input[type="text"] {
+   height: 15px;
+   font-size: 13px;
+   line-height: 15px;
+   margin-bottom: 0px;
+}
+
+.link_filtros{
+  font-size: 11px;
+}
+</style>

@@ -1,23 +1,27 @@
+<h3>Nueva Secci&oacute;n</h3> <br />
+
 <% form_for(@seccion) do |f| %>
   <%= f.error_messages %>
 
-<table>
-   <tr style=" text-align: right">
-                   <th>Rubro </th>
-                   <td style=" text-align: left"><%= f.select :rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-                 </tr>
-     <tr style=" text-align: right">
-                   <th>Nombre </th>
-                   <td style=" text-align: left"><%=  f.text_field :nombre %></td>
-     </tr>
-</table>
   <p>
-    <%= f.submit 'Create' %>
+    <%= f.label :nombre %>
+    <%= f.text_field :nombre %><br />
+  </p>
+
+  <p>
+    <%= f.label :rubro %>
+    <%= f.select :rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %><br />
+  </p>
+
+  <p>
+    <%= f.submit 'Guardar', :class=>"btn btn-primary"%> | <%= link_to 'volver', secciones_path %>
   </p>
 
 <% end %>
 
-<%= link_to 'Atras', secciones_path %>
+  <br />
+  
+
 
 
 <script type="text/javascript">

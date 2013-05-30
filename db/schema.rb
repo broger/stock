@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130412141651) do
+ActiveRecord::Schema.define(:version => 20130530205635) do
 
   create_table "categorias", :force => true do |t|
     t.string   "nombre",     :limit => 30
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20130412141651) do
     t.datetime "updated_at"
   end
 
-  create_table "localidads", :force => true do |t|
+  create_table "localidades", :force => true do |t|
     t.string   "nombre"
     t.integer  "provincia_id"
     t.integer  "codigo_postal"
@@ -69,6 +69,13 @@ ActiveRecord::Schema.define(:version => 20130412141651) do
     t.datetime "updated_at"
   end
 
+  create_table "monedas", :force => true do |t|
+    t.string   "nombre",     :limit => 25
+    t.string   "simbolo",    :limit => 10
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "productos", :force => true do |t|
     t.string   "nombre",             :limit => 60
     t.string   "descripcion"
@@ -89,6 +96,10 @@ ActiveRecord::Schema.define(:version => 20130412141651) do
     t.integer  "estado_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "costo",                            :precision => 7, :scale => 2
+    t.decimal  "ganancia",                         :precision => 7, :scale => 2
+    t.decimal  "descuento",                        :precision => 5, :scale => 2
+    t.decimal  "iva",                              :precision => 7, :scale => 2
   end
 
   create_table "proveedores", :force => true do |t|

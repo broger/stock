@@ -1,15 +1,130 @@
-<h1>New producto</h1>
+<h4>Nuevo Producto</h4><hr style="margin-top: 0px; padding-top: 0px;  margin-bottom:25px" />
 
 <% form_for(@producto) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
+
+<div class="brogertab">
+            <ul id="myTab" class="nav nav-tabs">
+              <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
+              <li class=""><a href="#categoria"  data-toggle="tab">Categoria</a></li>
+              <li class=""><a href="#Web"        data-toggle="tab">Web</a></li>
+              <li class=""><a href="#descipcion" data-toggle="tab">Descripci&oacute;n</a></li>
+            </ul>
+
+            <div id="myTabContent" class="tab-content">
+                      <div class="tab-pane fade" id="general">
+                                         <table>
+                                              <tr>
+                                                <td><%= f.label :codigo %></td>
+                                                <td> <%  Producto.count >= 1  ? "#{Producto.last.id.to_i + 1}" : "0"  %></td>
+                                              </tr>
+                                              <tr>
+                                                <td><%= f.label :nombre %></td>
+                                                <td><%= f.text_field :nombre %></td>
+                                              </tr>
+                                              <tr>
+                                                <td><%= f.label :costo, "Precio Costo" %></td>
+                                                <td><%= f.text_field :costo %></td>
+                                              </tr>
+                                              <tr>
+                                                <td><%= f.label :ganancia, "Ganacia %" %></td>
+                                                <td><%= f.text_field :ganancia %></td>
+                                              </tr>
+                                              <tr>
+                                                <td><%= f.label :descuento, "Descuento %" %></td>
+                                                <td><%= f.text_field :descuento %></td>
+                                              </tr>
+                                              <tr>
+                                                <td><%= f.label :iva, "IVA" %></td>
+                                                <td><%= f.text_field :iva %></td>
+                                              </tr>
+                                               <tr>
+                                                <td><%= f.label :iva, "Moneda" %></td>
+                                                <td> <% unless Moneda.count == 0 %>
+                                                          <%=  Moneda.count > 1 ? "#{f.select :moneda_id, Moneda.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}}" : "#{Moneda.first.nombre}" %>
+                                                     <% end %>
+                                                </td>
+
+                                              </tr>
+                                              <tr>
+                                                <td><%= f.label :precio, "Precio Costo" %></td>
+                                                <td><%= f.text_field :costo %></td>
+                                              </tr>
+                                              <tr>
+                                                <td><%= f.label :stock_minimo, "Stock M&iacute;nimo" %></td>
+                                                <td><%= f.text_field :stock_minimo %></td>
+                                              </tr>
+
+                                              <tr>
+                                                <td><%= f.label :proveedor %></td>
+                                                <td><%= f.select :proveedor_id, Proveedor.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                              </tr>
+                                              <tr>
+                                                <td><%= f.label :unidad_id, "Unidad de M&eacute;dida" %></td>
+                                                <td><%= f.select :unidad_id, Unidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                              </tr>
+                                               <tr>
+                                                <td><%= f.label :estado_id, "Estado" %></td>
+                                                <td><%= f.select :estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                              </tr>
+                                          </table>
+                      </div>
+
+
+                      <div class="tab-pane fade" id="categoria">
+                                           <table>
+                                                <tr>
+                                                  <td><%= f.label :descripcion %></td>
+                                                  <td><%= f.text_field :descripcion %></td>
+                                                </tr>
+                                            </table>
+                      </div>
+
+                      <div class="tab-pane fade" id="web">
+                                             <table>
+                                                  <tr>
+                                                    <td><%= f.label :descripcion %></td>
+                                                    <td><%= f.text_field :descripcion %></td>
+                                                  </tr>
+                                              </table>
+                      </div>
+              
+              
+                      <div class="tab-pane fade" id="descripcion">
+                                              <table>
+                                              <tr>
+                                                <td><%= f.label :descripcion %></td>
+                                                <td><%= f.text_field :descripcion %></td>
+                                              </tr>
+                                          </table>
+                      </div>
+
+
+            </div> 
+
+</div>
+<br />
+<br />
+<div style="text-aling:rigth"> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', productos_path %> </p></div>
+
+
 <% end %>
 
-<%= link_to 'Back', productos_path %>
+
+  <script type="text/javascript">
+
+    $('#myTab a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    })
+
+  </script>
+
+<style type="text/css">
+    .brogertab{
+          min-height: 260px;
+          height: auto;
+    }
+
+  </style>

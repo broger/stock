@@ -15,7 +15,7 @@ class CreateProveedores < ActiveRecord::Migration
       t.column  :celular2, "numeric(30)"
       t.column  :email, "character(60)"
       t.column  :web, "character(60)"
-	  t.integer :estado_id	
+	    t.integer :estado_id
       t.timestamps
     end
   end

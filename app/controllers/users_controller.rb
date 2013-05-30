@@ -6,6 +6,49 @@ class UsersController < ApplicationController
   include AuthenticatedSystem
   
 
+   def index
+    @usuario = User.new
+    if params[:txtbuscar].blank?
+       @usuarios = User.paginate(:page => params[:page],:order => 'name')
+    else
+       @usuarios = User.paginate(:page => params[:page],:conditions=> ['lower(name) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "name")
+    end
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @usuarios }
+    end
+  end
+
+
+
+
+   def new
+    @usuario = User.new
+  end
+
+  def create
+    #logout_keeping_session!
+    params[:usuario][:password]='123'
+    params[:usuario][:password_confirmation]='123'
+    @usuario = User.new(params[:usuario])
+    success = @usuario && @usuario.save
+    if success && @usuario.errors.empty?
+      # Protects against session fixation attacks, causes request forgery
+      # protection if visitor resubmits an earlier form using back
+      # button. Uncomment if you understand the tradeoffs.
+      # reset session
+      #self.current_usuario = @usuario # !! now logged in
+      #redirect_back_or_default('/')
+      flash[:notice] = "Usuario agregado con exito."
+      redirect_to(usuarios_url)
+    else
+      flash[:error]  = "No se pudo guardar el usuario."
+      render :action => 'new'
+    end
+  end
+
+
   # render new.rhtml
   def new
     @user = User.new
@@ -40,4 +83,27 @@ class UsersController < ApplicationController
       redirect_back_or_default('/')
     end
   end
+
+
+   def edit
+    @usuario = User.find(params[:id])
+    @roles = Rol.find(:all)
+    @areas=[]
+   end
+
+    def update
+    @usuario = User.find(params[:id])
+                  if @usuario.update_attributes(params[:user])
+                     @usuario.roles.clear
+                     @usuario.rol_ids = params[:usuario][:rol_ids]
+                     @usuario.update_attributes(params[:usuario])
+                     @usuario.save!
+                  end
+                  redirect_to(users_url)
+                  flash[:notice] = "El Usuario fue actualizado exitosamente."
+
+    end
+
+
+
 end

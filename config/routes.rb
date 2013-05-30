@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :proveedores
+
+  map.resources :monedas
+
   map.resources :estados
 
   map.resources :secciones

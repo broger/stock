@@ -1,20 +1,64 @@
 
-<h1>Sign up as a new user</h1>
+<h1>Nuevo Usuario</h1>
 <% @user.password = @user.password_confirmation = nil %>
 
-<%= error_messages_for :user %>
+ <%= error_messages_for :user,
+        :header_message => "No se pudo guardar el usuario",
+        :message => "Hubo problemas en los siguientes datos:" %>
+
 <% form_for :user, :url => users_path do |f| -%>
-<p><%= f.label :login %><br/>
-<%= f.text_field :login %></p>
 
-<p><%= f.label :email %><br/>
-<%= f.text_field :email %></p>
+  <p><%= f.label :login %><br/>
+  <%= f.text_field :login %></p>
 
-<p><%= f.label :password %><br/>
-<%= f.password_field :password %></p>
+  <p><%= f.label :email %><br/>
+  <%= f.text_field :email %></p>
 
-<p><%= f.label :password_confirmation, 'Confirm Password' %><br/>
-<%= f.password_field :password_confirmation %></p>
+  <p><%= f.label :password %><br/>
+  <%= f.password_field :password %></p>
 
+  <p><%= f.label :password_confirmation, 'Confirm Password' %><br/>
+  <%= f.password_field :password_confirmation %></p>
+
+
+
+  <fieldset>
+  <legend><b><h4>Roles</h4></b></legend>
+                 <table>
+                      <% unless @roles.blank? %>
+                          <% @roles.each do |p|%>
+                             <tr style=" text-align: right">
+                               <th style=" text-align: right"><%= p.descripcion %></th>
+                               <td style=" text-align: left"><%=check_box_tag "usuario[rol_ids][]",p.id,@usuario.roles.include?(p) %></td>
+                             </tr>
+                          <%end%>
+                     <% end %>
+
+                   </table>
+    </fieldset>
+               
 <p><%= submit_tag 'Sign up' %></p>
+
 <% end -%>
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+    $('form').validate(
+      {
+        rules:{
+          'usuario[login]': {required:true,minlength: 3 , maxlength: 40},
+          'usuario[nro_documento]': {required:true,minlength: 6 , maxlength: 8},
+          'usuario[name]': {required:true,minlength: 0, maxlength: 100 },
+          'usuario[email]': { email:true},
+          'usuario[password]': {required:true,minlength: 6},
+          'usuario[password_confirmation]': {required:true,minlength: 6}
+        }
+      });
+});
+</script>
+
+                       
+
+

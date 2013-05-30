@@ -1,4 +1,4 @@
-database.yml
+config/database.yml
 log/*.log
 tmp/**/*
 nbproject/**/*
@@ -7,8 +7,6 @@ db/schema.rb
 nbproject/*.xml
 **/*.html.erb~
 nohup.out
-nbproject/
-
 
 
 

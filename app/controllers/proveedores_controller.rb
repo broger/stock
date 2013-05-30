@@ -1,17 +1,17 @@
 class ProveedoresController < ApplicationController
-  # GET /proveedors
-  # GET /proveedors.xml
+  # GET /proveedores
+  # GET /proveedores.xml
   def index
-    @proveedors = Proveedor.all
+    @proveedores = Proveedor.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @proveedors }
+      format.xml  { render :xml => @proveedores }
     end
   end
 
-  # GET /proveedors/1
-  # GET /proveedors/1.xml
+  # GET /proveedores/1
+  # GET /proveedores/1.xml
   def show
     @proveedor = Proveedor.find(params[:id])
 
@@ -21,8 +21,8 @@ class ProveedoresController < ApplicationController
     end
   end
 
-  # GET /proveedors/new
-  # GET /proveedors/new.xml
+  # GET /proveedores/new
+  # GET /proveedores/new.xml
   def new
     @proveedor = Proveedor.new
 
@@ -32,13 +32,13 @@ class ProveedoresController < ApplicationController
     end
   end
 
-  # GET /proveedors/1/edit
+  # GET /proveedores/1/edit
   def edit
     @proveedor = Proveedor.find(params[:id])
   end
 
-  # POST /proveedors
-  # POST /proveedors.xml
+  # POST /proveedores
+  # POST /proveedores.xml
   def create
     @proveedor = Proveedor.new(params[:proveedor])
 
@@ -53,8 +53,8 @@ class ProveedoresController < ApplicationController
     end
   end
 
-  # PUT /proveedors/1
-  # PUT /proveedors/1.xml
+  # PUT /proveedores/1
+  # PUT /proveedores/1.xml
   def update
     @proveedor = Proveedor.find(params[:id])
 
@@ -69,14 +69,14 @@ class ProveedoresController < ApplicationController
     end
   end
 
-  # DELETE /proveedors/1
-  # DELETE /proveedors/1.xml
+  # DELETE /proveedores/1
+  # DELETE /proveedores/1.xml
   def destroy
     @proveedor = Proveedor.find(params[:id])
     @proveedor.destroy
 
     respond_to do |format|
-      format.html { redirect_to(proveedors_url) }
+      format.html { redirect_to(proveedores_url) }
       format.xml  { head :ok }
     end
   end

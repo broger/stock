@@ -16,7 +16,7 @@ class CreateProductos < ActiveRecord::Migration
    	  t.integer :proveedor2_id
 
 	    t.integer	:stock
-      t.integer :stock_mimimo
+      t.integer :stock_minimo
 	    t.boolean :avisa_stock_minimo
       t.boolean :visible_web
 

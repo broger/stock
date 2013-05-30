@@ -1,0 +1,18 @@
+<h4>Localidad</h4>
+<hr />
+
+
+<p>
+  <b>Nombre:</b>
+  <%=h @localidad.nombre %>
+</p>
+
+<p>
+  <b>Provincia:</b>
+  <%=h @localidad.provincia_id %>
+</p>
+
+<br />
+
+<%= link_to 'Editar', edit_localidad_path(@localidad) %> |
+<%= link_to 'Volver', localidades_path %>
