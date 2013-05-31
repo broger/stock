@@ -2,14 +2,18 @@ class ProveedoresController < ApplicationController
   # GET /proveedores
   # GET /proveedores.xml
   def index
-    @proveedores = Proveedor.all
-
+    if params[:txtbuscar].blank?
+       @proveedores = Proveedor.paginate(:page => params[:page],:order => "razon_social")
+    else
+       @proveedores = Proveedor.paginate(:page => params[:page],:conditions=> ['lower(razon_social) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "razon_social")
+    end
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @proveedores }
+      format.xml  { render :xml => @localidades }
     end
   end
 
+  
   # GET /proveedores/1
   # GET /proveedores/1.xml
   def show

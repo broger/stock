@@ -1,22 +1,81 @@
-<h1>Listing proveedores</h1>
+<h3 style="margin-top:0px; margin-bottom: 15px">Proveedores</h3>
 
-<table>
-  <tr>
-    <th>Nombre</th>
-    <th>Direccion</th>
-  </tr>
 
-<% @proveedores.each do |proveedor| %>
-  <tr>
-    <td><%=h proveedor.nombre %></td>
-    <td><%=h proveedor.direccion %></td>
-    <td><%= link_to 'Show', proveedor %></td>
-    <td><%= link_to 'Edit', edit_proveedor_path(proveedor) %></td>
-    <td><%= link_to 'Destroy', proveedor, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+    <%= form_tag(localidades_path, :method => 'get',:id=>'buscar') %>
+
+  <table>
+     <tr>
+       <td><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...', :class=>"textbox1"%></td>
+       <td>&nbsp;<%= submit_tag "Buscar", :class=>"btn btn-mini"%></td>
+       <td><div id="cargando"   style="display: none;">&nbsp;<%= image_tag('iconos/cargando.gif')%></div></td>
+     </tr>
+
+  </table>
+<div id="tips" style="color:gray; height:10px; margin: 0 0 25px 2px; font-size: 10px">&nbsp;<strong>Tip:</strong> Puede ingresar alguna porci&oacute;n del nombre de la localidad.</div>
+
+
+ <% unless @proveedores.blank? %>
+  <table class="table" style="font-size :13px" >
+          <thead>
+            <tr style="height:12px">
+            <th>Nombre</th>
+            <th>Provincia</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @proveedores.each do |proveedor| %>
+            <tr style="height:9px">
+                <td><%=h proveedor.razon_social%></td>
+                <td><%=h proveedor.direccion %></td>
+                <td style="text-align:right">
+                       <%= link_to image_tag('iconos/zoom2.png'), proveedor, :title=>'Ver', :class=>'qtip' %>
+                          <%= link_to image_tag('iconos/16x16/pencil.png'), edit_proveedor_path(proveedor), :title=>'Editar',:class=>'qtip' %>
+                          <%= link_to image_tag('iconos/16x16/remove.png'), proveedor, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+          <div style="text-align:center">
+               <%= will_paginate @proveedores, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+          </div>
+  <%else%>
+            <tr>
+              <td><div><h3><font color="red">No se encontraron resultados</font></h3></div></td>
+            </tr>
+   <%end%>
 </table>
 
+ 
+<br />
 <br />
 
-<%= link_to 'New proveedor', new_proveedor_path %>
+ <%= link_to 'Nuevo Proveedor', new_proveedor_path ,:class=>'btn btn-primary' %>
+
+
+<script type="text/javascript">
+
+ $(document).ready(function () {
+     $('#txtbuscar').focus();
+     console.log();
+ $('#buscar').submit(controlar_bene);
+});
+
+    function controlar_bene(){
+              if ( $('#txtbuscar') != '' && $('#buscar').valid()){
+                $('#cargando').show();
+              }
+    }
+
+
+</script>
+
+<style type="text/css">
+ input[type="text"] {
+   height: 15px;
+   font-size: 13px;
+   line-height: 15px;
+   margin-bottom: 0px;
+}
+</style>
+
