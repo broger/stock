@@ -1,4 +1,4 @@
-<h4>Nuevo Producto</h4><hr style="margin-top: 0px; padding-top: 0px;  margin-bottom:25px" />
+<h4>Nuevo Proveedor</h4><hr style="margin-top: 0px; padding-top: 0px;  margin-bottom:25px" />
 
 <% form_for(@proveedor) do |f| %>
   <%= f.error_messages %>
@@ -7,57 +7,94 @@
 <div class="brogertab">
             <ul id="myTab" class="nav nav-tabs">
               <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
-              <li class=""><a href="#categoria"  data-toggle="tab">Categoria</a></li>
-              <li class=""><a href="#Web"        data-toggle="tab">Web</a></li>
-              <li class=""><a href="#descipcion" data-toggle="tab">Descripci&oacute;n</a></li>
+              <li class=""><a href="#direccion"  data-toggle="tab">Direcci&oacute;n</a></li>
+              <li class=""><a href="#banco"        data-toggle="tab">Banco</a></li>
+              <li class=""><a href="#nota" data-toggle="tab">Nota</a></li>
             </ul>
 
-            <div id="myTabContent" class="tab-content">
-                      <div class="tab-pane fade" id="general">
-                                         <table>
+  <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
+                      <div  class="tab-pane active"  id="general">
+                                         <table style="width:350px; display:inline; float: left">
                                               <tr>
-                                                <td><%= f.label :codigo %></td>
+                                                <th><%= f.label :codigo %></th>
                                                 <td> <%  Proveedor.count >= 1  ? "#{Proveedor.last.id.to_i + 1}" : "1"  %></td>
                                               </tr>
                                               <tr>
-                                                <td><%= f.label :razon_social %></td>
+                                                <th><%= f.label :nombre %></th>
+                                                <td><%= f.text_field :nombre %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :cuil %></th>
+                                                <td><%= f.text_field :cuil %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :razon_social %></th>
                                                 <td><%= f.text_field :razon_social %></td>
                                               </tr>
                                               <tr>
-                                                <td><%= f.label :cuil  %></td>
-                                                <td><%= f.text_field :cuil %></td>
+                                                 <th><%= f.label :estado_id, "Estado" %></th>
+                                                 <td><%= f.select :estado_id , Estado.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
                                               </tr>
                                           </table>
-                      </div>
-
-
-                      <div class="tab-pane fade" id="categoria">
-                                           <table>
-                                                <tr>
-                                                  <td><%= f.label :descripcion %></td>
-                                                  <td><%= f.text_field :descripcion %></td>
-                                                </tr>
-                                            </table>
-                      </div>
-
-                      <div class="tab-pane fade" id="web">
-                                             <table>
-                                                  <tr>
-                                                    <td><%= f.label :descripcion %></td>
-                                                    <td><%= f.text_field :descripcion %></td>
-                                                  </tr>
-                                              </table>
-                      </div>
-
-
-                      <div class="tab-pane fade" id="descripcion">
-                                              <table>
+                                          <table style="width:350px; display:inline; float: left">
+                                             <tr>
+                                                <th><%= f.label :telefono1 %></th>
+                                                <td><%= f.text_field :telefono1 %></td>
+                                              </tr>
                                               <tr>
-                                                <td><%= f.label :descripcion %></td>
-                                                <td><%= f.text_field :descripcion %></td>
+                                                <th><%= f.label :telefono2 %></th>
+                                                <td><%= f.text_field :telefono2 %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :celular1 %></th>
+                                                <td><%= f.text_field :celular1 %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :celular2 %></th>
+                                                <td><%= f.text_field :celular2 %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :email %></th>
+                                                <td><%= f.text_field :email %></td>
                                               </tr>
                                           </table>
-                      </div>
+                                          </div>
+                                          <div class="tab-pane fade" id="direccion">
+                                                                                 <table>
+                                                                                      <tr>
+                                                                                         <th><%= f.label :provincia_id, "Provincia" %></th>
+                                                                                          <td><%= f.select :provincia_id , Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                                                      </tr>
+                                                                                      <tr>
+                                                                                         <th><%= f.label   :localidad_id, "Localidad" %></th>
+                                                                                          <td><%= f.select :localidad_id, Localidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                                                      </tr>
+                                                                                      <tr>
+                                                                                         <th><%= f.label :direccion, "Direcci&oacute;n" %></th>
+                                                                                          <td><%= f.text_field :direccion %></td>
+                                                                                      </tr>
+                                                                                  </table>
+                                         </div>
+                                         <div class="tab-pane fade" id="banco">
+                                                               <table>
+                                                                    <tr>
+                                                                       <th><%= f.label :banco_id, "Banco" %></th>
+                                                                        <td><%#= f.select :provincia_id , Banco.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                       <th><%= f.label   :cuenta_bancaria, "Cuenta Bancaria" %></th>
+                                                                        <td><%= f.text_field :cuenta_bacaria %></td>
+                                                                    </tr>
+                                                                </table>
+                                          </div>
+                                        <div class="tab-pane fade" id="nota">
+                                                                <table>
+                                                                <tr>
+                                                                  <td></td>
+                                                                  <td></td>
+                                                                </tr>
+                                                            </table>
+                                        </div>
 
 
             </div>
@@ -85,5 +122,19 @@
           min-height: 260px;
           height: auto;
     }
+
+    table
+    {
+    width:100%;
+    }
+    th{
+       text-align: left;
+      }
+    tr{
+      height:40px;
+     }
+     table label{
+        font-size: 11px;
+      }
 
   </style>

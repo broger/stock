@@ -12,90 +12,97 @@
               <li class=""><a href="#descripcion" data-toggle="tab">Descripci&oacute;n</a></li>
             </ul>
 
-            <div id="myTabContent" class="tab-content">
+  <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
                       <div class="tab-pane active" id="general">
-                                         <table>
-                                           <tr>
-                                           <td>
-                                              <tr>
-                                                <td><%= f.label :codigo %></td>
+                                        <table style="width:350px; display:inline; float: left">
+                                          <tr >
+                                                <th><%= f.label :codigo %></th>
                                                 <td> <%  Producto.count >= 1  ? "#{Producto.last.id.to_i + 1}" : "0"  %></td>
-                                              </tr>
+                                               </tr>
                                               <tr>
-                                                <td><%= f.label :nombre %></td>
+                                                <th><%= f.label :nombre %></th>
                                                 <td><%= f.text_field :nombre %></td>
                                               </tr>
                                               <tr>
-                                                <td><%= f.label :costo, "Precio Costo" %></td>
+                                                <th><%= f.label :costo, "Precio Costo" %></th>
                                                 <td><%= f.text_field :costo %></td>
                                               </tr>
                                               <tr>
-                                                <td><%= f.label :ganancia, "Ganacia %" %></td>
+                                                <th><%= f.label :ganancia, "Ganacia % " %></th>
                                                 <td><%= f.text_field :ganancia %></td>
                                               </tr>
                                               <tr>
-                                                <td><%= f.label :descuento, "Descuento %" %></td>
+                                                <th><%= f.label :descuento, "Descuento %" %></th>
                                                 <td><%= f.text_field :descuento %></td>
                                               </tr>
                                               <tr>
-                                                <td><%= f.label :iva, "IVA" %></td>
+                                                <th><%= f.label :iva, "IVA" %></th>
                                                 <td><%= f.text_field :iva %></td>
                                               </tr>
                                                <tr>
-                                                <td><%= f.label :moneda, "Moneda" %></td>
+                                                <th><%= f.label :moneda, "Moneda" %></th>
                                                 <td> <% unless Moneda.count == 0 %>
                                                           <%=  Moneda.count > 1 ? "#{f.select :moneda_id, Moneda.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}}" : "#{Moneda.first.nombre}" %>
                                                      <% end %>
                                                 </td>
-
-                                              </tr>
+                                               </tr>
+                                         </table>
+                        <table style="width:350px; display:inline; float: left">
                                                <tr>
-                                                <td><%= f.label :stock_minimo, "Stock M&iacute;nimo" %></td>
+                                                <th><%= f.label :stock_minimo, "Stock M&iacute;nimo" %></th>
                                                 <td><%= f.text_field :stock_minimo %></td>
                                               </tr>
-
                                               <tr>
-                                                <td><%= f.label :proveedor %></td>
-                                                <td><%= f.select :proveedor_id, Proveedor.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-                                              </tr>
-                                              <tr>
-                                                <td><%= f.label :unidad_id, "Unidad de M&eacute;dida" %></td>
+                                                <th><%= f.label :unidad_id, "Unidad de M&eacute;dida" %></th>
                                                 <td><%= f.select :unidad_id, Unidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
                                               </tr>
                                                <tr>
-                                                <td><%= f.label :estado_id, "Estado" %></td>
+                                                <th><%= f.label :estado_id, "Estado" %></th>
                                                 <td><%= f.select :estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
                                               </tr>
-                                            </td>
-                                            </tr>
                                           </table>
                       </div>
 
 
                       <div class="tab-pane fade" id="categoria">
-                                           <table>
+                                            <table style="width:350px; display:inline; float: left">
                                                 <tr>
-                                                  <td><%= f.label :codigo_proveedor, "C&oacute;digo Proveedor" %></td>
-                                                  <td><%= f.text_field :codigo_proveedor %></td>
+                                                     <th><%= f.label :rubro_id, "Rubro" %></th>
+                                                     <td><% unless Rubro.count == 0 %>
+                                                            <%=  Rubro.count > 1 ? "#{f.select :rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}}" : "#{Rubro.first.nombre}" %>
+                                                        <% end %>
+                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                  <td><%= f.label :proveedor_id, "Proveedor" %></td>
-                                                  <td><%= f.select :proveedor_id, Proveedor.find(:all).collect{|t|[t.razon_social, t.id]}, {:include_blank => true} %></td>
+                                                     <th><%= f.label :seccion_id, "Secci&iacute;n" %></th>
+                                                     <td><%=  f.select :seccion_id, Seccion.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}%></td>
                                                 </tr>
-                                                <td> <% unless Rubro.count == 0 %>
-                                                          <%=  Rubro.count > 1 ? "#{f.select :rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}}" : "#{Rubro.first.nombre}" %>
-                                                     <% end %>
-                                                </td>
-                                                <%#=  :seccion_id  %>
-                                                <%#=  :categoria_id  %>
-
+                                                 <tr>
+                                                     <th><%= f.label :categoria_id, "Categoria" %></th>
+                                                     <td><%=  f.select :categoria_id, Categoria.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}%></td>
+                                                </tr>
                                             </table>
+                                            <table style="width:350px; display:inline; float: left">
+                                                <tr>
+                                                       <th><%= f.label :codigo_proveedor, "C&oacute;digo Proveedor" %></th>
+                                                       <td><%= f.text_field :codigo_proveedor %></td>
+                                                  </tr>
+                                                  <tr>
+                                                       <th><%= f.label :proveedor_id, "Proveedor" %></th>
+                                                       <td><%= f.select :proveedor_id, Proveedor.find(:all).collect{|t|[t.razon_social, t.id]}, {:include_blank => true} %></td>
+                                                  </tr>
+                                                    <tr>
+                                                       <th><%= f.label :marca_id, "Marca" %></th>
+                                                       <td><%= f.select :marca_id, Marca.find(:all).collect{|t|[t.razon_social, t.id]}, {:include_blank => true} %></td>
+                                                  </tr>
+                                             </table>
+
                       </div>
 
                       <div class="tab-pane fade" id="web">
                                              <table>
                                                   <tr>
-                                                    <td style="vertical-align: middle"><%= f.check_box :visible_web %> Visible en la Web</td>
+                                                    <td> <div style="vertical-align: middle"><%= "#{f.check_box :visible_web} Visible para la Web" %></div></td>
                                                     <td></td>
                                                   </tr>
                                               </table>
@@ -103,12 +110,12 @@
               
               
                       <div class="tab-pane fade" id="descripcion">
-                                              <table>
-                                              <tr>
-                                                <td><%= f.label :descripcion %></td>
-                                                <td><%= f.text_field :descripcion %></td>
-                                              </tr>
-                                          </table>
+                        <table style="width:100%">
+                                <tr>
+                                  <td><%= f.text_area :descripcion , :cols => "50", :rows => "10" ,:placeholder => 'describa el producto aqui ...'%></td>
+                                </tr>
+                        </table>
+                                            
                       </div>
 
 
@@ -117,7 +124,7 @@
 </div>
 <br />
 <br />
-<div style="text-aling:rigth"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', productos_path %> </p></div>
+<div style="text-align: left"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', productos_path %> </p></div>
 
 
 <% end %>
@@ -139,5 +146,21 @@
           min-height: 260px;
           height: auto;
     }
+
+    table
+    {
+    width:100%;
+    }
+    th{ 
+      
+       text-align: left;
+
+      }
+    tr{
+      height:40px;
+     }
+     table label{
+        font-size: 11px;
+      }
 
   </style>
