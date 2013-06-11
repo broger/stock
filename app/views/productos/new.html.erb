@@ -17,7 +17,7 @@
                                         <table style="width:350px; display:inline; float: left">
                                           <tr >
                                                 <th><%= f.label :codigo %></th>
-                                                <td> <%  Producto.count >= 1  ? "#{Producto.last.id.to_i + 1}" : "0"  %></td>
+                                                <td><b> <%=  Producto.count >= 1  ? "#{Producto.last.id.to_i + 1}" : "0"  %></b></td>
                                                </tr>
                                               <tr>
                                                 <th><%= f.label :nombre %></th>
@@ -39,26 +39,31 @@
                                                 <th><%= f.label :iva, "IVA" %></th>
                                                 <td><%= f.text_field :iva %></td>
                                               </tr>
-                                               <tr>
-                                                <th><%= f.label :moneda, "Moneda" %></th>
-                                                <td> <% unless Moneda.count == 0 %>
-                                                          <%=  Moneda.count > 1 ? "#{f.select :moneda_id, Moneda.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}}" : "#{Moneda.first.nombre}" %>
-                                                     <% end %>
-                                                </td>
+                                              <tr>
+                                                    <th><%= f.label :moneda_id, "Moneda" %></th>
+                                                    <td><%= f.select :moneda_id, Moneda.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
                                                </tr>
                                          </table>
                         <table style="width:350px; display:inline; float: left">
+                                               <tr>
+                                                <th><%= f.label :stock, "Stock" %></th>
+                                                <td><%= f.text_field :stock %></td>
+                                              </tr>
+                                             <tr>
+                                                <th><%= f.label :avisa_stock_minimo, "Avisa stock M&iacute;nimo? " %></th>
+                                                <td><%= f.check_box :avisa_stock_minimo %></td>
+                                              </tr>
                                                <tr>
                                                 <th><%= f.label :stock_minimo, "Stock M&iacute;nimo" %></th>
                                                 <td><%= f.text_field :stock_minimo %></td>
                                               </tr>
                                               <tr>
                                                 <th><%= f.label :unidad_id, "Unidad de M&eacute;dida" %></th>
-                                                <td><%= f.select :unidad_id, Unidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                <td><%= f.select :unidad_id, Unidad.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
                                               </tr>
                                                <tr>
                                                 <th><%= f.label :estado_id, "Estado" %></th>
-                                                <td><%= f.select :estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                <td><%= f.select :estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
                                               </tr>
                                           </table>
                       </div>
@@ -74,7 +79,7 @@
                                                      </td>
                                                 </tr>
                                                 <tr>
-                                                     <th><%= f.label :seccion_id, "Secci&iacute;n" %></th>
+                                                     <th><%= f.label :seccion_id, "Secci&oacute;n" %></th>
                                                      <td><%=  f.select :seccion_id, Seccion.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}%></td>
                                                 </tr>
                                                  <tr>
@@ -93,7 +98,11 @@
                                                   </tr>
                                                     <tr>
                                                        <th><%= f.label :marca_id, "Marca" %></th>
-                                                       <td><%= f.select :marca_id, Marca.find(:all).collect{|t|[t.razon_social, t.id]}, {:include_blank => true} %></td>
+                                                       <td><%= f.select :marca_id, Marca.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                  </tr>
+                                                    <tr>
+                                                       <th><%= f.label :deposito_id, "Deposito" %></th>
+                                                       <td><%= f.select :deposito_id, Deposito.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
                                                   </tr>
                                              </table>
 
@@ -132,14 +141,87 @@
 
   <script type="text/javascript">
 
+   $.validator.addMethod('Decimal', function(value, element) {
+    return this.optional(element) || /^[0-9,]+(\.\d{0,3})?$/.test(value);
+    }, "formato correcto 0000.00");
+
+    $(document).ready(function(){
+        $("#new_producto").validate({
+         rules: {
+              "producto[nombre]": {required: true, rangelength: [3,60]},
+              "producto[marca_id]": {required: true},
+              "producto[unidad_id]": {required: true},
+              "producto[rubro_id]": {required: true},
+              "producto[seccion_id]": {required: true},
+              "producto[categoria_id]": {required: true},
+              "producto[proveedor_id]": {required: true},
+              "producto[moneda_id]": {required: true},
+              "producto[estado_id]": {required: true},
+              "producto[deposito_id]": {required: true},
+              "producto[proveedor_id]": {required: true},
+              "producto[codigo_proveedor]": {digits: true},
+              "producto[stock_minimo]": {required: true, digits: true},
+              "producto[stock]": {required: true, digits: true},
+              "producto[costo]": {required: true, Decimal: true},
+              "producto[ganancia]": {required: true,  Decimal: true},
+              "producto[iva]": {required: true,  Decimal: true},
+              "producto[descuento]": { Decimal: true},
+              "producto[codigo_proveedor]": {digits: true}
+
+
+              }
+        });
+
+    });
+
+
     $('#myTab a').click(function (e) {
       e.preventDefault();
       $(this).tab('show');
     });
 
 
+    var secciones = new Array();
+    <% secciones = Seccion.find(:all) %>
+    <% for seccion in secciones -%>
+          secciones.push(new Array(<%= seccion.rubro_id %>, "<%=h seccion.nombre %>", <%= seccion.id %>));
+    <% end %>
+    $('#producto_rubro_id').change(seccionSelec);
+
+    var categorias = new Array();
+    <% categorias = Categoria.find(:all) %>
+    <% for categoria in categorias -%>
+          categorias.push(new Array(<%=h categoria.seccion_id %>, "<%=h categoria.nombre %>", <%=h categoria.id %>));
+    <% end %>
+    $('#producto_seccion_id').change(categoriaSelec);
+
     
-  </script>
+
+function seccionSelec() {
+    rubro_id = $('#producto_rubro_id').val();
+    $('#producto_seccion_id').empty();
+    $('#producto_seccion_id').append(selec='<option></option>');
+    secciones.forEach(function(seccion){
+        if (seccion[0]==rubro_id){
+          $('#producto_seccion_id').append(selec='<option value="'+ seccion[2] +'">'+seccion[1]+'</option>');
+        }
+    });
+}
+
+function categoriaSelec() {
+    seccion_id = $('#producto_seccion_id').val();
+    $('#producto_categoria_id').empty();
+    $('#producto_categoria_id').append(selec='<option></option>');
+    categorias.forEach(function(categoria){
+        if (categoria[0]==seccion_id){
+            $('#producto_categoria_id').append(selec='<option value="'+ categoria[2] +'">'+categoria[1]+'</option>');
+        }
+    });
+}
+
+
+</script>
+
 
 <style type="text/css">
     .brogertab{

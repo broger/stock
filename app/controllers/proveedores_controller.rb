@@ -48,7 +48,7 @@ class ProveedoresController < ApplicationController
 
     respond_to do |format|
       if @proveedor.save
-        format.html { redirect_to(@proveedor, :notice => 'Proveedor was successfully created.') }
+        format.html { redirect_to(@proveedor, :notice => 'El Proveedor ha sido creado satisfactoriamente.') }
         format.xml  { render :xml => @proveedor, :status => :created, :location => @proveedor }
       else
         format.html { render :action => "new" }
@@ -64,7 +64,7 @@ class ProveedoresController < ApplicationController
 
     respond_to do |format|
       if @proveedor.update_attributes(params[:proveedor])
-        format.html { redirect_to(@proveedor, :notice => 'Proveedor was successfully updated.') }
+        format.html { redirect_to(@proveedor, :notice => 'El Proveedor ha sido actualizado satisfactoriamente.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

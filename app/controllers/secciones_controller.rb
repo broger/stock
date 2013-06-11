@@ -44,7 +44,7 @@ class SeccionesController < ApplicationController
 
     respond_to do |format|
       if @seccion.save
-        format.html { redirect_to(@seccion, :notice => 'Seccion was successfully created.') }
+        format.html { redirect_to(@seccion, :notice => 'La Secci&oacute;n   ha sido creado satisfactoriamente.') }
         format.xml  { render :xml => @seccion, :status => :created, :location => @seccion }
       else
         format.html { render :action => "new" }
@@ -60,7 +60,7 @@ class SeccionesController < ApplicationController
 
     respond_to do |format|
       if @seccion.update_attributes(params[:seccion])
-        format.html { redirect_to(@seccion, :notice => 'Seccion was successfully updated.') }
+        format.html { redirect_to(@seccion, :notice => 'La Secci&oacute;n  ha sido creado satisfactoriamente.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

@@ -44,7 +44,7 @@ class MenusController < ApplicationController
 
     respond_to do |format|
       if @menu.save
-        format.html { redirect_to(@menu, :notice => 'Menu was successfully created.') }
+        format.html { redirect_to(@menu, :notice => 'Menu ha sido creado satisfactoriamente..') }
         format.xml  { render :xml => @menu, :status => :created, :location => @menu }
       else
         format.html { render :action => "new" }
@@ -60,7 +60,7 @@ class MenusController < ApplicationController
 
     respond_to do |format|
       if @menu.update_attributes(params[:menu])
-        format.html { redirect_to(@menu, :notice => 'Menu was successfully updated.') }
+        format.html { redirect_to(@menu, :notice => 'Menu ha sido actualizado satisfactoriamente..') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

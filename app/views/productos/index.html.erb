@@ -34,18 +34,45 @@
    
 </div>
 
-<% @productos.each do |producto| %>
-  <tr>
-    <td><%=h producto.nombre %></td>
-    <td><%= link_to 'Show', producto %></td>
-    <td><%= link_to 'Edit', edit_producto_path(producto) %></td>
-    <td><%= link_to 'Destroy', producto, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+<% unless @productos.blank? %>
+  <table class="table" style="font-size :13px" >
+          <thead>
+            <tr style="height:12px">
+            <th>codigo</th>
+            <th>nombre</th>
+            <th>stock</th>
+            <th>Marca</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @productos.each do |producto| %>
+            <tr style="height:9px">
+                <td><%=h producto.id %></td>
+                <td><%=h producto.nombre %></td>
+                <td><%=h producto.stock %></td>
+                <td><%=h producto.marca.nombre %></td>
+                <td style="text-align:right">
+                       <%= link_to image_tag('iconos/zoom2.png'), producto, :title=>'Ver', :class=>'qtip' %>
+                          <%= link_to image_tag('iconos/16x16/pencil.png'), edit_producto_path(producto), :title=>'Editar',:class=>'qtip' %>
+                          <%= link_to image_tag('iconos/16x16/remove.png'), producto, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+  <%else%>
+            <tr>
+              <td><div><h3><font color="red">No se encontraron resultados</font></h3></div></td>
+            </tr>
+   <%end%>
+</table>
+ <div style="text-align:center">
+    <%= will_paginate @productos, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+  </div>
 
 <br />
+<br />
 
-<%= link_to 'New producto', new_producto_path %>
+ <%= link_to 'Nuevo Producto', new_producto_path ,:class=>'btn btn-primary' %>
 
 
 <script type="text/javascript">

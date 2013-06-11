@@ -3,6 +3,7 @@ class CreateCategorias < ActiveRecord::Migration
     create_table :categorias do |t|
       t.column :nombre, "character(30)"
       t.integer :seccion_id
+      t.integer :rubro_id
       t.timestamps
     end
   end

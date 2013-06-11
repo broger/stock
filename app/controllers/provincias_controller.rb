@@ -47,7 +47,7 @@ class ProvinciasController < ApplicationController
 
     respond_to do |format|
       if @provincia.save
-        format.html { redirect_to(@provincia, :notice => 'Provincia was successfully created.') }
+        format.html { redirect_to(@provincia, :notice => 'Provincia  ha sido creada satisfactoriamente.') }
         format.xml  { render :xml => @provincia, :status => :created, :location => @provincia }
       else
         format.html { render :action => "new" }
@@ -63,7 +63,7 @@ class ProvinciasController < ApplicationController
 
     respond_to do |format|
       if @provincia.update_attributes(params[:provincia])
-        format.html { redirect_to(@provincia, :notice => 'Provincia was successfully updated.') }
+        format.html { redirect_to(@provincia, :notice => 'Provincia  ha sido actualizada satisfactoriamente.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

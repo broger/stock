@@ -26,6 +26,7 @@
           <tbody>
           <% @proveedores.each do |proveedor| %>
             <tr style="height:9px">
+                <td><%=h proveedor.nombre%></td>
                 <td><%=h proveedor.razon_social%></td>
                 <td><%=h proveedor.direccion %></td>
                 <td style="text-align:right">
@@ -71,11 +72,11 @@
 </script>
 
 <style type="text/css">
- input[type="text"] {
-   height: 15px;
-   font-size: 13px;
-   line-height: 15px;
-   margin-bottom: 0px;
-}
+   input[type="text"] {
+     height: 15px;
+     font-size: 13px;
+     line-height: 15px;
+     margin-bottom: 0px;
+   }
 </style>
 

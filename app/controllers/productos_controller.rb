@@ -2,7 +2,12 @@ class ProductosController < ApplicationController
   # GET /productos
   # GET /productos.xml
   def index
-    @productos = Producto.all
+    if params[:txtbuscar].blank?
+       @productos = Producto.paginate(:page => params[:page],:order => "nombre")
+    else
+       @productos = Producto.paginate(:page => params[:page],:conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb
@@ -44,7 +49,7 @@ class ProductosController < ApplicationController
 
     respond_to do |format|
       if @producto.save
-        format.html { redirect_to(@producto, :notice => 'Producto was successfully created.') }
+        format.html { redirect_to(@producto, :notice => 'El Producto ha sido creado satisfactoriamente.') }
         format.xml  { render :xml => @producto, :status => :created, :location => @producto }
       else
         format.html { render :action => "new" }
@@ -60,7 +65,7 @@ class ProductosController < ApplicationController
 
     respond_to do |format|
       if @producto.update_attributes(params[:producto])
-        format.html { redirect_to(@producto, :notice => 'Producto was successfully updated.') }
+        format.html { redirect_to(@producto, :notice => 'El Producto ha sido actualizado satisfactoriamente.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

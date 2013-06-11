@@ -9,7 +9,6 @@
               <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
               <li class=""><a href="#direccion"  data-toggle="tab">Direcci&oacute;n</a></li>
               <li class=""><a href="#banco"        data-toggle="tab">Banco</a></li>
-              <li class=""><a href="#nota" data-toggle="tab">Nota</a></li>
             </ul>
 
   <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
@@ -87,14 +86,7 @@
                                                                     </tr>
                                                                 </table>
                                           </div>
-                                        <div class="tab-pane fade" id="nota">
-                                                                <table>
-                                                                <tr>
-                                                                  <td></td>
-                                                                  <td></td>
-                                                                </tr>
-                                                            </table>
-                                        </div>
+                                      
 
 
             </div>
@@ -102,19 +94,37 @@
 </div>
 <br />
 <br />
-<div style="text-aling:rigth"> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', productos_path %> </p></div>
+<div style="text-aling:rigth"> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', proveedors_path %> </p></div>
 
 
 <% end %>
 
 
   <script type="text/javascript">
+     $(document).ready(function(){
+        $("#new_proveedor").validate({
+         rules: {
+              "proveedor[razon_social]": {required: true, minlength: 3, maxlength:30},
+              "proveedor[email]": {required: true, email: true},
+              "proveedor[cuil]": { digits: true, rangelength: [1,11]},
+              "proveedor[cuenta_banacaria]": {digits: true},
+              "proveedor[provincia_id]": {required: true},
+              "proveedor[localidad_id]": {required: true},
+              "proveedor[estado_id]": {required: true},
+              "proveedor[telefono1]": {digits: true},
+              "proveedor[telefono2]": {digits: true},
+              "proveedor[celular1]": {digits: true},
+              "proveedor[celular2]": {digits: true}
+         }
+        });
+     });
 
-    $('#myTab a').click(function (e) {
-      e.preventDefault();
-      $(this).tab('show');
-    })
+     $('#myTab a').click(function (e) {
+         e.preventDefault();
+         $(this).tab('show');
+     })
 
+      
   </script>
 
 <style type="text/css">

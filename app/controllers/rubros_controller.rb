@@ -44,7 +44,7 @@ class RubrosController < ApplicationController
 
     respond_to do |format|
       if @rubro.save
-        format.html { redirect_to(@rubro, :notice => 'Rubro was successfully created.') }
+        format.html { redirect_to(@rubro, :notice => 'Rubro ha sido creado satisfactoriamente.') }
         format.xml  { render :xml => @rubro, :status => :created, :location => @rubro }
       else
         format.html { render :action => "new" }
@@ -60,7 +60,7 @@ class RubrosController < ApplicationController
 
     respond_to do |format|
       if @rubro.update_attributes(params[:rubro])
-        format.html { redirect_to(@rubro, :notice => 'Rubro was successfully updated.') }
+        format.html { redirect_to(@rubro, :notice => 'Rubro ha sido actualizado satisfactoriamente.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

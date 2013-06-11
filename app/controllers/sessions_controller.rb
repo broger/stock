@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
 
   def destroy
     logout_killing_session!
-    flash[:notice] = "Haaaa... te va peee... volve a ingresar tu clave loco"
+    flash[:notice] = "usted ha cerrado la sesi&oacute;n"
     redirect_back_or_default('/')
   end
 

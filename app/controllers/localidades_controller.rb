@@ -52,7 +52,7 @@ class LocalidadesController < ApplicationController
 
     respond_to do |format|
       if @localidad.save
-        format.html { redirect_to(@localidad, :notice => 'Localidad was successfully created.') }
+        format.html { redirect_to(@localidad, :notice => 'La Localidad ha sido creada satisfactoriamente.') }
         format.xml  { render :xml => @localidad, :status => :created, :location => @localidad }
       else
         format.html { render :action => "new" }

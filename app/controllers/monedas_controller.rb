@@ -44,7 +44,7 @@ class MonedasController < ApplicationController
 
     respond_to do |format|
       if @moneda.save
-        format.html { redirect_to(@moneda, :notice => 'Moneda was successfully created.') }
+        format.html { redirect_to(@moneda, :notice => 'Moneda ha sido creada satisfactoriamente.') }
         format.xml  { render :xml => @moneda, :status => :created, :location => @moneda }
       else
         format.html { render :action => "new" }
@@ -60,7 +60,7 @@ class MonedasController < ApplicationController
 
     respond_to do |format|
       if @moneda.update_attributes(params[:moneda])
-        format.html { redirect_to(@moneda, :notice => 'Moneda was successfully updated.') }
+        format.html { redirect_to(@moneda, :notice => 'Moneda ha sido actualizada satisfactoriamente.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

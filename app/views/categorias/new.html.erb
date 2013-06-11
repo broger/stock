@@ -1,15 +1,59 @@
-<h1>New categoria</h1>
+<h1>Nueva Categoria</h1>
 
 <% form_for(@categoria) do |f| %>
   <%= f.error_messages %>
 
   <p>
+    <%= f.label :rubro_id %><br />
+    <%= f.select :rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %>
+
+  </p>
+  <p>
+    <%= f.label :seccion_id %><br />
+    <%= f.select :seccion_id, Seccion.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %>
+
+  </p>
+   <p>
     <%= f.label :nombre %><br />
     <%= f.text_field :nombre %>
   </p>
   <p>
-    <%= f.submit 'Create' %>
+    <%= f.submit 'Guardar' %> | <%= link_to 'atras', categorias_path %>
   </p>
 <% end %>
 
-<%= link_to 'Back', categorias_path %>
+
+
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $("#new_categoria").validate({
+      rules: {
+              "categoria[nombre]": {required: true, minlength: 3, maxlength:30},
+              "categoria[seccion_id]": {required: true},
+              "categoria[rubro_id]": {required: true}
+              }
+    });
+
+  });
+
+  var secciones = new Array();
+  <% secciones = Seccion.find(:all) %>
+  <% for seccion in secciones -%>
+          secciones.push(new Array(<%= seccion.rubro_id %>, "<%=h seccion.nombre %>", <%= seccion.id %>));
+        <% end %>
+  $('#categoria_rubro_id').change(seccionSelec);
+
+
+function seccionSelec() {
+    rubro_id = $('#categoria_rubro_id').val();
+    $('#categoria_seccion_id').empty();
+    $('#categoria_seccion_id').append(selec='<option></option>');
+    secciones.forEach(function(seccion){
+        if (seccion[0]==rubro_id){
+          $('#categoria_seccion_id').append(selec='<option value="'+ seccion[2] +'">'+seccion[1]+'</option>');
+        }
+    });
+}
+</script>
