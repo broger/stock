@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :rubros
 
-  map.resources :productos
+  map.resources :productos , :collection => {:resultado => :post }
 
   map.resources :proveedors
 

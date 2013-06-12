@@ -22,10 +22,8 @@ class LocalidadesController < ApplicationController
   # GET /localidads/1.xml
   def show
     @localidad = Localidad.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @localidad }
+       format.html{render :layout=>false}
     end
   end
 

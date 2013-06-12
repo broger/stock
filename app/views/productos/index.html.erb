@@ -1,18 +1,15 @@
 <h3>Productos</h3>
+<%= form_tag(productos_path, :method => 'get',:id=>'buscar') %>
+<div class="filtros" style="display: none; background: yellow" >
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; background: yellow" >Rubro &nbsp; <%= select_tag :rubro_id,'<option></option>' + options_from_collection_for_select(Rubro.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; background: yellow" >Secci&oacute;n  &nbsp; <%= select_tag :seccion_id,'<option></option>' + options_from_collection_for_select(Seccion.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; background: yellow" >Categoria &nbsp; <%= select_tag :categoria_id,'<option></option>' + options_from_collection_for_select(Categoria.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; background: yellow" >Marca &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Marca.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px; background: yellow" >Proveedor &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Proveedor.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
 
-<div class="filtros" style="display: none" >
-  <table>
-     <tr>
-       <td><%= select_tag :tipo_tramite_id,'<option></option>' + options_from_collection_for_select(Categoria.find(:all, :order => "nombre"),'id','nombre') if Categoria.count > 1 %></td>
-       <td></td>
-       <td><div id="cargando"   style="display: none;">&nbsp;<%= image_tag('iconos/cargando.gif')%></div></td>
-     </tr>
-
-  </table>
  </div>
 
-
-<div class="search_simple">
+<div class="search_simple" style="display:block">
   <table>
      <tr>
        <td><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...'%></td>
@@ -26,53 +23,12 @@
   </table>
    <div id="tips" style="color:gray; height:10px; padding: 0 0 20px 0"><small><strong>Tip:</strong> Puede ingresar alguna porci&oacute;n del nombre de la localidad.</small></div>
 
-
-
-
-
-
-   
 </div>
 
-<% unless @productos.blank? %>
-  <table class="table" style="font-size :13px" >
-          <thead>
-            <tr style="height:12px">
-            <th>codigo</th>
-            <th>nombre</th>
-            <th>stock</th>
-            <th>Marca</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @productos.each do |producto| %>
-            <tr style="height:9px">
-                <td><%=h producto.id %></td>
-                <td><%=h producto.nombre %></td>
-                <td><%=h producto.stock %></td>
-                <td><%=h producto.marca.nombre %></td>
-                <td style="text-align:right">
-                       <%= link_to image_tag('iconos/zoom2.png'), producto, :title=>'Ver', :class=>'qtip' %>
-                          <%= link_to image_tag('iconos/16x16/pencil.png'), edit_producto_path(producto), :title=>'Editar',:class=>'qtip' %>
-                          <%= link_to image_tag('iconos/16x16/remove.png'), producto, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
-                </td>
-              </tr>
-          <% end %>
-          </tbody>
-  <%else%>
-            <tr>
-              <td><div><h3><font color="red">No se encontraron resultados</font></h3></div></td>
-            </tr>
-   <%end%>
-</table>
- <div style="text-align:center">
-    <%= will_paginate @productos, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
-  </div>
+ <%= render :partial => 'resultados' %>
 
-<br />
-<br />
 
- <%= link_to 'Nuevo Producto', new_producto_path ,:class=>'btn btn-primary' %>
+<%= link_to 'Nuevo Producto', new_producto_path ,:class=>'btn btn-primary' %>
 
 
 <script type="text/javascript">
@@ -80,8 +36,16 @@
     $('.filtros').hide();
     $('.ocultar_filtros').hide();
     ocultar_filtros();
-
+    $('#buscar').submit(mostrar_loading);
+    
     })
+
+
+   function mostrar_loading(){
+          if ( $('#txtbuscar') != '' && $('#buscar').valid()){
+                $('#cargando').show();
+          }
+  }
 
   function ver_filtros(){
     $('.filtros').show();
@@ -107,7 +71,17 @@
    margin-bottom: 0px;
 }
 
+.filtros{
+  background: yellow;
+}
+
 .link_filtros{
   font-size: 11px;
+}
+
+.filtros_select{
+  font-size: 11px;
+  height: 21px;
+  width:100px
 }
 </style>

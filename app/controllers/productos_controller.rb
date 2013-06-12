@@ -2,11 +2,23 @@ class ProductosController < ApplicationController
   # GET /productos
   # GET /productos.xml
   def index
-    if params[:txtbuscar].blank?
+    filtros =  " "
+    unless params[:rubro_id].blank?
+      filtros += " AND rubro_id = #{params[:rubro_id]}"
+    end
+
+    unless params[:txtbuscar].blank?
+      filtros += " AND lower(nombre) like lower('%#{params[:txtbuscar]}%') "
+    end
+
+    if filtros == " "
        @productos = Producto.paginate(:page => params[:page],:order => "nombre")
     else
-       @productos = Producto.paginate(:page => params[:page],:conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
-    end
+
+      @productos = Producto.find_by_sql("SELECT * FROM productos p where p.id > 0 #{filtros}")
+      @productos = @productos.paginate :per_page => 16, :page => params[:page],:order => 'nombre.apellido_y_nombre ASC',:include=>[:talbas,:estado_beneficiario]
+
+      end
 
 
     respond_to do |format|
@@ -15,6 +27,8 @@ class ProductosController < ApplicationController
     end
   end
 
+
+    
   # GET /productos/1
   # GET /productos/1.xml
   def show

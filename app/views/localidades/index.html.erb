@@ -29,7 +29,7 @@
                 <td><%=h localidad.nombre %></td>
                 <td><%=h localidad.provincia.nombre %></td>
                 <td style="text-align:right">
-                       <%= link_to image_tag('iconos/zoom2.png'), localidad, :title=>'Ver', :class=>'qtip' %>
+                       <%= link_to image_tag('iconos/zoom2.png'), localidad, :title=>'Ver', :class=>'fancybox' %>
                           <%= link_to image_tag('iconos/16x16/pencil.png'), edit_localidad_path(localidad), :title=>'Editar',:class=>'qtip' %>
                           <%= link_to image_tag('iconos/16x16/remove.png'), localidad, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
                 </td>
@@ -54,22 +54,34 @@
 
 <script type="text/javascript">
 
- $(document).ready(function () {
-     $('#txtbuscar').focus();
-     console.log();
- $('#buscar').submit(controlar_bene);
-});
+    $(document).ready(function () {
+         $('#txtbuscar').focus();
+         console.log();
+         $('#buscar').submit(controlar_bene);
+
+         // Set custom style, close if clicked, change title type and overlay color
+
+
+    });
 
     function controlar_bene(){
-              if ( $('#txtbuscar') != '' && $('#buscar').valid()){
+          if ( $('#txtbuscar') != '' && $('#buscar').valid()){
                 $('#cargando').show();
-              }
-    }
+          }
+}
 
- 
+
 </script>
 
+
 <style type="text/css">
+
+  .fancybox-custom .fancybox-skin {
+	box-shadow: 0 0 50px #222;
+  }
+
+
+
  input[type="text"] {
    height: 15px;
    font-size: 13px;
