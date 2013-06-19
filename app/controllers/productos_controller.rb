@@ -35,8 +35,7 @@ class ProductosController < ApplicationController
     @producto = Producto.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @producto }
+      format.html{render :layout=>false}
     end
   end
 

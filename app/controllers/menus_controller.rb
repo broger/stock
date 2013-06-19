@@ -80,4 +80,11 @@ class MenusController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+
+  def calculadora
+    respond_to do |format|
+      format.html{render :layout=>false}
+    end
+  end
 end

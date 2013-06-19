@@ -1,10 +1,160 @@
-<div style="width: 400px; padding:0 0 50px 10px ">
+<div style="width:800px; height: 50%; padding:0 0 50px 10px ">
+<h4><%=h "#{@producto.id} - #{@producto.nombre}" %></h4><hr style="margin-top: 0px; padding-top: 0px;  margin-bottom:25px" />
 
-  <h3><%=h @producto.nombre %></h3>
+<div class="brogertab">
+            <ul id="myTab" class="nav nav-tabs">
+              <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
+              <li class=""><a href="#categoria"  data-toggle="tab">Categoria</a></li>
+              <li class=""><a href="#web"        data-toggle="tab">Web</a></li>
+              <li class=""><a href="#descripcion" data-toggle="tab">Descripci&oacute;n</a></li>
+            </ul>
+
+  <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
+                      <div class="tab-pane active" id="general">
+                                        <table style="width:200px; display:inline; float: left">
+                                             <tr>
+                                                <th><%= label_tag :costo, "Precio Costo" %></th>
+                                                <td><%=  @producto.costo %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= label_tag :ganancia, "Ganacia % " %></th>
+                                                <td><%=  @producto.ganancia %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= label_tag :descuento, "Descuento %" %></th>
+                                                <td><%=  @producto.descuento %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= label_tag :iva, "IVA" %></th>
+                                                <td><%=  @producto.iva %></td>
+                                              </tr>
+                                              <tr>
+                                                    <th><%= label_tag :moneda_id, "Moneda" %></th>
+                                                    <td><%=  @producto.moneda.nombre %></td>
+                                               </tr>
+                                         </table>
+                                          <table style="width:200px; display:inline; float: left">
+                                               <tr>
+                                                <th><%= label_tag :stock, "Stock" %></th>
+                                                <td><%=  @producto.stock %></td>
+                                              </tr>
+                                             <tr>
+                                                <th><%= label_tag :avisa_stock_minimo, "Avisa stock M&iacute;nimo? " %></th>
+                                                <td><%=  @producto.avisa_stock_minimo %></td>
+                                              </tr>
+                                               <tr>
+                                                <th><%= label_tag :stock_minimo, "Stock M&iacute;nimo" %></th>
+                                                <td><%=  @producto.stock_minimo %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= label_tag :unidad_id, "Unidad de M&eacute;dida" %></th>
+                                                <td><%= @producto.unidad.nombre %></td>
+                                              </tr>
+                                               <tr>
+                                                <th><%= label_tag :estado_id, "Estado" %></th>
+                                                <td><%=  @producto.estado.nombre %></td>
+                                              </tr>
+                                          </table>
+                      </div>
 
 
+                      <div class="tab-pane fade" id="categoria">
+                                            <table style="width:350px; display:inline; float: left">
+                                                <tr>
+                                                     <th><%= label_tag :rubro_id, "Rubro" %></th>
+                                                     <td><%= @producto.rubro.nombre %></td>
+                                                </tr>
+                                                <tr>
+                                                     <th><%= label_tag :seccion_id, "Secci&oacute;n" %></th>
+                                                     <td><%= @producto.seccion.nombre%></td>
+                                                </tr>
+                                                 <tr>
+                                                     <th><%= label_tag :categoria_id, "Categoria" %></th>
+                                                     <td><%=  @producto.categoria.nombre%></td>
+                                                </tr>
+                                            </table>
+                                            <table style="width:350px; display:inline; float: left">
+                                                <tr>
+                                                       <th><%= label_tag :codigo_proveedor, "C&oacute;digo Proveedor" %></th>
+                                                       <td><%=  @producto.codigo_proveedor %></td>
+                                                  </tr>
+                                                  <tr>
+                                                       <th><%= label_tag :proveedor_id, "Proveedor" %></th>
+                                                       <td><%=  @producto.proveedor.razon_social%></td>
+                                                  </tr>
+                                                    <tr>
+                                                       <th><%= label_tag :marca_id, "Marca" %></th>
+                                                       <td><%=  @producto.marca.nombre %></td>
+                                                  </tr>
+                                                    <tr>
+                                                       <th><%= label_tag :deposito_id, "Deposito" %></th>
+                                                       <td><%=  @producto.deposito.nombre %></td>
+                                                  </tr>
+                                             </table>
+
+                      </div>
+
+                      <div class="tab-pane fade" id="web">
+                                             <table>
+                                                  <tr>
+                                                    <td> <div style="vertical-align: middle"><%= "Visible para la Web: #{check_box_tag @producto.visible_web} " %></div></td>
+                                                    <td></td>
+                                                  </tr>
+                                              </table>
+                      </div>
 
 
+                      <div class="tab-pane fade" id="descripcion">
+                        <table style="width:100%">
+                                <tr>
+                                  <td><%= text_area_tag @producto.descripcion %></td>
+                                </tr>
+                        </table>
+
+                      </div>
+
+
+            </div>
+
+</div>
+<br />
+<br />
+<div style="text-align: left"><p><%= link_to 'Volver', productos_path %> </p></div>
 
 
 </div>
+
+
+  <script type="text/javascript">
+
+
+    $(document).ready(function(){
+       
+    });
+
+</script>
+
+
+<style type="text/css">
+    .brogertab{
+          min-height: 200px;
+          height: auto;
+    }
+
+    table
+    {
+    width:100%;
+    }
+    th{
+
+       text-align: left;
+
+      }
+    tr{
+      height:40px;
+     }
+     table label{
+        font-size: 11px;
+      }
+
+  </style>

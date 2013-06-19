@@ -7,6 +7,7 @@ class Producto < ActiveRecord::Base
 	belongs_to :deposito
 	belongs_to :unidad
 	belongs_to :moneda
+  belongs_to :estado
 
 	validates_presence_of :nombre, :message => 'es obligatorio.'
   validates_uniqueness_of :nombre,:message => "ya existe"
