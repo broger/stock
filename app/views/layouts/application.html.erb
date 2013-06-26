@@ -26,6 +26,7 @@
 			'swfobject',
 			'jquery.uploadify.v2.1.4',
 			'date',
+                        'bootstrap-dropdown.js',
 			'jquery.decimalMask.1.1.1.min',
 			 'superfish',
       'jquery.maskedinput-1.2.2','jquery.MultiFile',
@@ -42,13 +43,13 @@
      <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                     <div class="container-fluid">
-                          <div class="container" style="width: auto;">
+                          <div class="container" style="width: auto; font-size: 12px">
                                   <a class="brand" href="#">Stock-Control &nbsp;&nbsp;&nbsp;&nbsp;</a>
                                    <% cache([current_user,"menu"]) do %>
                                        <ul class="nav" >
                                                   <%  @menu_raices = Menu.roots
                                                                   @menu_raices.each do |r| %>
-                                                                          <%=  hacer_menu(current_user, r,true,false) %>
+                                                                          <%=  hacer_menu(current_user, r,true,true) %>
                                                    <% end %>
 
                                        </ul>
@@ -84,10 +85,8 @@
                           <ul class="nav nav-list" style="font-size:13px">
                                 <li class="nav-header">Accesos Directos</li>
                                 <li class="active"><a href="#">vender</a></li>
-                                <li><a href="#">consutar productos</a></li>
+                                <li><a href="#"><%=  link_to 'consultar producto', productos_path %></a></li>
                                 <li><a  id ="calculadora" class ="fancybox" href="<%= calculadora_menus_path %>" >calculadora</a></li>
-                                <li><a href="<%= calculadora_menus_path %>">calculadora modal</a></li>
-                                <li><a href="<%= calculadora_menus_path %>" target="_blank" > calculadoradd</a></li>
                                 <li><a href="#"></a></li>
                                 <li><a href="#"></a></li>
                                 <li><a href="#"></a></li>

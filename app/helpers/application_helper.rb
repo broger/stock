@@ -1,6 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+
  def hacer_menu(usuario, nodo,desplegable,submenu)
     tiene_permiso = usuario.roles.map{|r| r.menus }.flatten.include?(nodo)
     if tiene_permiso
@@ -11,23 +12,22 @@ module ApplicationHelper
             end
             
             if desplegable
-               salida = "<li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown'>#{nodo.nombre} <b class='caret'></b></a>"
-            else
-                 if submenu
-                      salida =  "<li class='dropdown-submenu'><a tabindex='-1' href='#{nodo.url}'>#{nodo.nombre}</a>"
-                 else
+                                       
+                 if submenu == true
+                      salida = "<li class='dropdown'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} <b class='caret'></b></a>"
+                else
                       salida =  "<li><a href='#{nodo.url}' #{fan}>#{nodo.nombre}</a>"
                  end
 
-
             end
             if nodo.children.count != 0 && tiene_permiso
-                salida << "<ul class='dropdown-menu'>"
+                salida << "<ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
                 nodo.children.each do |child|
-                   if child.children.count != 0
-                       salida << hacer_menu(usuario, child,false,true)
+                    if child.children.count != 0
+                       salida << hacer_menu(usuario, child,true,true)
+
                    else
-                      salida << hacer_menu(usuario, child,false,false)
+                      salida << hacer_menu(usuario, child,true,false)
                    end
                   
                 end
