@@ -20,10 +20,10 @@ class CreateProductos < ActiveRecord::Migration
 	    t.boolean :avisa_stock_minimo
       t.boolean :visible_web
 
-      t.double  :costo, :precision => 7, :scale => 2
-      t.double  :ganancia, :precision => 7, :scale => 2
-      t.double  :descuento_contado, :precision => 7, :scale => 2
-      t.double  :iva, :precision => 7, :scale => 2
+      t.double  :costo, :decimal => 7, :scale => 2
+      t.double  :ganancia, :decimal=> 7, :scale => 2
+      t.double  :descuento_contado, :decimal => 7, :scale => 2
+      t.double  :iva, :decimal => 7, :scale => 2
 	    t.integer :moneda_id
 
 	    t.integer :deposito_id

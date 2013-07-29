@@ -11,23 +11,40 @@ module ApplicationHelper
              fan = nil
             end
             
-            if desplegable
-                                       
-                 if submenu == true
-                      salida = "<li class='dropdown'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} <b class='caret'></b></a>"
-                else
-                      salida =  "<li><a href='#{nodo.url}' #{fan}>#{nodo.nombre}</a>"
-                 end
 
+
+            if desplegable
+              if submenu == true             
+                  salida = "<li class='dropdown-submenu' style ='border-radius:1px'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} "
+              else
+                  salida = "<li class='dropdown' style ='border-radius:1px'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} <b class='caret'></b> "
+             
+              end                           
+
+
+            else
+              salida = "<li style ='border-radius:1px' ><a  href='#{nodo.url}'>#{nodo.nombre} "
             end
+            
+            salida = salida + "</a>"
+
+
+ #  if submenu == true
+ #                     salida = "<li class='dropdown'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} <b class='caret'></b></a>"
+ #               else
+ #                  salida =  "<li><a href='#{nodo.url}' #{fan}>#{nodo.nombre}</a>"
+#     end
+
+
+            
             if nodo.children.count != 0 && tiene_permiso
-                salida << "<ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
+                salida << "<ul class='dropdown-menu' style ='border-radius:1px' role='menu' aria-labelledby='dLabel'>"
                 nodo.children.each do |child|
                     if child.children.count != 0
                        salida << hacer_menu(usuario, child,true,true)
 
                    else
-                      salida << hacer_menu(usuario, child,true,false)
+                      salida << hacer_menu(usuario, child,false,false)
                    end
                   
                 end

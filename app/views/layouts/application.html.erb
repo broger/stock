@@ -49,7 +49,7 @@
                                        <ul class="nav" >
                                                   <%  @menu_raices = Menu.roots
                                                                   @menu_raices.each do |r| %>
-                                                                          <%=  hacer_menu(current_user, r,true,true) %>
+                                                                          <%=  hacer_menu(current_user, r,true,false) %>
                                                    <% end %>
 
                                        </ul>
