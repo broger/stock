@@ -1,40 +1,35 @@
-<h3>Nueva Secci&oacute;n</h3> <br />
+<h1>Nueva Secci&oacute:n </h1>
 
-<% form_for(@seccion) do |f| %>
+<% form_for(@seccion ) do |f| %>
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :nombre %>
-    <%= f.text_field :nombre %><br />
-  </p>
+    <%= f.label :rubro_id %><br />
+    <%= f.select :rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %>
 
+  </p>
+   <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
   <p>
-    <%= f.label :rubro %>
-    <%= f.select :rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %><br />
+    <%= f.submit 'Guardar' %> | <%= link_to 'atras', secciones_path %>
   </p>
-
-  <p>
-    <%= f.submit 'Guardar', :class=>"btn btn-primary"%> | <%= link_to 'volver', secciones_path %>
-  </p>
-
 <% end %>
 
-  <br />
-  
 
 
 
-<script type="text/javascript">
+  <script type="text/javascript">
+  $(document).ready(function(){
+    $("#new_seccion ").validate({
+      rules: {
+              "seccion [nombre]": {required: true, minlength: 3, maxlength:30},
+              "seccion [rubroprovincia_id]": {required: true, minlength: 1, maxlength:60}
+              }
+    });
 
-      $(document).ready(function(){
-           $(".new_seccion").validate({
-            rules: {
-                    "seccion[nombre]": {required: true, minlength: 3, maxlength:60},
-                    "seccion[rubro_id]": {required: true}
-                    }
-          });
-
-      });
-
+});
 </script>
-  
+
+

@@ -1,8 +1,15 @@
+<div style="width: 400px; padding:0 0 50px 10px ">
+<h4><%=h @seccion.nombre %></h4>
+<hr />
+
 <p>
-  <b>Nombre:</b>
-  <%=h @seccion.nombre %>
+  <b>Rubro:</b>
+  <%=h @seccion.rubro.nombre %>
 </p>
 
+<br />
+<br />
 
-<%= link_to 'Edit', edit_seccion_path(@seccion) %> |
-<%= link_to 'Back', secciones_path %>
+
+
+</div>

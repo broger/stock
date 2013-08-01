@@ -200,6 +200,7 @@
 function seccionSelec() {
     rubro_id = $('#producto_rubro_id').val();
     $('#producto_seccion_id').empty();
+    $('#producto_categoria_id').empty();
     $('#producto_seccion_id').append(selec='<option></option>');
     secciones.forEach(function(seccion){
         if (seccion[0]==rubro_id){

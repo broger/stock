@@ -1,21 +1,94 @@
-<h1>Listing secciones</h1>
+<h3 style="margin-top:0px; margin-bottom: 15px">Secciones</h3>
 
-<table>
-  <tr>
-    <th>Nombre</th>
-  </tr>
 
-<% @secciones.each do |seccion| %>
-  <tr>
-    <td><%=h seccion.nombre %></td>
-    <td><%= link_to 'Show', seccion %></td>
-    <td><%= link_to 'Edit', edit_seccion_path(seccion) %></td>
-    <td><%= link_to 'Destroy', seccion, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+    <%= form_tag(secciones_path, :method => 'get',:id=>'buscar') %>
 
-</table>
+  <table>
+     <tr>
+       <td><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => ' buscar ...', :class=>"textbox1"%></td>
+       <td>&nbsp;<%= submit_tag "Buscar", :class=>"btn btn-mini"%></td>
+       <td><div id="cargando"   style="display: none;">&nbsp;<%= image_tag('iconos/cargando.gif')%></div></td>
+     </tr>
 
-<br />
+  </table>
 
-<%= link_to 'New seccion', new_seccion_path %>
+<div id="tips" style="color:gray; height:10px; margin: 0 0 25px 2px; font-size: 10px">&nbsp;<strong>Tip:</strong> Puede ingresar alguna porci&oacute;n del nombre de la secci&oacute;n.</div>
+
+  
+ <% unless @secciones.blank? %>
+  <table class="table" style="font-size :13px" >
+          <thead>
+            <tr style="height:12px">
+            <th>Nombre</th>
+            <th>Rubro</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @secciones.each do |seccion| %>
+            <tr style="height:9px">
+                <td><%=h seccion.nombre %></td>
+                <td><%=h seccion.rubro.nombre %></td>
+                <td style="text-align:right">
+                      <%= link_to image_tag('iconos/zoom2.png'), seccion, :title=>'Ver', :class=>'fancybox' %>
+                      <%= link_to image_tag('iconos/16x16/pencil.png'), edit_seccion_path(seccion), :title=>'Editar',:class=>'qtip' %>
+                      <%= link_to image_tag('iconos/16x16/remove.png'), seccion, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+     </table>
+     <br />
+     <div style="text-align:center">
+         <%= will_paginate @secciones, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+     </div>
+  <br />
+  <br />
+
+<%else%>
+            
+          <div><h3><font color="red">No se encontraron resultados</font></h3></div></td>
+           
+   <%end%>
+
+
+ <%= link_to 'Nueva Seccion', new_seccion_path ,:class=>'btn btn-primary' %>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+         $('#txtbuscar').focus();
+         console.log();
+         $('#buscar').submit(controlar);
+
+         // Set custom style, close if clicked, change title type and overlay color
+
+
+    });
+
+    function controlar(){
+          if ( $('#txtbuscar') != '' && $('#buscar').valid()){
+                $('#cargando').show();
+          }
+}
+
+
+</script>
+
+
+<style type="text/css">
+
+  .fancybox-custom .fancybox-skin {
+	box-shadow: 0 0 50px #222;
+  }
+
+
+
+ input[type="text"] {
+   height: 24px;
+   font-size: 13px;
+   line-height: 15px;
+   margin-bottom: 0px;
+}
+</style>

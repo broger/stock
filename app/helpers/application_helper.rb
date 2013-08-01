@@ -9,9 +9,7 @@ module ApplicationHelper
               fan="class='#{nodo.tooltip}'"
             else
              fan = nil
-            end
-            
-
+            end            
 
             if desplegable
               if submenu == true             
@@ -27,14 +25,6 @@ module ApplicationHelper
             end
             
             salida = salida + "</a>"
-
-
- #  if submenu == true
- #                     salida = "<li class='dropdown'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} <b class='caret'></b></a>"
- #               else
- #                  salida =  "<li><a href='#{nodo.url}' #{fan}>#{nodo.nombre}</a>"
-#     end
-
 
             
             if nodo.children.count != 0 && tiene_permiso

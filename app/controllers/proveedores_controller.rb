@@ -3,9 +3,9 @@ class ProveedoresController < ApplicationController
   # GET /proveedores.xml
   def index
     if params[:txtbuscar].blank?
-       @proveedores = Proveedor.paginate(:page => params[:page],:order => "razon_social")
+       @proveedores = Proveedor.paginate(:page => params[:page],:per_page => 6,:order => "razon_social")
     else
-       @proveedores = Proveedor.paginate(:page => params[:page],:conditions=> ['lower(razon_social) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "razon_social")
+       @proveedores = Proveedor.paginate(:page => params[:page],:per_page => 6,:conditions=> ['lower(razon_social) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "razon_social")
     end
     respond_to do |format|
       format.html # index.html.erb

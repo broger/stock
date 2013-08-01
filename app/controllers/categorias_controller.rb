@@ -5,11 +5,16 @@ class CategoriasController < ApplicationController
   # GET /categorias
   # GET /categorias.xml
   def index
-    @categorias = Categoria.all
+     if params[:txtbuscar].blank?
+       @categorias = Categoria.paginate(:page => params[:page],:per_page => 6, :order => "nombre")
+    else
+       @categoria = Categoria.paginate(:page => params[:page],:per_page => 6, :conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @categorias}
+      format.xml  { render :xml => @localidades }
     end
   end
 
@@ -19,8 +24,7 @@ class CategoriasController < ApplicationController
     @categoria = Categoria.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @categoria }
+       format.html{render :layout=>false}
     end
   end
 
@@ -47,7 +51,7 @@ class CategoriasController < ApplicationController
 
     respond_to do |format|
       if @categoria.save
-        format.html { redirect_to(@categoria, :notice => 'Categoria was successfully created.') }
+        format.html { redirect_to(categorias_path, :notice => 'La Categoria ha sido creada satisfactoriamente.') }
         format.xml  { render :xml => @categoria, :status => :created, :location => @categoria }
       else
         format.html { render :action => "new" }
@@ -63,7 +67,7 @@ class CategoriasController < ApplicationController
 
     respond_to do |format|
       if @categoria.update_attributes(params[:categoria])
-        format.html { redirect_to(@categoria, :notice => 'Categoria was successfully updated.') }
+        format.html { redirect_to(categoria_path, :notice => 'la Categoria ha sido actualizada satisfactoriamente.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

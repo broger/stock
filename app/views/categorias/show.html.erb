@@ -1,8 +1,22 @@
+<div style="width: 400px; padding:0 0 50px 10px ">
+<h4><%=h @categoria.nombre %></h4>
+<hr />
+<br />
+
 <p>
-  <b>Nombre: </b>
-  <%=h @categoria.nombre %>
+  <b>Rubro:</b>
+  <%=h @categoria.rubro.nombre %>
+</p>
+
+<p>
+  <b>Secci&on:</b>
+  <%=h @categoria.seccion.nombre %>
 </p>
 
 
-<%= link_to 'Edit', edit_categoria_path(@categoria) %> |
-<%= link_to 'Back', categorias_path %>
+<br />
+<br />
+
+
+
+</div>

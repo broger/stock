@@ -2,7 +2,7 @@ class RubrosController < ApplicationController
   # GET /rubros
   # GET /rubros.xml
   def index
-    @rubros = Rubro.all
+    @rubros = Rubro.paginate(:page => params[:page],:per_page => 6,:order => "nombre")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,8 +16,7 @@ class RubrosController < ApplicationController
     @rubro = Rubro.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @rubro }
+       format.html{render :layout=>false}
     end
   end
 

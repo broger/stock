@@ -2,11 +2,16 @@ class SeccionesController < ApplicationController
   # GET /secciones
   # GET /secciones.xml
   def index
-    @secciones = Seccion.all
+    if params[:txtbuscar].blank?
+       @secciones = Seccion.paginate(:page => params[:page],:per_page => 6,:order => "nombre")
+    else
+       @secciones = Seccion.paginate(:page => params[:page],:per_page => 6,:conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @secciones }
+      format.xml  { render :xml => @localidades }
     end
   end
 
@@ -16,8 +21,7 @@ class SeccionesController < ApplicationController
     @seccion = Seccion.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @seccion }
+       format.html{render :layout=>false}
     end
   end
 
@@ -44,7 +48,7 @@ class SeccionesController < ApplicationController
 
     respond_to do |format|
       if @seccion.save
-        format.html { redirect_to(@seccion, :notice => 'La Secci&oacute;n   ha sido creado satisfactoriamente.') }
+        format.html { redirect_to(secciones_path, :notice => 'La Secci&oacute;n   ha sido creado satisfactoriamente.') }
         format.xml  { render :xml => @seccion, :status => :created, :location => @seccion }
       else
         format.html { render :action => "new" }
@@ -60,7 +64,7 @@ class SeccionesController < ApplicationController
 
     respond_to do |format|
       if @seccion.update_attributes(params[:seccion])
-        format.html { redirect_to(@seccion, :notice => 'La Secci&oacute;n  ha sido creado satisfactoriamente.') }
+        format.html { redirect_to(secciones_path, :notice => 'La Secci&oacute;n  ha sido creado satisfactoriamente.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

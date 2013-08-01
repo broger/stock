@@ -12,11 +12,11 @@ class ProductosController < ApplicationController
     end
 
     if filtros == " "
-       @productos = Producto.paginate(:page => params[:page],:order => "nombre")
+       @productos = Producto.paginate(:page => params[:page],:per_page => 6,:order => "nombre")
     else
 
       @productos = Producto.find_by_sql("SELECT * FROM productos p where p.id > 0 #{filtros}")
-      @productos = @productos.paginate :per_page => 16, :page => params[:page],:order => 'nombre.apellido_y_nombre ASC',:include=>[:talbas,:estado_beneficiario]
+      @productos = @productos.paginate :per_page => 6, :page => params[:page],:order => 'nombre.apellido_y_nombre ASC',:include=>[:talbas,:estado_beneficiario]
 
       end
 
