@@ -13,45 +13,25 @@
             </ul>
 
   <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
-                      <div class="tab-pane active" id="general">
-                                        <table style="width:350px; display:inline; float: left">
-                                          <tr >
-                                                <th><%= f.label :codigo %></th>
+                      <div class="tab-pane active" id="general" style="width:100%">
+                                       
+                                         <table style="width:300px; margin-right:20px; display:inline; float: left">
+                                             <th style="text-align:right; padding-right:7px; padding-top:5px"><b><%= f.label :codigo, "c&oacute;digo:" %></b></th>
                                                 <td><b> <%=  Producto.count >= 1  ? "#{Producto.last.id.to_i + 1}" : "0"  %></b></td>
                                                </tr>
                                               <tr>
-                                                <th><%= f.label :nombre %></th>
+                                                <th style="text-align:right; padding-right:7px"><%= f.label :nombre %></th>
                                                 <td><%= f.text_field :nombre %></td>
                                               </tr>
-                                              <tr>
-                                                <th><%= f.label :costo, "Precio Costo" %></th>
-                                                <td><%= f.text_field :costo %></td>
-                                              </tr>
-                                              <tr>
-                                                <th><%= f.label :ganancia, "Ganacia % " %></th>
-                                                <td><%= f.text_field :ganancia %></td>
-                                              </tr>
-                                              <tr>
-                                                <th><%= f.label :descuento, "Descuento %" %></th>
-                                                <td><%= f.text_field :descuento %></td>
-                                              </tr>
-                                              <tr>
-                                                <th><%= f.label :iva, "IVA" %></th>
-                                                <td><%= f.text_field :iva %></td>
-                                              </tr>
-                                              <tr>
-                                                    <th><%= f.label :moneda_id, "Moneda" %></th>
-                                                    <td><%= f.select :moneda_id, Moneda.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
-                                               </tr>
-                                         </table>
-                        <table style="width:350px; display:inline; float: left">
-                                               <tr>
+                                             <tr>
                                                 <th><%= f.label :stock, "Stock" %></th>
                                                 <td><%= f.text_field :stock %></td>
                                               </tr>
                                              <tr>
-                                                <th><%= f.label :avisa_stock_minimo, "Avisa stock M&iacute;nimo? " %></th>
-                                                <td><%= f.check_box :avisa_stock_minimo %></td>
+                                                <th colspan="2" style="text-align:left" >
+                                                <%= f.label :avisa_stock_minimo, "Avisa stock M&iacute;nimo? " %>
+                                                <%= f.check_box :avisa_stock_minimo %> 
+                                                </th>
                                               </tr>
                                                <tr>
                                                 <th><%= f.label :stock_minimo, "Stock M&iacute;nimo" %></th>
@@ -66,11 +46,43 @@
                                                 <td><%= f.select :estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
                                               </tr>
                                           </table>
-                      </div>
+                                          <fieldset style="border-width:6px">
+                                           <table style="width:360px; display:inline; float: left">
+                                          <tr >
+                                                
+                                              <tr>
+                                                <th style="text-align:right; padding-right:7px"><%= f.label :costo, "Precio Costo" %></th>
+                                                <td><%= f.text_field :costo,:size=>16,:placeholder => ' 0.00 $' %></td>
+                                                <th style="text-align:right; padding-right:7px"><%= f.label :ganancia, "Ganacia" %></th>
+                                                <td><%= f.text_field :ganancia ,:size=>16,:placeholder => ' 0.00 %' %></td>
+                                              </tr>
+                                              <tr>
+                                                <th style="text-align:right; padding-right:7px"><%= f.label :descuento, "Descuento" %></th>
+                                                <td><%= f.text_field :descuento,:size=>16,:placeholder => ' 0.00 %' %></td>
+                                                <th style="text-align:right; padding-right:7px"><%= f.label :iva, "IVA" %></th>
+                                                <td><%= f.text_field :iva ,:size=>16,:placeholder => ' 0.00 %'%></td>
+                                              </tr>
+                                              <tr>
+                                                    <th style="text-align:right; padding-right:7px"><%= f.label :moneda_id, "Moneda" %></th>
+                                                    <td><%= f.select :moneda_id, Moneda.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
+                                                    <th style="text-align:right; padding-right:7px"></th>
+                                                    <td></td>
+                                              </tr>
+                                              <tr>
+                                                    <th colspan="2" style="text-align:left; margin:0 0 0 20px" >
+                                                         <font size="+1" color="blue">Ganacias: <label id='total_ganancia'>0</label>&nbsp;$</font><br />
+                                                         <font size="+1" color="blue">IVA: <label id='total_iva'>0</label>&nbsp;$</font><br />
+                                                         <font size="+1" color="blue">Desc. Contado: <label id='total_desc_contado'>0</label>&nbsp;$</font><br />
+                                                         <font size="+1" color="blue">PRECIO CONTADO: <label id='precio_contado'>0</label>&nbsp;$</font><br />
+                                                         <font size="+2" color="blue">PRECIO LISTA: <label id='precio_lista'>0</label>&nbsp;$</font><br />
+                                                    
+                                                    </th>
+                                              </tr>
 
-
+                                         </table>          
+                      </div>            </fieldset>          
                       <div class="tab-pane fade" id="categoria">
-                                            <table style="width:350px; display:inline; float: left">
+                        <table style="width:360px; display:inline; float: left">
                                                 <tr>
                                                      <th><%= f.label :rubro_id, "Rubro" %></th>
                                                      <td><% unless Rubro.count == 0 %>
@@ -127,19 +139,20 @@
                                             
                       </div>
 
-
-            </div> 
+       </div>               
+ 
 
 </div>
 <br />
 <br />
-<div style="text-align: left"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', productos_path %> </p></div>
+<div style="text-align: left; margin-top:30px"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', productos_path %> </p></div>
 
 
 <% end %>
 
 
-  <script type="text/javascript">
+<script type="text/javascript">
+
 
    $.validator.addMethod('Decimal', function(value, element) {
     return this.optional(element) || /^[0-9,]+(\.\d{0,3})?$/.test(value);
@@ -171,6 +184,12 @@
 
               }
         });
+
+      $('#producto_costo').keypress(totales_precio);
+      $('#producto_costo').change(totales_precio);
+      $('#producto_ganancia').keypress(totales_precio);
+      $('#producto_descuento').keypress(totales_precio);
+
 
     });
 
@@ -221,12 +240,61 @@ function categoriaSelec() {
 }
 
 
+function totales_precio(){
+
+  var costo =  $('#producto_costo').val();
+  var text_ganancia = $('#producto_ganancia').val();
+  var text_iva =  $('#producto_iva').val();
+  var text_descuento =  $('#producto_descuento').val();
+
+  var costo = parseInt(costo);
+  
+  if (text_ganancia == null || text_ganancia == 0){
+       ganancia = 0;
+       }
+  else {
+      var text_ganancia = parseInt(text_ganancia);
+      ganancia = text_ganancia * costo / 100;
+  };
+
+  if (text_iva == null || text_iva == 0){
+       iva = 0;
+       }
+  else {
+      var text_iva = parseInt(text_iva);
+      iva = text_iva * costo / 100;
+  };
+
+  if (text_descuento == null || text_descuento == 0){
+       descuento = 0;
+       }
+  else {
+      var text_descuento = parseInt(text_descuento);
+      descuento = text_descuento * costo / 100;
+  };
+
+
+  precio_lista = costo + ganancia + iva ;
+  precio_contado = precio_lista - descuento;
+  
+  $('#total_ganancia').text(ganancia);
+  $('#total_iva').text(iva);
+  $('#total_desc_contado').text(precio_lista);
+  $('#precio_contado').text(precio_contado);
+  $('#precio_lista').text(precio_lista);
+  
+  
+   
+}
+
+
+
 </script>
 
 
 <style type="text/css">
     .brogertab{
-          min-height: 260px;
+          min-height: 280px;
           height: auto;
     }
 
@@ -236,7 +304,9 @@ function categoriaSelec() {
     }
     th{ 
       
-       text-align: left;
+       text-align: right;
+       padding-right: 7px;
+
 
       }
     tr{

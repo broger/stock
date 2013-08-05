@@ -7,7 +7,23 @@ class ProductosController < ApplicationController
       filtros += " AND rubro_id = #{params[:rubro_id]}"
     end
 
-    unless params[:txtbuscar].blank?
+    unless params[:seccion_id].blank?
+      filtros += " AND seccion_id = #{params[:seccion_id]}"
+    end
+
+    unless params[:categoria_id].blank?
+      filtros += " AND categoria_id = #{params[:categoria_id]}"
+    end
+
+    unless params[:marca_id].blank?
+      filtros += " AND marca_id = #{params[:marca_id]}"
+    end
+
+    unless params[:proveedor_id].blank?
+      filtros += " AND marca_id = #{params[:proveedor_id]}"
+    end
+
+     unless params[:txtbuscar].blank?
       filtros += " AND lower(nombre) like lower('%#{params[:txtbuscar]}%') "
     end
 
@@ -62,7 +78,7 @@ class ProductosController < ApplicationController
 
     respond_to do |format|
       if @producto.save
-        format.html { redirect_to(@producto, :notice => 'El Producto ha sido creado satisfactoriamente.') }
+        format.html { redirect_to(productos_url, :notice => "El Producto #{@producto.nombre} ha sido creado satisfactoriamente.") }
         format.xml  { render :xml => @producto, :status => :created, :location => @producto }
       else
         format.html { render :action => "new" }
@@ -78,7 +94,7 @@ class ProductosController < ApplicationController
 
     respond_to do |format|
       if @producto.update_attributes(params[:producto])
-        format.html { redirect_to(@producto, :notice => 'El Producto ha sido actualizado satisfactoriamente.') }
+        format.html { redirect_to(productos_url, :notice => "El Producto #{@producto.nombre} ha sido actualizado satisfactoriamente.") }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

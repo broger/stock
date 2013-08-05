@@ -1,47 +1,90 @@
-<h3>Productos</h3>
 <%= form_tag(productos_path, :method => 'get',:id=>'buscar') %>
-<div class="filtros" style="display: none; background: yellow" >
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; background: yellow" >Rubro &nbsp; <%= select_tag :rubro_id,'<option></option>' + options_from_collection_for_select(Rubro.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; background: yellow" >Secci&oacute;n  &nbsp; <%= select_tag :seccion_id,'<option></option>' + options_from_collection_for_select(Seccion.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; background: yellow" >Categoria &nbsp; <%= select_tag :categoria_id,'<option></option>' + options_from_collection_for_select(Categoria.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; background: yellow" >Marca &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Marca.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px; background: yellow" >Proveedor &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Proveedor.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
 
- </div>
-
-<div class="search_simple" style="display:block">
+<h3>Productos</h3>
+<div style="float:left; width:55%; margin-top:0px; margin-bottom:30px;"><hr style="height:2px" /></div>
+<div class="search_simple" style="float:left">
   <table>
      <tr>
-       <td><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...'%></td>
-       <td><div class="textbox1">&nbsp;<%= submit_tag "Buscar" , :class=>"btn btn-mini"%>&nbsp;</div></td>
+       <td><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => ' buscar ...'%></td>
        <td><div id="cargando"   style="display: none;">&nbsp;<%= image_tag('iconos/cargando.gif')%></div></td>
        <td>
-           <div class="link_filtros" id="ver_filtros" onclick="ver_filtros()">ver filtros</div>
+           <div class="link_filtros" id="ver_filtros" onclick="ver_filtros()">&nbsp;ver filtros</div>
            <div class="link_filtros" id="ocultar_filtros" onclick="ocultar_filtros()" style="display:none">ocultar filtros</div>
        </td>
      </tr>
   </table>
-   <div id="tips" style="color:gray; height:10px; padding: 0 0 20px 0"><small><strong>Tip:</strong> Puede ingresar alguna porci&oacute;n del nombre de la localidad.</small></div>
-
 </div>
 
- <%= render :partial => 'resultados' %>
-
-
+<div class="filtros" style="display: none; background: yellow" >
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Rubro &nbsp; <%= select_tag :rubro_id,'<option></option>' + options_from_collection_for_select(Rubro.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Secci&oacute;n  &nbsp; <%= select_tag :seccion_id,'<option></option>' + options_from_collection_for_select(Seccion.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Categoria &nbsp; <%= select_tag :categoria_id,'<option></option>' + options_from_collection_for_select(Categoria.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Marca &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Marca.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" >Proveedor &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Proveedor.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" ><%= submit_tag "Buscar" , :class=>"btn btn-mini"%></div>
+  
+ </div>
+<br />
+<%= render :partial => 'resultados' %>
+<br />
 <%= link_to 'Nuevo Producto', new_producto_path ,:class=>'btn btn-primary' %>
 
 
+
+
+
+
 <script type="text/javascript">
-   $(document).ready(function(){
+
+  var secciones = new Array();
+    <% secciones = Seccion.find(:all) %>
+    <% for seccion in secciones -%>
+          secciones.push(new Array(<%= seccion.rubro_id %>, "<%=h seccion.nombre %>", <%= seccion.id %>));
+    <% end %>
+   
+
+    var categorias = new Array();
+    <% categorias = Categoria.find(:all) %>
+    <% for categoria in categorias -%>
+          categorias.push(new Array(<%=h categoria.seccion_id %>, "<%=h categoria.nombre %>", <%=h categoria.id %>));
+    <% end %>
+
+
+  $(document).ready(function(){
     $('.filtros').hide();
     $('.ocultar_filtros').hide();
     ocultar_filtros();
     $('#buscar').submit(mostrar_loading);
-    
+    $('#rubro_id').change(seccionSelec);
+    $('#seccion_id').change(categoriaSelec);
     })
 
 
-   function mostrar_loading(){
+ function seccionSelec() {
+    rubro_id = $('#rubro_id').val();
+    $('#seccion_id').empty();
+    $('#categoria_id').empty();
+    $('#seccion_id').append(selec='<option></option>');
+    secciones.forEach(function(seccion){
+        if (seccion[0]==rubro_id){
+          $('#seccion_id').append(selec='<option value="'+ seccion[2] +'">'+seccion[1]+'</option>');
+        }
+    });
+  }
+
+  function categoriaSelec() {
+    seccion_id = $('#seccion_id').val();
+    $('#categoria_id').empty();
+    $('#categoria_id').append(selec='<option></option>');
+    categorias.forEach(function(categoria){
+        if (categoria[0]==seccion_id){
+            $('#categoria_id').append(selec='<option value="'+ categoria[2] +'">'+categoria[1]+'</option>');
+        }
+    });
+  }
+
+
+  function mostrar_loading(){
           if ( $('#txtbuscar') != '' && $('#buscar').valid()){
                 $('#cargando').show();
           }
@@ -65,7 +108,7 @@
 
 <style type="text/css">
  input[type="text"] {
-   height: 15px;
+   height: 22px;
    font-size: 13px;
    line-height: 15px;
    margin-bottom: 0px;
