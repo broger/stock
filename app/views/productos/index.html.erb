@@ -15,7 +15,7 @@
   </table>
 </div>
 
-<div class="filtros" style="display: none; background: yellow" >
+<div class="filtros" >
   <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Rubro &nbsp; <%= select_tag :rubro_id,'<option></option>' + options_from_collection_for_select(Rubro.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
   <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Secci&oacute;n  &nbsp; <%= select_tag :seccion_id,'<option></option>' + options_from_collection_for_select(Seccion.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
   <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Categoria &nbsp; <%= select_tag :categoria_id,'<option></option>' + options_from_collection_for_select(Categoria.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
@@ -28,9 +28,6 @@
 <%= render :partial => 'resultados' %>
 <br />
 <%= link_to 'Nuevo Producto', new_producto_path ,:class=>'btn btn-primary' %>
-
-
-
 
 
 
@@ -114,9 +111,7 @@
    margin-bottom: 0px;
 }
 
-.filtros{
-  background: yellow;
-}
+
 
 .link_filtros{
   font-size: 11px;

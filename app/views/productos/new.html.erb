@@ -4,18 +4,60 @@
   <%= f.error_messages %>
 
 
-<div class="brogertab">
-            <ul id="myTab" class="nav nav-tabs">
+ 
+<div class="container">
+ 
+<!-------->
+<div id="content">
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#red" data-toggle="tab">Red</a></li>
+        <li><a href="#orange" data-toggle="tab">Orange</a></li>
+        <li><a href="#yellow" data-toggle="tab">Yellow</a></li>
+        <li><a href="#green" data-toggle="tab">Green</a></li>
+        <li><a href="#blue" data-toggle="tab">Blue</a></li>
+    </ul>
+    <div id="my-tab-content" class="tab-content">
+        <div class="tab-pane active" id="red">
+            <h1>Red</h1>
+            <p>red red red red red red</p>
+        </div>
+        <div class="tab-pane" id="orange">
+            <h1>Orange</h1>
+            <p>orange orange orange orange orange</p>
+        </div>
+        <div class="tab-pane" id="yellow">
+            <h1>Yellow</h1>
+            <p>yellow yellow yellow yellow yellow</p>
+        </div>
+        <div class="tab-pane" id="green">
+            <h1>Green</h1>
+            <p>green green green green green</p>
+        </div>
+        <div class="tab-pane" id="blue">
+            <h1>Blue</h1>
+            <p>blue blue blue blue blue</p>
+        </div>
+    </div>
+</div>
+ 
+
+
+
+
+<div class="container">
+
+<div id="content" >
+            <ul id="myTab" class="nav nav-tabs" data-tabs="tabs">
               <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
               <li class=""><a href="#categoria"  data-toggle="tab">Categoria</a></li>
               <li class=""><a href="#web"        data-toggle="tab">Web</a></li>
               <li class=""><a href="#descripcion" data-toggle="tab">Descripci&oacute;n</a></li>
             </ul>
 
-  <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
+      <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px;">
                       <div class="tab-pane active" id="general" style="width:100%">
                                        
-                                         <table style="width:300px; margin-right:20px; display:inline; float: left">
+                                         <table style="width:320px; margin-right:30px; display:inline; float: left">
                                              <th style="text-align:right; padding-right:7px; padding-top:5px"><b><%= f.label :codigo, "c&oacute;digo:" %></b></th>
                                                 <td><b> <%=  Producto.count >= 1  ? "#{Producto.last.id.to_i + 1}" : "0"  %></b></td>
                                                </tr>
@@ -28,17 +70,16 @@
                                                 <td><%= f.text_field :stock %></td>
                                               </tr>
                                              <tr>
-                                                <th colspan="2" style="text-align:left" >
-                                                <%= f.label :avisa_stock_minimo, "Avisa stock M&iacute;nimo? " %>
-                                                <%= f.check_box :avisa_stock_minimo %> 
-                                                </th>
+                                                <th></th>
+                                                <td style="text-align:right"> <%= f.label :avisa_stock_minimo, "Avisa stock M&iacute;nimo? " %>
+                                                <%= f.check_box :avisa_stock_minimo %> </td>
                                               </tr>
                                                <tr>
                                                 <th><%= f.label :stock_minimo, "Stock M&iacute;nimo" %></th>
                                                 <td><%= f.text_field :stock_minimo %></td>
                                               </tr>
                                               <tr>
-                                                <th><%= f.label :unidad_id, "Unidad de M&eacute;dida" %></th>
+                                                <th><%= f.label :unidad_id, "Unidad Medida" %></th>
                                                 <td><%= f.select :unidad_id, Unidad.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
                                               </tr>
                                                <tr>
@@ -46,41 +87,44 @@
                                                 <td><%= f.select :estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
                                               </tr>
                                           </table>
-                                          <fieldset style="border-width:6px">
-                                           <table style="width:360px; display:inline; float: left">
-                                          <tr >
-                                                
-                                              <tr>
+                                           <table style="width:320px; display:inline; float: left">
+                                             <tr>
                                                 <th style="text-align:right; padding-right:7px"><%= f.label :costo, "Precio Costo" %></th>
                                                 <td><%= f.text_field :costo,:size=>16,:placeholder => ' 0.00 $' %></td>
+                                              </tr>
+                                              <tr>  
                                                 <th style="text-align:right; padding-right:7px"><%= f.label :ganancia, "Ganacia" %></th>
                                                 <td><%= f.text_field :ganancia ,:size=>16,:placeholder => ' 0.00 %' %></td>
                                               </tr>
                                               <tr>
                                                 <th style="text-align:right; padding-right:7px"><%= f.label :descuento, "Descuento" %></th>
                                                 <td><%= f.text_field :descuento,:size=>16,:placeholder => ' 0.00 %' %></td>
+                                              </tr>
+                                              <tr>  
                                                 <th style="text-align:right; padding-right:7px"><%= f.label :iva, "IVA" %></th>
                                                 <td><%= f.text_field :iva ,:size=>16,:placeholder => ' 0.00 %'%></td>
                                               </tr>
                                               <tr>
                                                     <th style="text-align:right; padding-right:7px"><%= f.label :moneda_id, "Moneda" %></th>
                                                     <td><%= f.select :moneda_id, Moneda.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
+                                              </tr>
+                                              <tr>      
                                                     <th style="text-align:right; padding-right:7px"></th>
                                                     <td></td>
                                               </tr>
-                                              <tr>
-                                                    <th colspan="2" style="text-align:left; margin:0 0 0 20px" >
-                                                         <font size="+1" color="blue">Ganacias: <label id='total_ganancia'>0</label>&nbsp;$</font><br />
-                                                         <font size="+1" color="blue">IVA: <label id='total_iva'>0</label>&nbsp;$</font><br />
-                                                         <font size="+1" color="blue">Desc. Contado: <label id='total_desc_contado'>0</label>&nbsp;$</font><br />
-                                                         <font size="+1" color="blue">PRECIO CONTADO: <label id='precio_contado'>0</label>&nbsp;$</font><br />
-                                                         <font size="+2" color="blue">PRECIO LISTA: <label id='precio_lista'>0</label>&nbsp;$</font><br />
-                                                    
-                                                    </th>
-                                              </tr>
+                                              </table>  
+                                                    <div  style=" display:'inline'; margin:10px 0 0 0px"> 
+                                                        <fieldset>
+                                                             <div class="etiqueta_precios">Ganacias: <label id='total_ganancia'>0</label>&nbsp;$</div>
+                                                             <div class="etiqueta_precios">IVA: <label id='total_iva'>0</label>&nbsp;$</div>
+                                                             <div class="etiqueta_precios">Desc. Contado: <label id='total_desc_contado'>0</label>&nbsp;$</div>
+                                                             <div class="etiqueta_precios">PRECIO CONTADO: <label id='precio_contado'>0</label>&nbsp;$</div>
+                                                             <div class="etiqueta_precios" style="margin-top:30px; font-size:16px">PRECIO LISTA: <label style="font-size:24px" id='precio_lista'>0</label>&nbsp;$</div>
+                                                        </fieldset>
+                                                    </div>
+                                                 
+                      </div>          
 
-                                         </table>          
-                      </div>            </fieldset>          
                       <div class="tab-pane fade" id="categoria">
                         <table style="width:360px; display:inline; float: left">
                                                 <tr>
@@ -139,13 +183,14 @@
                                             
                       </div>
 
-       </div>               
- 
-
+            </div>               
+      </div> 
 </div>
 <br />
 <br />
-<div style="text-align: left; margin-top:30px"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', productos_path %> </p></div>
+<br />
+
+<div style="text-align: left;"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', productos_path %> </p></div>
 
 
 <% end %>
@@ -187,8 +232,13 @@
 
       $('#producto_costo').keypress(totales_precio);
       $('#producto_costo').change(totales_precio);
+      
       $('#producto_ganancia').keypress(totales_precio);
       $('#producto_descuento').keypress(totales_precio);
+      
+      $('#producto_iva').keypress(totales_precio);
+      $('#producto_iva').change(totales_precio);
+      
 
 
     });
@@ -244,7 +294,7 @@ function totales_precio(){
 
   var costo =  $('#producto_costo').val();
   var text_ganancia = $('#producto_ganancia').val();
-  var text_iva =  $('#producto_iva').val();
+  var text_iva = $('#producto_iva').val();
   var text_descuento =  $('#producto_descuento').val();
 
   var costo = parseInt(costo);
@@ -279,7 +329,7 @@ function totales_precio(){
   
   $('#total_ganancia').text(ganancia);
   $('#total_iva').text(iva);
-  $('#total_desc_contado').text(precio_lista);
+  $('#total_desc_contado').text(descuento);
   $('#precio_contado').text(precio_contado);
   $('#precio_lista').text(precio_lista);
   
@@ -293,6 +343,24 @@ function totales_precio(){
 
 
 <style type="text/css">
+
+     fieldset {
+          border: 1px solid #ccc;
+          padding: 10px;
+      }
+
+
+    .etiqueta_precios{
+          width:180px;
+          font-size:12px;
+          float:left;
+          display: inline;
+          text-align: left;
+          padding-left: 10px; 
+
+    }
+
+
     .brogertab{
           min-height: 280px;
           height: auto;

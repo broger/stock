@@ -1,0 +1,77 @@
+<% form_for(@parametro) do |f| %>
+  <%= f.error_messages %>
+
+<h2>Parametros del Sistema</h2>
+
+<br />
+<br />
+
+<fieldset>
+  <legend><p> Empresa </p> </legend>
+<table>
+  <tr>
+      <th><%= f.label :nombre_empresa %></th><td><%= f.text_field :nombre_empresa %></td><th style="padding-left:20px"><%= f.label :cuil %></th><td><%= f.text_field :cuil %></td>
+  </tr>
+  <tr>
+      <th><%= f.label :telefono1, "Telefono 1" %></th><td><%= f.text_field :telefono1 %></td><th style="padding-left:20px"><%= f.label :telefono2, "Telefono 2"  %></th><td><%= f.text_field :telefono2 %></td>
+  </tr>
+  <tr>
+      <th><%= f.label :celular1, "Celular 1" %></th><td><%= f.text_field :celular1 %></td><th style="padding-left:20px"><%= f.label :celular2, "Celular2"  %></th><td><%= f.text_field :celular2 %></td>
+  </tr>
+  <tr>
+      <th><%= f.label :direccion %></th><td><%= f.text_field :direccion %></td><th style="padding-left:20px"></th><td></td>
+  </tr>
+  <tr>
+      <th><%= f.label :provincia_id %></th><td><%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td><th style="padding-left:20px"><%= f.select :localidad_id, Localidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+  </tr>
+
+</table>
+</fieldset>
+
+<fieldset>
+  <legend> <p> Productos </p> </legend>
+<table>
+   <tr>
+      <th><%= f.label :iva, "IVA para Productos" %></th><td><%= f.text_field :iva %></td><th style="padding-left:20px"><%= f.label :descuento %></th><td><%= f.text_field :descuento %></td>
+  </tr>
+  
+</table>
+</fieldset>
+
+<br />
+<br />
+
+  <p> <%= f.submit 'Guardar' %>  </p>
+<% end %>
+
+
+<%= link_to 'Show', @parametro %> | <%= link_to 'VolverBack', parametros_path %>
+
+
+<style type="text/css">
+
+     fieldset {
+          border: 1px solid #ccc;
+          padding: 10px;
+      }
+
+
+    table
+    {
+    width:100%;
+    }
+    th{ 
+      
+       text-align: right;
+       padding-right: 7px;
+
+
+      }
+    tr{
+      height:40px;
+     }
+     table label{
+        font-size: 11px;
+      }
+
+  </style>

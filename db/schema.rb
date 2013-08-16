@@ -9,13 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130530205635) do
+ActiveRecord::Schema.define(:version => 20130806153625) do
 
   create_table "categorias", :force => true do |t|
     t.string   "nombre",     :limit => 30
     t.integer  "seccion_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rubro_id"
   end
 
   create_table "depositos", :force => true do |t|
@@ -76,6 +77,13 @@ ActiveRecord::Schema.define(:version => 20130530205635) do
     t.datetime "updated_at"
   end
 
+  create_table "parametros", :force => true do |t|
+    t.integer  "iva"
+    t.integer  "descuento"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "productos", :force => true do |t|
     t.string   "nombre",             :limit => 60
     t.string   "descripcion"
@@ -88,7 +96,7 @@ ActiveRecord::Schema.define(:version => 20130530205635) do
     t.integer  "codigo_proveedor"
     t.integer  "proveedor2_id"
     t.integer  "stock"
-    t.integer  "stock_mimimo"
+    t.integer  "stock_minimo"
     t.boolean  "avisa_stock_minimo"
     t.boolean  "visible_web"
     t.integer  "moneda_id"
@@ -100,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20130530205635) do
     t.decimal  "ganancia",                         :precision => 7, :scale => 2
     t.decimal  "descuento",                        :precision => 5, :scale => 2
     t.decimal  "iva",                              :precision => 7, :scale => 2
+    t.integer  "proveedor_id"
   end
 
   create_table "proveedores", :force => true do |t|

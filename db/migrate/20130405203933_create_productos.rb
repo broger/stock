@@ -15,7 +15,7 @@ class CreateProductos < ActiveRecord::Migration
 	    t.integer :codigo_proveedor
    	  t.integer :proveedor2_id
 
-	    t.integer	:stock
+	    t.double  :stock, :decimal => 7, :scale => 2
       t.integer :stock_minimo
 	    t.boolean :avisa_stock_minimo
       t.boolean :visible_web
