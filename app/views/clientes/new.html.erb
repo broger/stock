@@ -1,0 +1,138 @@
+<h4>Nuevo cliente</h4><hr style="margin-top: 0px; padding-top: 0px;  margin-bottom:25px" />
+
+<% form_for(@cliente) do |f| %>
+  <%= f.error_messages %>
+
+
+<div class="brogertab">
+            <ul id="myTab" class="nav nav-tabs">
+              <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
+              <li class=""><a href="#direccion"  data-toggle="tab">Direcci&oacute;n</a></li>
+              <li class=""><a href="#banco"        data-toggle="tab">Banco</a></li>
+            </ul>
+
+  <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
+                      <div  class="tab-pane active"  id="general">
+                                         <table style="width:350px; display:inline; float: left">
+                                              <tr>
+                                                <th><%= f.label :codigo %></th>
+                                                <td> <%=  Cliente.count >= 1  ? "#{Cliente.last.id.to_i + 1}" : "1"  %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :nombre %></th>
+                                                <td><%= f.text_field :nombre %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :cuil %></th>
+                                                <td><%= f.text_field :cuil %></td>
+                                              </tr>
+                                              <tr>
+                                                 <th><%= f.label :estado_id, "Estado" %></th>
+                                                 <td><%= f.select :estado_id , Estado.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                              </tr>
+                                          </table>
+                                          <table style="width:350px; display:inline; float: left">
+                                             <tr>
+                                                <th><%= f.label :telefono %></th>
+                                                <td><%= f.text_field :telefono %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :celular %></th>
+                                                <td><%= f.text_field :celular %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :email %></th>
+                                                <td><%= f.text_field :email %></td>
+                                              </tr>
+                                          </table>
+                                          </div>
+                                          <div class="tab-pane fade" id="direccion">
+                                                                                 <table>
+                                                                                      <tr>
+                                                                                         <th><%= f.label :provincia_id, "Provincia" %></th>
+                                                                                          <td><%= f.select :provincia_id , Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                                                      </tr>
+                                                                                      <tr>
+                                                                                         <th><%= f.label   :localidad_id, "Localidad" %></th>
+                                                                                          <td><%= f.select :localidad_id, Localidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                                                      </tr>
+                                                                                      <tr>
+                                                                                         <th><%= f.label :direccion, "Direcci&oacute;n" %></th>
+                                                                                          <td><%= f.text_field :direccion %></td>
+                                                                                      </tr>
+                                                                                  </table>
+                                         </div>
+                                         <div class="tab-pane fade" id="banco">
+                                                               <table>
+                                                                    <tr>
+                                                                       <th><%= f.label :banco_id, "Banco" %></th>
+                                                                        <td><%#= f.select :provincia_id , Banco.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                       <th><%= f.label   :cuenta_bancaria, "Cuenta Bancaria" %></th>
+                                                                        <td><%= f.text_field :cuenta_bacaria %></td>
+                                                                    </tr>
+                                                                </table>
+                                          </div>
+
+
+
+            </div>
+
+</div>
+<br />
+<br />
+<div style="text-aling:rigth"> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', clientes_path %></div>
+
+
+<% end %>
+
+
+  <script type="text/javascript">
+     $(document).ready(function(){
+        $("#new_cliente").validate({
+         rules: {
+              "cliente[razon_social]": {required: true, minlength: 3, maxlength:30},
+              "cliente[email]": {email: true},
+              "cliente[cuil]": { digits: true, rangelength: [1,11]},
+              "cliente[cuenta_banacaria]": {digits: true},
+              "cliente[provincia_id]": {required: true},
+              "cliente[localidad_id]": {required: true},
+              "cliente[estado_id]": {required: true},
+              "cliente[telefono1]": {digits: true},
+              "cliente[telefono2]": {digits: true},
+              "cliente[celular1]": {digits: true},
+              "cliente[celular2]": {digits: true}
+         }
+        });
+     });
+
+     $('#myTab a').click(function (e) {
+         e.preventDefault();
+         $(this).tab('show');
+     })
+
+
+  </script>
+
+<style type="text/css">
+    .brogertab{
+          min-height: 260px;
+          height: auto;
+    }
+
+    table
+    {
+    width:100%;
+    }
+    th{
+       text-align: left;
+      }
+    tr{
+      height:40px;
+     }
+     table label{
+        font-size: 11px;
+      }
+
+  </style>

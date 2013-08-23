@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130806153625) do
+ActiveRecord::Schema.define(:version => 20130816175624) do
 
   create_table "categorias", :force => true do |t|
     t.string   "nombre",     :limit => 30
@@ -17,6 +17,22 @@ ActiveRecord::Schema.define(:version => 20130806153625) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rubro_id"
+  end
+
+  create_table "clientes", :force => true do |t|
+    t.string   "nombre",         :limit => 60
+    t.integer  "cuil",           :limit => 12, :precision => 12, :scale => 0
+    t.integer  "provincia_id"
+    t.integer  "localidad_id"
+    t.string   "direccion",      :limit => 80
+    t.integer  "banco_id"
+    t.integer  "cuenta_bacaria", :limit => 30, :precision => 30, :scale => 0
+    t.integer  "telefono",       :limit => 30, :precision => 30, :scale => 0
+    t.integer  "celular",        :limit => 30, :precision => 30, :scale => 0
+    t.string   "email",          :limit => 60
+    t.integer  "estado_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "depositos", :force => true do |t|
@@ -82,6 +98,15 @@ ActiveRecord::Schema.define(:version => 20130806153625) do
     t.integer  "descuento"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "nombre_empresa", :limit => 100
+    t.string   "direccion",      :limit => 150
+    t.string   "telefono1",      :limit => 50
+    t.string   "telefono2",      :limit => 50
+    t.string   "celular1",       :limit => 50
+    t.string   "celular2",       :limit => 50
+    t.integer  "localidad_id"
+    t.integer  "provincia_id"
+    t.integer  "cuil",           :limit => 12,  :precision => 12, :scale => 0
   end
 
   create_table "productos", :force => true do |t|
@@ -95,7 +120,6 @@ ActiveRecord::Schema.define(:version => 20130806153625) do
     t.integer  "provedor_id"
     t.integer  "codigo_proveedor"
     t.integer  "proveedor2_id"
-    t.integer  "stock"
     t.integer  "stock_minimo"
     t.boolean  "avisa_stock_minimo"
     t.boolean  "visible_web"
@@ -109,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20130806153625) do
     t.decimal  "descuento",                        :precision => 5, :scale => 2
     t.decimal  "iva",                              :precision => 7, :scale => 2
     t.integer  "proveedor_id"
+    t.decimal  "stock",                            :precision => 8, :scale => 2
   end
 
   create_table "proveedores", :force => true do |t|

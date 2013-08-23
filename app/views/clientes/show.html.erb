@@ -1,0 +1,13 @@
+<p>
+  <b>Nombre:</b>
+  <%=h @cliente.nombre %>
+</p>
+
+<p>
+  <b>Localidad:</b>
+  <%=h @cliente.localidad_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_cliente_path(@cliente) %> |
+<%= link_to 'Back', clientes_path %>

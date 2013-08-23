@@ -16,6 +16,8 @@ ActiveSupport::Inflector.inflections do |inflect|
 	inflect.irregular 'proveedor','proveedores'
     inflect.irregular 'seccion','secciones'
     inflect.irregular 'parametro','parametros'
+    inflect.irregular 'cliente','clientes'
+    
     
 
 
