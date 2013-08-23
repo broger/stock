@@ -1,19 +1,42 @@
-<h1>New moneda</h1>
 
-<% form_for(@moneda) do |f| %>
-  <%= f.error_messages %>
+<link href="http://www.w3resource.com/twitter-bootstrap/twitter-bootstrap-v2/docs/assets/css/bootstrap.css" rel="stylesheet">
 
-  <p>
-    <%= f.label : %><br />
-    <%= f.text_field : %>
-  </p>
-  <p>
-    <%= f.label : %><br />
-    <%= f.text_field : %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
-<% end %>
+        <fieldset>
+          <legend>Controls Bootstrap supports</legend>
+          <div class="control-group">
+            <label class="control-label" for="input01">Focused Input</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" id="input01">
+              <p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input01">Raed only Input</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" id="input01" readonly="true">
+              <p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>
+            </div>
+          </div>
+      <div class="control-group">
+            <label class="control-label" for="input01">Disabled Input</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" id="input01" disabled="">
+              <p class="help-block">In addition to freeform text, any HTML5 text-based input appears like so.</p>
+            </div>
+          </div>
+      <div class="control-group">
+            <label class="control-label" for="optionsCheckbox" reado="">Checkbox (disabled)</label>
+            <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox" id="optionsCheckbox" value="option1" disabled="">
+                Option one is this and that—be sure to include why it's great
+              </label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" disabled="">Save changes (disabled button)</button>
+            <button class="btn">Cancel</button>
+          </div>
+        </fieldset>
 
-<%= link_to 'Back', monedas_path %>
+

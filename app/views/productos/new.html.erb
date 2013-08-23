@@ -13,35 +13,40 @@
               <li class=""><a href="#descripcion"   data-toggle="tab">Descripci&oacute;n</a></li>
             </ul>
 
-      <div id="my-tab-content" class="tab-content" style="padding:10px 0px 0px 30px;">
+      <div id="my-tab-content" class="tab-content" style="padding:10px 0px 0px 20px;">
                       <div class="tab-pane active" id="general" style="width:100%">
                                        
                                          <table style="width:320px; margin-right:30px; display:inline; float: left">
-                                             <th style="text-align:right; padding-right:7px; padding-top:5px"><b><%= f.label :codigo, "c&oacute;digo:" %></b></th>
-                                                <td><b> <%=  Producto.count >= 1  ? "#{Producto.last.id.to_i + 1}" : "0"  %></b></td>
-                                               </tr>
+                                              <tr>
+                                                <th><%= f.label :codigo, "C&oacute;digo" %></th>
+                                                <% ultimo =  Producto.count >= 1  ? "#{Producto.last.id.to_i + 1}" : "1"  %>
+                                                <td><%= f.text_field :codigo, :value=> ultimo %></td>
+                                              </tr> 
                                               <tr>
                                                 <th style="text-align:right; padding-right:7px"><%= f.label :nombre %></th>
                                                 <td><%= f.text_field :nombre %></td>
                                               </tr>
-                                             <tr>
-                                                <th><%= f.label :stock, "Stock" %></th>
-                                                <td><%= f.text_field :stock %></td>
+                                              <tr>
+                                                <th style="text-align:right; padding-right:7px"><%= f.label :etiqueta_busqueda,  "Etiqueta de B&uacute;squeda" %></th>
+                                                <td><%= f.text_field :etiqueta_busqueda %></td>
                                               </tr>
-                                             <tr>
-                                                <th></th>
-                                                <td style="text-align:right"> <%= f.label :avisa_stock_minimo, "Avisa stock M&iacute;nimo? " %>
-                                                <%= f.check_box :avisa_stock_minimo %> </td>
-                                              </tr>
-                                               <tr>
+                                              <tr>
                                                 <th><%= f.label :stock_minimo, "Stock M&iacute;nimo" %></th>
-                                                <td><%= f.text_field :stock_minimo %></td>
+                                                <td><%= f.text_field :stock_minimo,:size=>16,:placeholder => ' 0.00' %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :stock_maximo, "Stock M&aacute;ximo" %></th>
+                                                <td><%= f.text_field :stock_maximo,:size=>16,:placeholder => ' 0.00' %></td>
+                                              </tr>
+                                              <tr>
+                                                <th><%= f.label :punto_de_pedido, "Avisa en" %></th>
+                                                <td><%= f.text_field :punto_de_pedido,:size=>16,:placeholder => ' 0.00' %></td>
                                               </tr>
                                               <tr>
                                                 <th><%= f.label :unidad_id, "Unidad Medida" %></th>
                                                 <td><%= f.select :unidad_id, Unidad.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
                                               </tr>
-                                               <tr>
+                                              <tr>
                                                 <th><%= f.label :estado_id, "Estado" %></th>
                                                 <td><%= f.select :estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
                                               </tr>
@@ -120,6 +125,32 @@
                                                        <td><%= f.select :deposito_id, Deposito.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
                                                   </tr>
                                              </table>
+                                             <table>
+                                                    <tr>
+                                                        <td>
+                                                              
+                                                            <%= f.label 'calificacion_a','A'%>                               
+                                                            <%= f.radio_button :calificacion, 'A', :checked => true %> 
+                                                        </td>
+                                                  </tr>
+                                                  <tr>
+                                                        <td>
+                                                            <%= f.label 'calificacion_b','B'%>
+                                                            <%= f.radio_button :calificacion, 'B', :checked => false %>
+                                                            
+                                                        </td>
+
+                                                  </tr>
+                                                  <tr>
+                                                        <td>
+                                                            <%= f.label 'calificacion_c','C'%>
+                                                            <%= f.radio_button :calificacion, 'C', :checked => false %>
+                                                            
+                                                        </td>
+                                                        
+                                                  </tr>
+
+                                                </table>
 
                       </div>
 
@@ -178,7 +209,6 @@
               "producto[proveedor_id]": {required: true},
               "producto[codigo_proveedor]": {digits: true},
               "producto[stock_minimo]": {required: true, digits: true},
-              "producto[stock]": {required: true, digits: true},
               "producto[costo]": {required: true, Decimal: true},
               "producto[ganancia]": {required: true,  Decimal: true},
               "producto[iva]": {required: true,  Decimal: true},
@@ -308,6 +338,25 @@ function totales_precio(){
           padding: 10px;
       }
 
+      input {
+      font-size: 12px;
+      padding-left: 6px;
+      }
+
+      
+      select{
+         font-size: 11px;
+      }
+
+
+      textarea{
+          margin-top: 20px;
+          width:600px;
+          height: 220px;
+          padding-left: 6px;
+        }
+
+
 
     .etiqueta_precios{
           width:180px;
@@ -342,5 +391,9 @@ function totales_precio(){
      table label{
         font-size: 11px;
       }
+
+     
+
+
 
   </style>
