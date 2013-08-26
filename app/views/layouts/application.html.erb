@@ -11,122 +11,127 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
+
     <link rel="shortcut icon" href="http://localhost/opt/ioscordev/images/gobierno/escudo_icono32x32.ico" type="image/x-icon" />
 
  
-     <!--link type="image/png" href="<%#= image_tag('16x16/emotion_tongue.png')%>" rel="icon" /-->
-     <%= stylesheet_link_tag 'broger','bootstrap', 'bootstrap-responsive', 'bootstrap-responsive', 'bootstrap-responsive.min',
-                             'fancybox', 'jquery.fancybox-1.3.1' %>
-     <%= javascript_include_tag 'jquery-1.7.1','jquery-1.7.min',
-			'fg.menu',
-			'swfobject',
-			'date',
-      'bootstrap.min.js',
-      'paging.js',
-			'superfish',
-      'jquery.decimalMask.1.1.1.min',
-      'jquery.validate','messages_es',
-      'jquery.mousewheel-3.0.2.pack',
-      'jquery.fancybox-1.3.1',
-      'jquery.qtip-1.0.0-rc3',
-      'jquery.uploadify.v2.1.4',
-      'jquery.maskedinput-1.2.2',
-      'jquery.MultiFile',
-      'jquery.autocomplete',
-      'jquery.simpleImageCheck-0.4.min'
-       %>
+    <%= stylesheet_link_tag 'bootstrap',
+                            # 'bootstrap-theme.min',
+                             'broger'
+                              %>
+
+     <%= javascript_include_tag 'bootstrap.min',
+                                'jquery',
+                                'holder',
+                                'affix',
+                                'alert',
+                                'button',
+                                'carousel',
+                                'collapse',
+                                'modal',
+                                'dropdown',
+                                'popover',
+                                'scrollspy',
+                                'tab',
+                                'tooltip',
+                                'transition'
+    %>
+
      <%#= csrf_meta_tag %>
 
 
   </head>
-
   <body>
+     <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container" style="padding: 0 0 0 0" >
+        <div class="navbar-header">
+        <%#= " <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <col-md- class="icon-bar">dfdfdf</col-md->
+            <col-md- class="icon-bar">222222222222</col-md->
+            <col-md- class="icon-bar">3333333</col-md->
+          </button> "  %>
 
-  <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container" style="width: auto; font-size: 12px">
-            <a class="navbar-brand" href="#">Stock-Control</a>
-
-            <div class="nav-collapse collapse">
-              
-
-               <% cache([current_user,"menu"]) do %>
-                                      <ul class="nav navbar-nav"  role="navigation">
-                                                  <%  @menu_raices = Menu.roots
-                                                                  @menu_raices.each do |r| %>
-                                                                          <%=  hacer_menu(current_user, r,true,false) %>
-                                                   <% end %>
-
-                                      </ul>
-              <% end %>
-
-              <% cache([current_user,"logindata"]) do %>
-
-              <p class="navbar-text pull-right">
-                <a href="http://twitter.github.com/bootstrap/examples/fluid.html#"><i class="icon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;<a href="/logout"><i class="icon-off"></i></a>
-              </p>
-              <% end %>
+          <a class="navbar-brand" href="#">STOCK&nbsp;&nbsp;&nbsp;&nbsp;</a>
 
 
-              </div><!--/.nav-collapse -->
-            </div>
+        </div>
+        <div class="navbar-collapse collapse">
+           <% cache([current_user,"menu"]) do %>
+                <ul class="nav navbar-nav" >
+                        <%@menu_raices = Menu.roots
+                          @menu_raices.each do |r| %>
+                                    <%=  hacer_menu(current_user, r,true,false) %>
+                        <% end %>
+
+                </ul>
+	   <% end %>
+           <% cache([current_user,"logindata"]) do %>
+   	         <p class="navbar-text pull-right">
+		   <a href="http://twitter.github.com/bootstrap/examples/fluid.html#"><i class="glyphicon glyphicon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;<span href="/logout" class="glyphicon glyphicon-off"></span>
+		 </p>
+	   <% end %>
+
+        </div><!--/.nav-collapse -->
+      </div>
     </div>
-
-
-
-     <!-- CONTENIDO DE LA APLICACION -->
-     <div class="container-fluid">
-       <div class="row-fluid" style="padding-bottom:200px">
-                <!-- Notice -->
-                <div class="span12">
-                    <%if flash[:notice]%>
-                        <div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
-                    <%end%>
-                    <%if flash[:error]%>
-                        <div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:error] %></div>
-                    <%end%>
-                </div>
-                <!-- Panel Lateral -->
-                <div class="span2">
-                        <div class="well sidebar-nav">
-                          <ul class="nav nav-list" style="font-size:13px">
-                                <li class="nav-header">Accesos Directos</li>
-                                <li class="active"><a href="#">vender</a></li>
-                                <li><a href="#"><%=  link_to 'consultar producto', productos_path %></a></li>
-                                <li><a  id ="calculadora" class ="fancybox" href="<%= calculadora_menus_path %>" >calculadora</a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                                <li><a href="#"></a></li>
-                              </ul>
-                        </div>
-                  
-                </div>
-                <!-- CONTENIDO -->
-                <div class="span9" style="padding-left:4%">
-                         <%= yield %>
-
-                </div>
-                <hr />
-           </div>
-           <footer>
-               <p>© Sistema Stock 2013</p>
-           </footer>
+     <!-- CONTENIDO DE LA APLICACION 
+ 
+        <div class="container" id="botonera"  style="display: block; width:100%" class="col-sm-12">
+                 <div style="float:left; margin-right:4px">ICON</div>
+                 <div style="float:left; margin-right:4px">ICON</div>
+                 <div style="float:left; margin-right:4px">ICON</div>
+                 <div style="float:left; margin-right:4px">ICON</div>
+                 <div style="float:left; margin-right:4px">ICON</div>
+                 <div style="float:left; margin-right:4px">ICON</div>
+        </div>
+     <div class="container" id="botonera"  style="display: block; width:100%" class="col-sm-12">
+              <%if flash[:notice]%>
+             <div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
+           <%end%>
+           <%if flash[:error]%>
+             <div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:error] %></div>
+           <%end%>
+     </div>-->
+     <div class="container" style="height: 750px">
+      <div class="row" style="background-color:gray" >
+              <div  class="col-sm-12" >
+                 <div style="float:left; margin-right:4px">ICON</div>
+                 <div style="float:left; margin-right:4px">ICON</div>
+                 <div style="float:left; margin-right:4px">ICON</div>
+                 <div style="float:left; margin-right:4px">ICON</div>
+                 <div style="float:left; margin-right:4px">ICON</div>
+                 <div style="float:left; margin-right:4px">ICON</div>
+             </div>
+      </div>
+      <div class="row" style="background-color:aqua" >
+            <div  class="col-sm-12" >
+                 <%if flash[:notice]%>
+                 <div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
+               <%end%>
+               <%if flash[:error]%>
+                 <div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:error] %></div>
+              <%end%>
+            </div>
      </div>
-</body></html>
+
+
+       <div class="row" style=";background-color:rgb(183, 241, 183)" >
+              <div  class="col-sm-12">
+                         <%= yield %>
+              </div>
+      </div>
+          
+     </div>
+</body>
+   <footer >
+               
+           </footer>
+</html>
 
 <script type="text/javascript">
     $(document).ready(function(){
 
-       $('.fancybox').fancybox({
-             titleShow: false
-        });
+     
 
 
     });
@@ -137,19 +142,23 @@
 <style type="text/css">
       body {
         padding-top: 60px;
-        padding-bottom: 40px;
+        background-color:rgb(192, 148, 176)
+
       }
       .sidebar-nav {
         padding: 9px 0;
       }
+      .container{
+        max-width: 1300px;
 
-      @media (max-width: 980px) {
-        /* Enable use of floated navbar text */
-        .navbar-text.pull-right {
-          float: none;
-          padding-left: 5px;
-          padding-right: 5px;
-        }
-      }
+     }
+
+     footer{
+       background-color:black;
+       height:220px;
+       margin-bottom: 0px;
+    }
+
+
       
 </style>
