@@ -16,11 +16,12 @@
 
  
     <%= stylesheet_link_tag 'bootstrap',
-                            # 'bootstrap-theme.min',
+                              # 'bootstrap-theme.min',
                              'broger'
                               %>
 
      <%= javascript_include_tag 'bootstrap.min',
+                                'bootstrap',
                                 'jquery',
                                 'holder',
                                 'affix',
@@ -30,7 +31,8 @@
                                 'collapse',
                                 'modal',
                                 'dropdown',
-                                'popover',
+                                'bootstrap-prompts-alert.js',
+                               # 'popover', 
                                 'scrollspy',
                                 'tab',
                                 'tooltip',
@@ -43,8 +45,8 @@
   </head>
   <body>
      <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container" style="padding: 0 0 0 0" >
-        <div class="navbar-header">
+      <div class="container" style="padding: 0 0 0 0"  >
+        <div class="navbar-header" >
         <%#= " <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <col-md- class="icon-bar">dfdfdf</col-md->
             <col-md- class="icon-bar">222222222222</col-md->
@@ -55,9 +57,9 @@
 
 
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse" >
            <% cache([current_user,"menu"]) do %>
-                <ul class="nav navbar-nav" >
+                <ul class="nav navbar-nav" style="font-size:12px" >
                         <%@menu_raices = Menu.roots
                           @menu_raices.each do |r| %>
                                     <%=  hacer_menu(current_user, r,true,false) %>
@@ -158,6 +160,15 @@
        height:220px;
        margin-bottom: 0px;
     }
+
+    .dropdown-submenu{position:relative;}
+    .dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+    .dropdown-submenu:hover>.dropdown-menu{display:block;}
+    .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+    .dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+    .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+
+
 
 
       
