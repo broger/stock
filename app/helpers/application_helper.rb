@@ -11,20 +11,22 @@ module ApplicationHelper
              fan = nil
             end            
 
+             nodo.tiene_divisor == true ?  salida = "<li class='divider'></li> " : salida = " "
+
             if desplegable
               if submenu == true             
-                  salida = "<li class='dropdown-submenu' style ='border-radius:1px'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} "
+                  salida = "#{salida} <li class='dropdown-submenu' style ='border-radius:1px'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} "
               else
-                  salida = "<li class='dropdown' style ='border-radius:1px'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} <b class='caret'></b> "
+                  salida = "#{salida} <li class='dropdown' style ='border-radius:1px'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} <b class='caret'></b> "
              
               end                           
 
 
             else
-              salida = "<li style ='border-radius:1px' ><a  href='#{nodo.url}'>#{nodo.nombre} "
+              salida = "#{salida} <li style ='border-radius:1px' ><a  href='#{nodo.url}'>#{nodo.nombre} "
             end
             
-            salida = salida + "</a>"
+            salida = "#{salida} </a>"
 
             
             if nodo.children.count != 0 && tiene_permiso
