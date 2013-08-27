@@ -1,4 +1,4 @@
-
+/*
 table {
   max-width: 100%;
   border-collapse: collapse;
@@ -210,3 +210,5 @@ table .span24 {
   margin-left: 0;
 }
 
+
+*/

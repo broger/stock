@@ -1,0 +1,7 @@
+
+pg_dump    -i -h localhost -p 5432 -U postgres -F c -b -v -f "/home/damian/backups/mibase.backup" stock
+
+pg_restore -i -h localhost -p 5432 -U postgres -d stock -v "/home/damian/backups/mibase.backup"
+
+
+

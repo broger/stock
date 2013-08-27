@@ -15,15 +15,16 @@
     <link rel="shortcut icon" href="http://localhost/opt/ioscordev/images/gobierno/escudo_icono32x32.ico" type="image/x-icon" />
 
  
-    <%= stylesheet_link_tag 'bootstrap',
+    <%= stylesheet_link_tag  'bootstrap',
                              'tablecloth',
                              'prettify.css',
                              'bootstrap-tables',
                              'broger'
                               %>
 
-     <%= javascript_include_tag 'jquery-1.10.2.min',  # Siempre JQUERY 1er Script de la Lista
+    <%= javascript_include_tag  'jquery-1.10.2.min', # siempre primer jquery
                                 'bootstrap.min',
+                                'bootstrap',
                                 'holder',
                                 'affix',
                                 'alert',
@@ -38,10 +39,9 @@
                                 'tab',
                                 'tooltip',
                                 'transition',
-                                # tablecloth
+                                 # tablas 
                                 'jquery.metadata',
                                 'jquery.tablecloth.js',
-                                'jquery.tablesorter.js',
                                 'jquery.tablesorter.min.js'
     %>
 
@@ -72,12 +72,12 @@
                         <% end %>
 
                 </ul>
-	   <% end %>
+     <% end %>
            <% cache([current_user,"logindata"]) do %>
-   	         <p class="navbar-text pull-right">
-		   <a href="http://twitter.github.com/bootstrap/examples/fluid.html#"><i class="glyphicon glyphicon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;<span href="/logout" class="glyphicon glyphicon-off"></span>
-		 </p>
-	   <% end %>
+             <p class="navbar-text pull-right">
+       <a href="http://twitter.github.com/bootstrap/examples/fluid.html#"><i class="glyphicon glyphicon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;<span href="/logout" class="glyphicon glyphicon-off"></span>
+     </p>
+     <% end %>
 
         </div><!--/.nav-collapse -->
       </div>
@@ -101,14 +101,18 @@
            <%end%>
      </div>-->
      <div class="container" style="height: 750px">
-      <div class="row" style="background-color:gray" >
-              <div  class="col-sm-12" >
+      <div class="row" >
+              <div  id="botonera"  class="col-sm-12" >
+                <div id="bontones" style="float:left">
+                 <div style="float:left; margin-right:4px">A</div>
                  <div style="float:left; margin-right:4px">ICON</div>
                  <div style="float:left; margin-right:4px">ICON</div>
                  <div style="float:left; margin-right:4px">ICON</div>
                  <div style="float:left; margin-right:4px">ICON</div>
                  <div style="float:left; margin-right:4px">ICON</div>
-                 <div style="float:left; margin-right:4px">ICON</div>
+                </div>
+                <div id="atras" style="float:right"><img src="/home/broger/proyectos/stock/public/images/iconos/atras.png"></img></div>
+                 
              </div>
       </div>
       <div class="row" style="background-color:aqua" >
@@ -123,8 +127,8 @@
      </div>
 
 
-       <div class="row"  style="background-color:rgb(192, 148, 176)" >
-         <div  class="col-sm-12">
+       <div class="row" style=";background-color:rgb(183, 241, 183)" >
+              <div  class="col-sm-12">
                          <%= yield %>
               </div>
       </div>
@@ -144,18 +148,37 @@
 
     });
 
+    $("table").tablecloth({
+      theme: "default",
+      bordered: true,
+      condensed: true,
+      striped: false, // linea par gris impar blanca
+      sortable: true,  // algo de jquery
+      clean: false,
+      cleanElements: "th td",
+      customClass: "my-table"
+    });
+
+
 </script>
 
 
 <style type="text/css">
-      body {
+
+   body {
         padding-top: 60px;
-        background-color:rgb(192, 148, 176)
+        /* background-color:rgb(192, 148, 176) */
 
       }
+
       .sidebar-nav {
         padding: 9px 0;
       }
+
+      #botonera{
+       /* background-color:gray */
+      }
+
       .container{
         max-width: 1300px;
 
@@ -166,6 +189,9 @@
        height:220px;
        margin-bottom: 0px;
     }
+
+
+
 
     .dropdown-submenu{position:relative;}
     .dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}

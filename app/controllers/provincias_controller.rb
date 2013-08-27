@@ -5,13 +5,19 @@ class ProvinciasController < ApplicationController
   # GET /provincias
   # GET /provincias.xml
   def index
-    @provincias = Provincia.all
+      if params[:txtbuscar].blank?
+         @provincias = Provincia.paginate(:page => params[:page],:per_page => 6,:order => "nombre")
+      else
+         @provincias = Provincia.paginate(:page => params[:page],:per_page => 6,:conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
+      end
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @provincias }
-    end
+
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @localidades }
+      end
   end
+
 
   # GET /provincias/1
   # GET /provincias/1.xml
