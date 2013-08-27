@@ -1,96 +1,163 @@
-   <form id="form1" >
-    <div>
-     <input id="lblresumen" type="text" disabled="disabled"  /> <br />
-    <input id="txtmostrar" type="text"/>
-    <br />
-    <input id="btn1" type="button" value="1"  onclick="estapresionado('1')" />
-    <input id="btn2" type="button" value="2" onclick="estapresionado('2')"/>
-    <input id="btn3" type="button" value="3"  onclick="estapresionado('3')"/>
-    <input id="btndividir" type="button" value="/"  onclick="asignaroperador('4')"/><br />
-    <input id="btn4" type="button" value="4"  onclick="estapresionado('4')"/>
-    <input id="btn5" type="button" value="5"  onclick="estapresionado('5')"/>
-    <input id="btn6" type="button" value="6"  onclick="estapresionado('6')"/>
-    <input id="btnmultiplicar" type="button" value="*"   onclick="asignaroperador('3')"/><br />
-    <input id="btn7" type="button" value="7"  onclick="estapresionado('7')"/>
-    <input id="btn8" type="button" value="8"  onclick="estapresionado('8')"/>
-    <input id="btn9" type="button" value="9"  onclick="estapresionado('9')"/>
-    <input id="btnrestar" type="button" value="-" onclick="asignaroperador('2')"/><br />
-     <input id="btn0" type="button" value="0" onclick="estapresionado('0')"/>
-    <input id="btnsumar" type="button" value="+" onclick="asignaroperador('1')"/>
-    <input id="btnigual" type="button" value="=" onclick="resultado('=')"/>
+         
+          <table border="0" cellpadding="0" cellspacing="0" width="107%">
+            <tbody><tr>
+              <td width="100%" height="259">
+                <p align="center"><b><u>Ejemplo del Script</u></b></p>
+                  <form action"action"""="" name="Keypad" id="Keypad">
+                  <div align="center">
+                    <table border="2" cellpadding="1" cellspacing="5" height="60" width="50">
+                      <tbody>
+                        <tr>
+                          <td align="middle" colspan="3"><b>
+                            <input name="ReadOut" size="24" value="0" width="100%" style="text-align: right">
+                          </b></td>
+                          <td>&nbsp;</td>
+                          <td align="center"><b>
+                            <input name="btnClear" onclick="Clear()" type="button" value=" C ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnClearEntry" onclick="ClearEntry()" type="button" value=" CE ">
+                          </b></td>
+                        </tr>
+                        <tr>
+                          <td align="center"><b>
+                            <input name="btnSeven" onclick="NumPressed(7)" type="button" value="  7  ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnEight" onclick="NumPressed(8)" type="button" value="  8  ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnNine" onclick="NumPressed(9)" type="button" value="  9  ">
+                          </b></td>
+                          <td align="center">&nbsp;</td>
+                          <td align="center"><b>
+                            <input name="btnNeg" onclick="Neg()" type="button" value=" +/- ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnPercent" onclick="Percent()" type="button" value=" % ">
+                          </b></td>
+                        </tr>
+                        <tr>
+                          <td align="center"><b>
+                            <input name="btnFour" onclick="NumPressed(4)" type="button" value="  4  ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnFive" onclick="NumPressed(5)" type="button" value="  5  ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnSix" onclick="NumPressed(6)" type="button" value="  6  ">
+                          </b></td>
+                          <td align="center">&nbsp;</td>
+                          <td align="center"><b>
+                            <input name="btnPlus" onclick="Operation(&#39;+&#39;)" type="button" value="  +  ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnMinus" onclick="Operation(&#39;-&#39;)" type="button" value="  -  ">
+                          </b></td>
+                        </tr>
+                        <tr>
+                          <td align="center"><b>
+                            <input name="btnOne" onclick="NumPressed(1)" type="button" value="  1  ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnTwo" onclick="NumPressed(2)" type="button" value="  2  ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnThree" onclick="NumPressed(3)" type="button" value="  3  ">
+                          </b></td>
+                          <td align="center">&nbsp;</td>
+                          <td align="center"><b>
+                            <input name="btnMultiply" onclick="Operation(&#39;*&#39;)" type="button" value=" * ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnDivide" onclick="Operation(&#39;/&#39;)" type="button" value=" / ">
+                          </b></td>
+                        </tr>
+                        <tr>
+                          <td align="center"><b>
+                            <input name="btnZero" onclick="NumPressed(0)" type="button" value="  0  ">
+                          </b></td>
+                          <td align="center"><b>
+                            <input name="btnDecimal" onclick="Decimal()" type="button" value="  .  ">
+                          </b></td>
+                          <td colspan="3" align="center">&nbsp;</td>
+                          <td align="center"><b>
+                            <input name="btnEquals" onclick="Operation(&#39;=&#39;)" type="button" value="  =  ">
+                          </b></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </form>
+                <script language="JavaScript" type="text/javascript">
 
-    </div>
-    </form>
+var FKeyPad = document.Keypad;
+var Accum = 0;
+var FlagNewNum = false;
+var PendingOp = "";
+function NumPressed (Num) {
+if (FlagNewNum) {
+FKeyPad.ReadOut.value = Num;
+FlagNewNum = false;
+}
+else {
+if (FKeyPad.ReadOut.value == "0")
+FKeyPad.ReadOut.value = Num;
+else
+FKeyPad.ReadOut.value += Num;
+}
+}
+function Operation (Op) {
+var Readout = FKeyPad.ReadOut.value;
+if (FlagNewNum && PendingOp != "=");
+else
+{
+FlagNewNum = true;
+if ( '+' == PendingOp )
+Accum += parseFloat(Readout);
+else if ( '-' == PendingOp )
+Accum -= parseFloat(Readout);
+else if ( '/' == PendingOp )
+Accum /= parseFloat(Readout);
+else if ( '*' == PendingOp )
+Accum *= parseFloat(Readout);
+else
+Accum = parseFloat(Readout);
+FKeyPad.ReadOut.value = Accum;
+PendingOp = Op;
+}
+}
+function Decimal () {
+var curReadOut = FKeyPad.ReadOut.value;
+if (FlagNewNum) {
+curReadOut = "0.";
+FlagNewNum = false;
+}
+else
+{
+if (curReadOut.indexOf(".") == -1)
+curReadOut += ".";
+}
+FKeyPad.ReadOut.value = curReadOut;
+}
+function ClearEntry () {
+FKeyPad.ReadOut.value = "0";
+FlagNewNum = true;
+}
+function Clear () {
+Accum = 0;
+PendingOp = "";
+ClearEntry();
+}
+function Neg () {
+FKeyPad.ReadOut.value = parseFloat(FKeyPad.ReadOut.value) * -1;
+}
+function Percent () {
+FKeyPad.ReadOut.value = (parseFloat(FKeyPad.ReadOut.value) / 100) * parseFloat(Accum);
+}
+// End -->
+           </script>
 
-<script type="text/javascript">
-// declarando variables Globales
-      var valor1 = 0;
-       var valor2 = 0;
-       var operacion
-// funcion que agrega al textbox  los numeros que vamos presionando
-       function estapresionado(valor) {
-           if (document.getElementById("txtmostrar").value == "0" || valor1 == 0) {
-               valor1 = valor;
-           } else
-           {
-               valor1 += valor;
-           }
-           document.getElementById("txtmostrar").value = valor1;
-       }
-// función que  asigna el operador seleccionado
-       function asignaroperador(codigo) {
-           print(valor1);
-           if (valor1 == 0) {
-               resultado = parseInt(document.getElementById("txtmostrar").value);
-           }
-           valor2 = parseInt(valor1);
-           valor1 = 0;
-           operacion = codigo;
-           printsimbolo(operacion); // imprimiendo simbolo en lblresumen
-       }
 
-// imprimiendo los numeros en el label para saber que operaciones hemos hecho
-       function print(s) {
-           document.getElementById("lblresumen").value += s;
-       }
-// imprimiendo el simbolo de suma, resta , multiplicacion y divicion
-       function printsimbolo() {
-           switch (parseInt(operacion)) {
-               case 1:
-                   document.getElementById("lblresumen").value += "+";
-                   break;
-               case 2:
-                   document.getElementById("lblresumen").value += "-";
-                   break;
-               case 3:
-                   document.getElementById("lblresumen").value += "*";
-                   break;
-               case 4:
-                   document.getElementById("lblresumen").value += "/";
-                   break;
-           }
-       }
-       // funcion que nos facilitara el resultado cuando presionamos el boton igual
-       function resultado()
-       {
-           print(valor1);
-           valor1= parseInt(valor1);
-           switch (parseInt(operacion)) {
-               case 1:
-                   valor1 += valor2;
-                   break;
-               case 2:
-                   valor1 = valor2 - valor1;
-                   break;
-               case 3:
-                   valor1 *= valor2;
-                   break;
-               case 4:
-                   valor1 = valor2 / valor1;
-                   break;
-           }
-           document.getElementById("lblresumen").value += "=";
-           document.getElementById("txtmostrar").value = valor1;
-           valor2 = parseInt(valor1); // valor 2 toma el valor de valor 1
-       }
-</script>
+
+
