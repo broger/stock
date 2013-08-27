@@ -109,10 +109,40 @@
           }
 }
 
+// With customizations
+
+$("table").tablecloth({
+  theme: "default",
+  bordered: true,
+  condensed: true,
+  striped: false, // linea par gris impar blanca
+  sortable: true,  // algo de jquery
+  clean: false,
+  cleanElements: "th td",
+  customClass: "my-table"
+});
+
+
 
 </script>
 
 <style type="text/css">
+
+  
+
+  .table{
+    font-size: 14px;
+    border-radius: 1px;
+    webkit-border-radius: 4px 0 0 0;
+  }
+
+  table thead th {
+   background: #DDDDDD;
+   color: #333333;
+    border-radius: 1px
+
+  }
+
      
      input[type="text"] {
        height: 20px;
@@ -138,7 +168,7 @@
 
     #contenido{
       padding:30px 30px 0 50px;
-      background-color:aqua;
+      background-color:white;
       float: left;
       display: inline;
     }

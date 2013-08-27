@@ -16,13 +16,14 @@
 
  
     <%= stylesheet_link_tag 'bootstrap',
-                              # 'bootstrap-theme.min',
+                             'tablecloth',
+                             'prettify.css',
+                             'bootstrap-tables',
                              'broger'
                               %>
 
-     <%= javascript_include_tag 'bootstrap.min',
-                                'bootstrap',
-                                'jquery',
+     <%= javascript_include_tag 'jquery-1.10.2.min',  # Siempre JQUERY 1er Script de la Lista
+                                'bootstrap.min',
                                 'holder',
                                 'affix',
                                 'alert',
@@ -32,11 +33,16 @@
                                 'modal',
                                 'dropdown',
                                 'bootstrap-prompts-alert.js',
-                               # 'popover', 
+                                'popover', 
                                 'scrollspy',
                                 'tab',
                                 'tooltip',
-                                'transition'
+                                'transition',
+                                # tablecloth
+                                'jquery.metadata',
+                                'jquery.tablecloth.js',
+                                'jquery.tablesorter.js',
+                                'jquery.tablesorter.min.js'
     %>
 
      <%#= csrf_meta_tag %>
@@ -117,8 +123,8 @@
      </div>
 
 
-       <div class="row" style=";background-color:rgb(183, 241, 183)" >
-              <div  class="col-sm-12">
+       <div class="row"  style="background-color:rgb(192, 148, 176)" >
+         <div  class="col-sm-12">
                          <%= yield %>
               </div>
       </div>
