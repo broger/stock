@@ -33,7 +33,7 @@
                                 'collapse',
                                 'modal',
                                 'dropdown',
-                                'bootstrap-prompts-alert.js',
+                                
                                 'popover', 
                                 'scrollspy',
                                 'tab',
@@ -75,53 +75,50 @@
      <% end %>
            <% cache([current_user,"logindata"]) do %>
              <p class="navbar-text pull-right">
-               <a href="http://twitter.github.com/bootstrap/examples/fluid.html#"><i class="glyphicon glyphicon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;<span href="/logout" class="glyphicon glyphicon-off" title="salir del sistema"></span>
-     </p>
-     <% end %>
+               <a  style="text-decoration:none"href="http://twitter.github.com/bootstrap/examples/fluid.html#"><i class="glyphicon glyphicon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/logout" style="color:#999999;" class="glyphicon glyphicon-off" title="salir del sistema" ></a>
+             </p>
+            <% end %>
 
         </div><!--/.nav-collapse -->
       </div>
     </div>
     <div class="container" style="height: 750px">
-      <div class="row" >
-              <div  id="botonera"  class="col-sm-12" >
-                <div id="bontones" style="float:left">
-                 <div style="float:left; margin-right:4px">A</div>
-                 <div style="float:left; margin-right:4px">ICON</div>
-                 <div style="float:left; margin-right:4px">ICON</div>
-                 <div style="float:left; margin-right:4px">ICON</div>
-                 <div style="float:left; margin-right:4px">ICON</div>
-                 <div style="float:left; margin-right:4px">ICON</div>
-                </div>
-                <div id="atras" style="float:right; margin:10px 10px 0 0" ><%= link_to image_tag ("iconos/atras.png"), 'javascript:history.back(1)', :title=> "atras" %></div>
-                 
-             </div>
-      </div>
-      <div class="row" >
-            <div  id="noticias" class="col-sm-12" >
-               <%if flash[:notice]%>
-              <div class="alert alert-warning fade in" style="width:80%">
-                     <button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
-                  </div>
-               <%end%>
-               <%if flash[:error]%>
-                 <div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:error] %></div>
-              <%end%>
+            <div class="row" >
+                    <div  id="botonera"  class="col-sm-12" >
+                      <div id="bontones" style="float:left">
+                       <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
+                       <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-usd"></button>
+                       <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-stats"></button>
+                       <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
+                       <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
+                      </div>
+                      <div id="atras" style="float:right; margin:10px 10px 0 0" ><%= link_to image_tag ("iconos/atras.png"), 'javascript:history.back(1)', :title=> "atras" %></div>
+
+                   </div>
             </div>
-     </div>
-
-
-       <div class="row" style=";background-color:rgb(183, 241, 183)" >
-              <div  class="col-sm-12">
-                         <%= yield %>
-              </div>
-      </div>
-          
-     </div>
+            <div class="row" >
+                     <%if flash[:notice]%>
+                        <div  id="noticias" class="col-sm-12" >
+                              <div class="alert alert-warning fade in" style="width:80%">
+                              <button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
+                        </div>
+                     <%end%>
+                     <%if flash[:error]%>
+                        <div  id="noticias" class="col-sm-12" >
+                              <div class="alert alert-warning fade in" style="width:80%">
+                              <button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
+                        </div>
+                     <%end%>
+                  </div>
+            <div class="row">
+                    <div  class="col-sm-12">
+                               <%= yield %>
+                    </div>
+            </div>
+        </div>
 </body>
-   <footer >
-               
-           </footer>
+<footer>
+</footer>
 </html>
 
 <script type="text/javascript">
@@ -132,17 +129,8 @@
 
     });
 
-    $("table").tablecloth({
-      theme: "default",
-      bordered: true,
-      condensed: true,
-      striped: false, // linea par gris impar blanca
-      sortable: true,  // algo de jquery
-      clean: false,
-      cleanElements: "th td",
-      customClass: "my-table"
-    });
 
+   
 
 </script>
 

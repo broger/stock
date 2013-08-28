@@ -84,16 +84,9 @@
                        <div style="text-align:center" >
                           <%= will_paginate @localidades, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
                         </div>
-      
-
      </div>
  </div>
  
-
-
-
-
-
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -107,7 +100,20 @@
           if ( $('#txtbuscar') != '' && $('#buscar').valid()){
                 $('#cargando').show();
           }
-}
+    }
+
+
+    $("table").tablecloth({
+      theme: "default",
+      bordered: true,
+      condensed: true,
+      striped: false, // linea par gris impar blanca
+      sortable: true,  // algo de jquery
+      clean: false,
+      cleanElements: "th td",
+      customClass: "my-table"
+    });
+
 
 
 

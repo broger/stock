@@ -4,7 +4,9 @@
   <%= f.error_messages %>
 
 
-<div class="brogertab">
+<div class="well">
+
+<div class="brogertab" >
             <ul id="myTab" class="nav nav-tabs">
               <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
               <li class=""><a href="#direccion"  data-toggle="tab">Direcci&oacute;n</a></li>
@@ -12,8 +14,8 @@
             </ul>
 
   <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
-                      <div  class="tab-pane active"  id="general">
-                                         <table style="width:350px; display:inline; float: left">
+    <div  class="tab-pane active"  id="general" >
+                                         <table>
                                               <tr>
                                                 <th><%= f.label :codigo %></th>
                                                 <td> <%=  Cliente.count >= 1  ? "#{Cliente.last.id.to_i + 1}" : "1"  %></td>
@@ -30,8 +32,6 @@
                                                  <th><%= f.label :estado_id, "Estado" %></th>
                                                  <td><%= f.select :estado_id , Estado.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
                                               </tr>
-                                          </table>
-                                          <table style="width:350px; display:inline; float: left">
                                              <tr>
                                                 <th><%= f.label :telefono %></th>
                                                 <td><%= f.text_field :telefono %></td>
@@ -45,21 +45,21 @@
                                                 <td><%= f.text_field :email %></td>
                                               </tr>
                                           </table>
-                                          </div>
+                                </div>
                                           <div class="tab-pane fade" id="direccion">
-                                                                                 <table>
-                                                                                      <tr>
-                                                                                         <th><%= f.label :provincia_id, "Provincia" %></th>
-                                                                                          <td><%= f.select :provincia_id , Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-                                                                                      </tr>
-                                                                                      <tr>
-                                                                                         <th><%= f.label   :localidad_id, "Localidad" %></th>
-                                                                                          <td><%= f.select :localidad_id, Localidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-                                                                                      </tr>
-                                                                                      <tr>
-                                                                                         <th><%= f.label :direccion, "Direcci&oacute;n" %></th>
-                                                                                          <td><%= f.text_field :direccion %></td>
-                                                                                      </tr>
+                                                       <table>
+                                                            <tr>
+                                                               <th><%= f.label :provincia_id, "Provincia" %></th>
+                                                                <td><%= f.select :provincia_id , Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                            </tr>
+                                                            <tr>
+                                                               <th><%= f.label   :localidad_id, "Localidad" %></th>
+                                                                <td><%= f.select :localidad_id, Localidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                            </tr>
+                                                            <tr>
+                                                               <th><%= f.label :direccion, "Direcci&oacute;n" %></th>
+                                                                <td><%= f.text_field :direccion %></td>
+                                                            </tr>
                                                                                   </table>
                                          </div>
                                          <div class="tab-pane fade" id="banco">
@@ -80,9 +80,9 @@
             </div>
 
 </div>
-<br />
-<br />
-<div style="text-aling:rigth"> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Volver', clientes_path %></div>
+
+<div style="float:right"><%= f.submit 'Guardar', :class=>"btn btn-danger" %> &nbsp; <%= button_to_function "Cancelar", "alert('close el fancybox')" %></div>
+</div>
 
 
 <% end %>
@@ -120,6 +120,11 @@
           min-height: 260px;
           height: auto;
     }
+
+    .tab-content{
+        background-color: white
+    }
+
 
     table
     {
