@@ -26,6 +26,57 @@ class ApplicationController < ActionController::Base
   def update_activity_time
     session[:expires_at] = 6.hours.from_now
   end
+
+
+
+  # Busqueda optimizada por campo nombre o descripcion.
+
+  def sql_descripcion(tabla,campo,txtbuscar,limite,visible,filtros)
+     sql = nil
+     txtbuscar = txtbuscar.squish
+     i = 0
+     nombre = txtbuscar.split(' ')
+     nombre.each do |p|
+        if i == 0
+                  if visible == true
+                      sql = "SELECT * FROM #{tabla} where es_visible = TRUE AND #{campo} ilike '%#{nombre[0]}%'"
+                  else
+                      sql = "SELECT * FROM #{tabla} where #{campo} ilike '%#{nombre[0]}%'"
+                  end
+        else
+           sql += " AND #{campo} ilike '%#{nombre[i]}%'"
+        end
+        i += 1
+     end
+     sql += " #{filtros} LIMIT #{limite}"
+     return sql
+  end
+
+
+  def sql_descripcion_con_orden(tabla,campo,txtbuscar,limite,visible,campo_orden,tipo_orden)
+     sql = nil
+     txtbuscar = txtbuscar.squish
+     i = 0
+     nombre = txtbuscar.split(' ')
+     nombre.each do |p|
+        if i == 0
+            if visible == true
+               sql = "SELECT * FROM #{tabla} where es_visible = TRUE AND #{campo} ilike '%#{nombre[0]}%'"
+            else
+               sql = "SELECT * FROM #{tabla} where #{campo} ilike '%#{nombre[0]}%'"
+            end
+        else
+           sql += " AND #{campo} ilike '%#{nombre[i]}%'"
+        end
+        i += 1
+     end
+     unless campo_orden.blank?
+        sql += " ORDER BY #{campo_orden} #{tipo_orden}"
+     end
+     sql += " LIMIT #{limite}"
+     return sql
+  end
+
   
 
 

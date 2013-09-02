@@ -13,11 +13,9 @@ class CreateProductos < ActiveRecord::Migration
       t.integer :seccion_id
       t.integer :categoria_id
 
-
       t.integer :provedor_id
 	    t.integer :codigo_proveedor
 
-	    t.double  :stock, :decimal => 7, :scale => 4
       t.double  :stock_minimo, :decimal => 7, :scale => 4
       t.double  :stock_maximo, :decimal => 7, :scale => 4
       t.double  :punto_pedido, :decimal => 7, :scale => 4
@@ -26,14 +24,10 @@ class CreateProductos < ActiveRecord::Migration
       t.boolean :visible_web
       t.column  :calificacion, "character(1)"
 
-
       t.double  :costo, :decimal => 7, :scale => 2
       t.double  :ganancia, :decimal=> 7, :scale => 2
       t.double  :descuento_contado, :decimal => 7, :scale => 2
       t.double  :iva, :decimal => 7, :scale => 2
-	    t.integer :moneda_id
-
-	    t.integer :deposito_id
 
    	  t.integer :estado_id
 

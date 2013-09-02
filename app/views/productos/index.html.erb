@@ -1,34 +1,79 @@
+
 <%= form_tag(productos_path, :method => 'get',:id=>'buscar') %>
 
-<h3>Productos</h3>
-<div style="float:left; width:55%; margin-top:0px; margin-bottom:30px;"><hr style="height:2px" /></div>
-<div class="search_simple" style="float:left">
-  <table>
-     <tr>
-       <td><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => ' buscar ...'%></td>
-       <td><div id="cargando"   style="display: none;">&nbsp;<%= image_tag('iconos/cargando.gif')%></div></td>
-       <td>
-           <div class="link_filtros" id="ver_filtros" onclick="ver_filtros()">&nbsp;ver filtros</div>
-           <div class="link_filtros" id="ocultar_filtros" onclick="ocultar_filtros()" style="display:none">ocultar filtros</div>
-       </td>
-     </tr>
-  </table>
-</div>
+<div class="row" >
+     <div id="titulo" class="col-sm-12" >
+        <h2 style="margin:0">Productos</h2>
+         <hr  style=" width=100%; border-width: 1px 0 0 0; margin:0; border-color:#333333; ">
+     </div>
+     
+     <div id="menu_izquierdo"  class="col-sm-2" >
 
-<div class="filtros" >
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Rubro &nbsp; <%= select_tag :rubro_id,'<option></option>' + options_from_collection_for_select(Rubro.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Secci&oacute;n  &nbsp; <%= select_tag :seccion_id,'<option></option>' + options_from_collection_for_select(Seccion.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Categoria &nbsp; <%= select_tag :categoria_id,'<option></option>' + options_from_collection_for_select(Categoria.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Marca &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Marca.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" >Proveedor &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Proveedor.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
-  <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" ><%= submit_tag "Buscar" , :class=>"btn btn-mini"%></div>
-  
+       <!-- ACORDENON -->
+       <div class="panel-group" id="accordion" style="font-size:11px">
+           <div class="panel panel-default" >
+             <div class="panel-heading">
+                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">REGISTROS</a></h5>
+             </div>
+             <div id="collapseOne" class="panel-collapse collapse in">
+                 <div class="panel-body"><%= link_to 'Nuevo Producto', new_producto_path %></div>
+             </div>
+           </div>
+           <div class="panel panel-default">
+             <div class="panel-heading">
+              <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">REPORTES</a></h5>
+             </div>
+             <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body"> - Todos   </div>
+             </div>
+           </div>
+           <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    TABLAS RELACIONADAS
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <ul>
+                     <li>Rubros</li>
+                     <li>Secciones</li>
+                     <li>Categorias</li>
+                     <li>Marcas</li>
+                     <li>Proveedores</li>
+                  </ul>
+
+                </div>
+              </div>
+            </div>
+      </div>
+
+
+     </div>
+     <div  id="contenido"  class="col-sm-10"  >
+
+            <div id="buscador" >
+                <div id="cargando"   style="display: none; float:left">&nbsp;<%= image_tag('iconos/loader.gif')%></div>
+                 <div style="float:right">
+                       <%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...', :class=>"form-control" , :style=> "display:initial"%>
+                       <div class="link_filtros" id="ver_filtros" onclick="ver_filtros()">&nbsp;ver filtros</div>  
+                       <div class="link_filtros" id="ocultar_filtros" onclick="ocultar_filtros()" style="display:none">ocultar filtros</div>
+                 </div>  
+            </div>
+            <div class="filtros" >
+              <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Rubro &nbsp; <%= select_tag :rubro_id,'<option></option>' + options_from_collection_for_select(Rubro.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+              <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Secci&oacute;n  &nbsp; <%= select_tag :seccion_id,'<option></option>' + options_from_collection_for_select(Seccion.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+              <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Categoria &nbsp; <%= select_tag :categoria_id,'<option></option>' + options_from_collection_for_select(Categoria.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+              <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Marca &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Marca.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+              <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" >Proveedor &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Proveedor.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
+              <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" ><%= submit_tag "Buscar" , :class=>"btn btn-xs btn-default"%></div>
+            </div> 
+            <%= render :partial => 'resultados' %>       
+
+     </div>
  </div>
-<br />
-<%= render :partial => 'resultados' %>
-<br />
-<%= link_to 'Nuevo Producto', new_producto_path ,:class=>'btn btn-primary' %>
-
 
 
 <script type="text/javascript">
@@ -54,7 +99,10 @@
     $('#buscar').submit(mostrar_loading);
     $('#rubro_id').change(seccionSelec);
     $('#seccion_id').change(categoriaSelec);
+
     })
+  $('#txtbuscar').focus;
+ 
 
 
  function seccionSelec() {
@@ -100,26 +148,72 @@
 
   }
 
+  $("table").tablecloth({
+      theme: "default",
+      bordered: true,
+      condensed: true,
+      striped: false, // linea par gris impar blanca
+      sortable: true,  // algo de jquery
+      clean: false,
+      cleanElements: "th td",
+      customClass: "my-table"
+    });
+
+
 
 </script>
 
 <style type="text/css">
- input[type="text"] {
-   height: 22px;
-   font-size: 13px;
-   line-height: 15px;
-   margin-bottom: 0px;
-}
+
+
+    
+    #titulo{
+      margin: 40px 0 4px 0;
+    }
+
+    input[type="text"] {
+       height: 24px;
+       font-size: 13px;
+       line-height: 15px;
+       border-radius: 1px;
+       width: 300px;
+    }
 
 
 
-.link_filtros{
-  font-size: 11px;
-}
+    #buscador{
+        height: 35px;
+        margin-bottom: 10px
+    }
 
-.filtros_select{
-  font-size: 11px;
-  height: 21px;
-  width:100px
-}
+    #menu_izquierdo{
+      float: left;
+      padding:30px 0 0 10px;
+      font-size: 11px;
+      /* background-color:green; */
+    }
+
+    #contenido{
+      padding:12px 30px 0 50px;
+      /*background-color:white; */
+      float: left;
+      display: inline;
+    }
+
+    .link_filtros{
+      font-size: 11px;
+      display: inline;
+    }
+
+    .filtros_select{
+      font-size: 11px;
+      height: 21px;
+      width:100px
+    }
+
+    .filtros{
+
+
+    }
+
 </style>

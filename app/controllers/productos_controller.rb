@@ -23,18 +23,23 @@ class ProductosController < ApplicationController
       filtros += " AND marca_id = #{params[:proveedor_id]}"
     end
 
-     unless params[:txtbuscar].blank?
-      filtros += " AND lower(nombre) like lower('%#{params[:txtbuscar]}%') "
-    end
 
-    if filtros == " "
-       @productos = Producto.paginate(:page => params[:page],:per_page => 6,:order => "nombre")
-    else
+      if params[:txtbuscar].blank? && filtros == " "
+         @productos = Producto.paginate(:page => params[:page],:per_page => 24,:order => "nombre")
+      else
+      
+          if params[:txtbuscar].blank?
+                @productos = Producto.find_by_sql("SELECT * FROM productos p where id > 0 #{filtros}")
 
-      @productos = Producto.find_by_sql("SELECT * FROM productos p where p.id > 0 #{filtros}")
-      @productos = @productos.paginate :per_page => 6, :page => params[:page],:order => 'nombre.apellido_y_nombre ASC',:include=>[:talbas,:estado_beneficiario]
-
-      end
+          else
+                if /^\d{1,10}$/.match(params[:txtbuscar].strip)
+                    @productos = Producto.find_by_sql("SELECT * FROM productos p where p.codigo ilike '%#{params[:txtbuscar].strip}%' #{filtros}")
+                else
+                    @productos = Producto.find_by_sql("#{sql_descripcion('productos','nombre',params[:txtbuscar],30,false,filtros)}")
+                end
+          end 
+           @productos = @productos.paginate :per_page => 24, :page => params[:page],:include=>[:talbas,:estado_beneficiario]
+      end     
 
 
     respond_to do |format|

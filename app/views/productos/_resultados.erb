@@ -1,36 +1,69 @@
 
 <% unless @productos.blank? %>
-  <table class="table" style="font-size :13px" >
-          <thead>
-            <tr style="height:12px">
-            <th>codigo</th>
-            <th>nombre</th>
-            <th>stock</th>
-            <th>Marca</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @productos.each do |producto| %>
-            <tr style="height:8px">
-                <td><%=h producto.id %></td>
-                <td><%=h producto.nombre %></td>
-                <td><%=h producto.stock %></td>
-                <td><%=h producto.marca.nombre %></td>
-                <td style="text-align:right">
-                       <%= link_to image_tag('iconos/zoom2.png'), producto, :title=>'Ver', :class=>'fancybox' %>
-                          <%= link_to image_tag('iconos/16x16/pencil.png'), edit_producto_path(producto), :title=>'Editar',:class=>'qtip' %>
-                          <%= link_to image_tag('iconos/16x16/remove.png'), producto, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
-                </td>
-              </tr>
-          <% end %>
-          </tbody>
-  <%else%>
-            <tr>
-              <td><div><h3><font color="red">No se encontraron resultados</font></h3></div></td>
-            </tr>
-   <%end%>
-</table>
- <div style="text-align:center">
-    <%= will_paginate @productos, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
-  </div>
 
+      <div  class= "cuadro-scroll">
+          <table>
+              <thead>
+                <tr style="height:12px">
+                  <th>codigo</th>
+                  <th>nombre</th>
+                  <th>Marca</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              <% @productos.each do |producto| %>
+                <tr >
+                    <td><%=h producto.codigo %></td>
+                    <td><%=h producto.nombre %></td>
+                    <td><%=h producto.marca.nombre %></td>
+                    <td style="text-align:right; padding-right:10px">
+                           <%= link_to image_tag('iconos/16x16/zoom.png'), producto, :title=>'Ver', :class=>'fancybox' %>
+                              <%= link_to image_tag('iconos/16x16/editar.png'), edit_producto_path(producto), :title=>'Editar',:class=>'qtip' %>
+                              <%= link_to image_tag('iconos/16x16/delete.png'), producto, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody> 
+          </table>
+      </div>
+      <div style="text-align:center">
+            <%= will_paginate @productos, :previous_label => '<< Anterior &nbsp;', :next_label => '&nbsp; Siguiente >>'%>
+      </div>
+
+
+  <%else%>
+           <div style="margin: 40px 0 0 20px; font-style: oblique"><h5><font color="red">No se encontraron resultados, modifique sus parametros de busqueda y vuelva a intenar Suerte!!</font></h5></div>
+            
+  <%end%>
+
+
+
+
+
+
+<style type="text/css">
+
+
+    .cuadro-scroll {
+     height:320px;
+     /* background-color:#F2F2F2; */
+     overflow:auto;
+    }
+
+
+    table{
+      font-size: 11px;
+      
+    }
+
+    table tr{
+      padding: 3px;
+
+    }
+
+     .table-condensed tbody > tr > td, .table-condensed tfoot > tr > td {
+    padding: 3px;
+      }
+
+</style>
