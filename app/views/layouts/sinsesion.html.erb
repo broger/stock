@@ -1,6 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
   <head>
     <title>Control-Stock</title>
     <%= javascript_include_tag :all %>
@@ -9,43 +6,56 @@
   <body>
    
     <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">Stock-Control &nbsp;&nbsp;&nbsp;&nbsp;</a>
-          <div class="nav-collapse collapse">
-          </div>
+        <div class="container"   >
+            <div class="navbar-header" >
+                  <a class="navbar-brand" href="#">STOCK&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            </div>
         </div>
-      </div>
     </div>
-    <br />
-    <br />
-    <br />
-    <div class="container">
-      <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
+      <div class="portada_cuerpo" >
+        
+        <div class="col-sm-3 " style="padding:60px 0 0 60px">
+          <div class="well sidebar-nav" style="border-radius:1px; background-color:rgba(250,250,250, 0.15)">
             <%=  yield %>
           </div>
         </div>
-        <div class="span9">
-          <div class="hero-unit">
-            <h1>Bienvenido</h1>
+        <div class="col-sm-9" style="padding:180px 0 0 160px">
+          <div  style="color:#ffffff">
+            <h1 style= " font-size:70px; color: #fff; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);">Bienvenido</h1>
+            <p> Sistema de Control de Stock. </p>
             <p>
-              Sistema de Control de Stock.
+              Versi&oacute;n: 0.0.1.
             </p>
-            <p>
-              Nuevas Actualizaciones.
-            </p>
-        </div>
+            </div>
       </div>
-    </div>
-  </body>
-</html>
+
+      </div>
+</body>
+<footer>
+  <div style="background-color: #ffffff;  height:2px; width:100%"></div>
+</footer>
+
+
+
+
+<style type="text/css">
+
+   .portada_cuerpo {
+      height: 750px; margin: 60px 0 0 0;
+   }
+   
+   body{
+    background-image: url('/images/estantes.jpg');
+    margin:0 0 10px 0 ;
+   }
+
+    footer{
+       background-color:black;
+       height:220px;
+       margin: 10px 0 0 0 ;
+    }
+   
+</style>
 
 
 

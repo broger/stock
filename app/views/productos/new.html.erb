@@ -61,31 +61,27 @@
                             </td>
                             <td>
                                <table>
-                                             <tr>
-                                                <th style="text-align:right; padding-right:7px"><%= f.label :costo, "Precio Costo" %></th>
-                                                <td><%= f.text_field :costo,:size=>16,:placeholder => ' 0.00 $' %></td>
-                                              </tr>
-                                              <tr>
-                                                <th style="text-align:right; padding-right:7px"><%= f.label :ganancia, "Ganacia" %></th>
-                                                <td><%= f.text_field :ganancia ,:size=>16,:placeholder => ' 0.00 %' %></td>
-                                              </tr>
-                                              <tr>
-                                                <th style="text-align:right; padding-right:7px"><%= f.label :descuento, "Descuento" %></th>
-                                                <td><%= f.text_field :descuento,:size=>16,:placeholder => ' 0.00 %' %></td>
-                                              </tr>
-                                              <tr>
-                                                <th style="text-align:right; padding-right:7px"><%= f.label :iva, "IVA" %></th>
-                                                <td><%= f.text_field :iva ,:size=>16,:placeholder => ' 0.00 %'%></td>
-                                              </tr>
-                                              <tr>
-                                                    <th style="text-align:right; padding-right:7px"><%= f.label :moneda_id, "Moneda" %></th>
-                                                    <td><%= f.select :moneda_id, Moneda.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
-                                              </tr>
-                                              <tr>
-                                                    <th style="text-align:right; padding-right:7px"></th>
-                                                    <td></td>
-                                              </tr>
-                                              </table>
+                                           <tr>
+                                              <th style="text-align:right; padding-right:7px"><%= f.label :costo, "Precio Costo" %></th>
+                                              <td><%= f.text_field :costo,:size=>16,:placeholder => ' 0.00 $' %></td>
+                                            </tr>
+                                            <tr>
+                                              <th style="text-align:right; padding-right:7px"><%= f.label :ganancia, "Ganacia" %></th>
+                                              <td><%= f.text_field :ganancia ,:size=>16,:placeholder => ' 0.00 %' %></td>
+                                            </tr>
+                                            <tr>
+                                              <th style="text-align:right; padding-right:7px"><%= f.label :descuento, "Descuento" %></th>
+                                              <td><%= f.text_field :descuento,:size=>16,:placeholder => ' 0.00 %' %></td>
+                                            </tr>
+                                            <tr>
+                                              <th style="text-align:right; padding-right:7px"><%= f.label :iva, "IVA" %></th>
+                                              <td><%= f.text_field :iva ,:size=>16,:placeholder => ' 0.00 %'%></td>
+                                            </tr>
+                                            <tr>
+                                                  <th style="text-align:right; padding-right:7px"></th>
+                                                  <td></td>
+                                            </tr>
+                                            </table>
 
                             </td>
                             <td style="width:30%">
@@ -138,10 +134,7 @@
                                                        <th><%= f.label :marca_id, "Marca" %></th>
                                                        <td><%= f.select :marca_id, Marca.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
                                                   </tr>
-                                                    <tr>
-                                                       <th><%= f.label :deposito_id, "Deposito" %></th>
-                                                       <td><%= f.select :deposito_id, Deposito.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %></td>
-                                                  </tr>
+                                                  
                                              </table>
                                              <table>
                                                     <tr>

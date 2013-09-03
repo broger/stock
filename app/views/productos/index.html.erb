@@ -8,41 +8,40 @@
      </div>
      
      <div id="menu_izquierdo"  class="col-sm-2" >
-
        <!-- ACORDENON -->
        <div class="panel-group" id="accordion" style="font-size:11px">
            <div class="panel panel-default" >
              <div class="panel-heading">
-                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">REGISTROS</a></h5>
+                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Registros</a></h5>
              </div>
              <div id="collapseOne" class="panel-collapse collapse in">
-                 <div class="panel-body"><%= link_to 'Nuevo Producto', new_producto_path %></div>
+                 <div class="panel-body"><%= link_to 'nuevo producto', new_producto_path %></div>
              </div>
            </div>
            <div class="panel panel-default">
              <div class="panel-heading">
-              <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">REPORTES</a></h5>
+              <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Reportes</a></h5>
              </div>
              <div id="collapseTwo" class="panel-collapse collapse">
-              <div class="panel-body"> - Todos   </div>
+              <div class="panel-body"> - todos   </div>
              </div>
            </div>
            <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
                   <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                    TABLAS RELACIONADAS
+                    Tablas Relacionadas
                   </a>
                 </h4>
               </div>
               <div id="collapseThree" class="panel-collapse collapse">
                 <div class="panel-body">
                   <ul>
-                     <li>Rubros</li>
-                     <li>Secciones</li>
-                     <li>Categorias</li>
-                     <li>Marcas</li>
-                     <li>Proveedores</li>
+                     <li>rubros</li>
+                     <li>secciones</li>
+                     <li>categorias</li>
+                     <li>marcas</li>
+                     <li>proveedores</li>
                   </ul>
 
                 </div>
@@ -58,7 +57,7 @@
                 <div id="cargando"   style="display: none; float:left">&nbsp;<%= image_tag('iconos/loader.gif')%></div>
                  <div style="float:right">
                        <%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...', :class=>"form-control" , :style=> "display:initial"%>
-                       <div class="link_filtros" id="ver_filtros" onclick="ver_filtros()">&nbsp;<i class="glyphicon glyphicon-filter" style="color#27A9E3" ></i></div>  
+                       <div class="link_filtros" id="ver_filtros" title="filtros" onclick="ver_filtros()">&nbsp;<i class="glyphicon glyphicon-filter" style="color#27A9E3" ></i></div>  
                        <div class="link_filtros" id="ocultar_filtros" onclick="ocultar_filtros()" style="display:none"><i class="glyphicon glyphicon-filter" ></i></div>
                  </div>  
             </div>
@@ -188,7 +187,7 @@
 
     #menu_izquierdo{
       float: left;
-      padding:30px 0 0 10px;
+      padding:20px 0 0 10px;
       font-size: 11px;
       /* background-color:green; */
     }
@@ -201,9 +200,15 @@
     }
 
     .link_filtros{
-      font-size: 11px;
+      font-size: 16px;
       display: inline;
+      color:#27A9E3;
     }
+
+     .filtros{
+       float: left; 
+       width:100%
+     }
 
     .filtros_select{
       font-size: 11px;
@@ -211,9 +216,12 @@
       width:100px
     }
 
-    .filtros{
 
 
-    }
+</style>
+
+
+
+<style type="text/css">
 
 </style>

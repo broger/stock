@@ -81,7 +81,7 @@
      <% end %>
            <% cache([current_user,"logindata"]) do %>
              <p class="navbar-text pull-right">
-               <a  style="text-decoration:none"href="http://twitter.github.com/bootstrap/examples/fluid.html#"><i class="glyphicon glyphicon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/logout" style="color:#999999;" class="glyphicon glyphicon-off" title="salir del sistema" ></a>
+               <a  style="text-decoration:none"><i class="glyphicon glyphicon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/logout" style="color:#999999;" class="glyphicon glyphicon-off" title="salir del sistema" ></a>
              </p>
             <% end %>
 
@@ -92,7 +92,8 @@
             <div class="row" >
                     <div  id="botonera"  class="col-sm-12" >
                       <div id="bontones" style="float:left">
-                      <a  id ="calculadora" class ="fancybox" href="<%= calculadora_menus_path %>" >calculadora</a>
+                      <a  id ="calculadora" class ="boton fancybox" href="<%= calculadora_menus_path %>" ><i class="glyphicon glyphicon-list-alt" ></i></a>
+                      
                        <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
                        <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-usd"></button>
                        <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-stats"></button>
@@ -217,5 +218,28 @@
         margin: 18px 0 0 0;
       }
 
+
+
+.boton {
+
+    color: #333333;
+    background-color: #ffffff;
+    border: 1px solid transparent;
+    border-color: #cccccc;
+    border-radius:1px;
+
+    -webkit-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    -moz-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+
+
+    -moz-border-radius:1px;
+    -webkit-border-radius:1px;
+
+  
+    font-size:16px;
+    padding:4px 16px;
+
+}
       
 </style>
