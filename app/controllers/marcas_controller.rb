@@ -1,8 +1,13 @@
 class MarcasController < ApplicationController
   # GET /marcas
   # GET /marcas.xml
-  def index
-    @marcas = Marca.all
+   def index
+    if params[:txtbuscar].blank?
+       @marcas = Marca.paginate(:page => params[:page],:per_page => 6,:order => "nombre")
+    else
+       @marcas = Marca.paginate(:page => params[:page],:per_page => 6,:conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb

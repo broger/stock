@@ -22,9 +22,7 @@ class LocalidadesController < ApplicationController
   # GET /localidads/1.xml
   def show
     @localidad = Localidad.find(params[:id])
-    respond_to do |format|
-       format.html{render :layout=>false}
-    end
+     
   end
 
   # GET /localidads/new
@@ -32,15 +30,17 @@ class LocalidadesController < ApplicationController
   def new
     @localidad = Localidad.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @localidad }
+     respond_to do |format|
+      format.html{render :layout=>false}
     end
   end
 
   # GET /localidads/1/edit
   def edit
     @localidad = Localidad.find(params[:id])
+     respond_to do |format|
+      format.html{render :layout=>false}
+    end
   end
 
   # POST /localidads
@@ -50,7 +50,7 @@ class LocalidadesController < ApplicationController
 
     respond_to do |format|
       if @localidad.save
-        format.html { redirect_to(@localidad, :notice => 'La Localidad ha sido creada satisfactoriamente.') }
+        format.html { redirect_to(localidades_path, :notice => 'La Localidad ha sido creada satisfactoriamente.') }
         format.xml  { render :xml => @localidad, :status => :created, :location => @localidad }
       else
         format.html { render :action => "new" }
@@ -66,7 +66,7 @@ class LocalidadesController < ApplicationController
 
     respond_to do |format|
       if @localidad.update_attributes(params[:localidad])
-        format.html { redirect_to(@localidad, :notice => 'Localidad was successfully updated.') }
+        format.html { redirect_to(localidades_path, :notice => 'La Localidad ha sido actualizada satisfactoriamente.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

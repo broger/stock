@@ -1,21 +1,31 @@
-<h1>Nueva Localidad</h1>
-
+<div style="width:500px; height:400px">
+<div style="border-bottom: 1px solid #eee; width: 100%" >
+    <h4>Nueva Localidad </h4>
+  </div>
+<div style="width: 100%; padding:30px 0 30px 0" >
 <% form_for(@localidad) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :provincia_id %><br />
-    <%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %>
+  <table>
+    <tr> 
+       <td><%= f.label :provincia_id %></td>
+       <td><%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %>
+    </td>
+     </tr>
+    <tr> 
+       <td><%= f.label :nombre %></td>
+       <td>  <%= f.text_field :nombre %>
+  </td>
+     </tr>
+  </table>    
+</div>
+ <div  style="background-color: #f5f5f5; border-top: 1px solid #ddd;">
+     <%= f.submit 'Guardar' %>
+  </div>
+ 
 
-  </p>
-   <p>
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
-  </p>
-  <p>
-    <%= f.submit 'Guardar' %> | <%= link_to 'atras', localidades_path %>
-  </p>
-<% end %>
+
+ <% end %>
 
 
 
