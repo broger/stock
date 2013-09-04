@@ -65,15 +65,17 @@ class ProductosController < ApplicationController
   def new
     @producto = Producto.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @producto }
+   respond_to do |format|
+      format.html{render :layout=>false}
     end
   end
 
   # GET /productos/1/edit
   def edit
     @producto = Producto.find(params[:id])
+    respond_to do |format|
+      format.html{render :layout=>false}
+    end
   end
 
   # POST /productos

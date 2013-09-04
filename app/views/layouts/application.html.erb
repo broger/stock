@@ -134,7 +134,17 @@
 
            $("input:text:visible:first").focus();
 
-           $(".fancybox").fancybox();
+
+           $(".fancybox").fancybox({
+              'autoDimensions'    : false,
+              'width'             : 800,
+              'height'            : 600,
+              'transitionIn'      : 'none',
+              'transitionOut'     : 'none',
+              'scrolling'         : false,
+              'padding'           : 0,
+
+            });
 
 
     });
@@ -191,12 +201,15 @@
 
     .panel-title {
       color:#ffffff;
-      font-size: 12px;
+      font-size: 13px;
+      text-decoration: none;
        background-color:#27A9E3
      }
 
      .panel-heading{
-         background-color:#27A9E3
+         background-color:#27A9E3; 
+         padding: 20px 15px;
+           border-radius: 1px;
      }
 
      .panel-default > .panel-heading {
@@ -206,19 +219,22 @@
     .panel-group{
       border-radius: 1px;
      }
+    
     .panel panel-default{
       border-radius: 1px;
      }
-     .panel-heading{
-      border-radius: 1px;
-      }
 
-      .alert{ 
+    .alert{ 
         padding: 9px ;
         margin: 18px 0 0 0;
-      }
+    }
 
 
+    .panel-group .panel + .panel {
+        margin-top: 1px;
+    }
+
+ /** fin acordeon **/ 
 
 .boton {
 
@@ -241,5 +257,6 @@
     padding:4px 16px;
 
 }
+
       
 </style>

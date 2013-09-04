@@ -9,30 +9,27 @@
      
      <div id="menu_izquierdo"  class="col-sm-2" >
        <!-- ACORDENON -->
-       <div class="panel-group" id="accordion" style="font-size:11px">
+       <div class="panel-group" id="accordion" style="font-size:13px">
            <div class="panel panel-default" >
-             <div class="panel-heading">
-                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Registros</a></h5>
+             <div class="panel-heading"  data-toggle="collapse"  href="#collapseOne">
+                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="glyphicon glyphicon-align-justify" ></i>&nbsp;Registros</a></h5>
              </div>
              <div id="collapseOne" class="panel-collapse collapse in">
-                 <div class="panel-body"><%= link_to 'nuevo producto', new_producto_path %></div>
+                 <div class="panel-body"><%= link_to 'nuevo producto', new_producto_path , :class=>'fancybox' %></div>
              </div>
            </div>
            <div class="panel panel-default">
-             <div class="panel-heading">
-              <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Reportes</a></h5>
+             <div class="panel-heading" data-toggle="collapse"  href="#collapseTwo">
+              <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="glyphicon glyphicon-file" ></i>&nbsp;Reportes</a></h5>
              </div>
              <div id="collapseTwo" class="panel-collapse collapse">
               <div class="panel-body"> - todos   </div>
              </div>
            </div>
            <div class="panel panel-default">
-              <div class="panel-heading">
+              <div class="panel-heading"  data-toggle="collapse"  href="#collapseThree">
                 <h4 class="panel-title">
-                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                    Tablas Relacionadas
-                  </a>
-                </h4>
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"><i class="glyphicon glyphicon-folder-open" ></i>&nbsp; Tablas Relacionadas</a></h5>
               </div>
               <div id="collapseThree" class="panel-collapse collapse">
                 <div class="panel-body">
@@ -90,16 +87,30 @@
           categorias.push(new Array(<%=h categoria.seccion_id %>, "<%=h categoria.nombre %>", <%=h categoria.id %>));
     <% end %>
 
+    var marcas = new Array();
+    <% marcas = Marca.find(:all) %>
+    <% for marca in marcas -%>
+          marcas.push(new Array(<%=h marca.rubro_id %>, "<%=h marca.nombre %>", <%=h marca.id %>));
+    <% end %>
+
 
   $(document).ready(function(){
     $('.filtros').hide();
     $('.ocultar_filtros').hide();
     ocultar_filtros();
+    
+
     $('#buscar').submit(mostrar_loading);
     $('#rubro_id').change(seccionSelec);
+    $('#rubro_id').change(marcasSelec);
+    
     $('#seccion_id').change(categoriaSelec);
+    seccionSelec();
+    categoriaSelec();
+    marcasSelec();
 
     })
+
   $('#txtbuscar').focus;
  
 
@@ -123,6 +134,17 @@
     categorias.forEach(function(categoria){
         if (categoria[0]==seccion_id){
             $('#categoria_id').append(selec='<option value="'+ categoria[2] +'">'+categoria[1]+'</option>');
+        }
+    });
+  }
+
+  function marcasSelec() {
+    rubro_id = $('#rubro_id').val();
+    $('#marca_id').empty();
+    $('#marca_id').append(selec='<option></option>');
+    marcas.forEach(function(marca){
+        if (marca[0]==rubro_id){
+            $('#marca_id').append(selec='<option value="'+ marca[2] +'">'+ marca[1]+'</option>');
         }
     });
   }
