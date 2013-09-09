@@ -1,45 +1,15 @@
-
-<div style="width:450px; height:380px">
-<div style="border-bottom: 1px solid #eee; width: 90%" >
-    <h4>Nueva Localidad </h4>
-  </div>
-<div style="height:200px;" >
-<% form_for(@localidad) do |f| %>
-  <%= f.error_messages %>
-
-  <table>
-    <tr> 
-       <td><%= f.label :provincia_id %></td>
-       <td><%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %>
-    </td>
-     </tr>
-    <tr> 
-       <td><%= f.label :nombre %></td>
-       <td>  <%= f.text_field :nombre %>
-  </td>
-     </tr>
-  </table>    
+<div class="modal" id="loginModal">
+    Test Content
 </div>
- <div  style="width:450px; background-color:#efefef">
-     <%= f.submit 'Guardar' , :class=> 'btn btn-xs btn-danger', :style=>'float:right'%>
-  </div>
- 
 
- <% end %>
 
 
 
 
   <script type="text/javascript">
-  $(document).ready(function(){
-    $("#new_localidad").validate({
-      rules: {
-              "localidad[nombre]": {required: true, minlength: 3, maxlength:30},
-              "localidad[provincia_id]": {required: true, minlength: 1, maxlength:60}
-              }
-    });
+ $('#loginModal').modal()
 
-});
+
 </script>
 
 
