@@ -1,15 +1,181 @@
-<div  style="background-color:rgb(243, 243, 243)">
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+    <h3 >Nuevo Producto</h3>
+</div>
+<% form_for(@producto) do |f| %>
+  <%= f.error_messages %>
+<div class="well">
+	<div class="brogertab" >
+	            <ul id="myTab" class="nav nav-tabs">
+	              <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
+	              <li class=""><a href="#categoria"  data-toggle="tab">Direcci&oacute;n</a></li>
+	              <li class=""><a href="#web"        data-toggle="tab">Banco</a></li>
+	            </ul>
+
+				 <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
+	    					<div  class="tab-pane active"  id="general" >
+                             <table >
+                                 <tr>
+                                      <td>
+                                         <% ultimo =  Producto.count >= 1  ? "#{Producto.last.id.to_i + 1}" : "1"  %>
+                                         <%= f.text_field :codigo, :value=> ultimo, :size=>20 %>
+                                            <%= f.label :codigo, "C&oacute;digo" %>
+                                          	<%= f.text_field :nombre %><%= f.label :nombre %> 
+                                       </td>
+                                 </tr>
+                                 <tr>
+                                       <td >
+                                           <%= f.text_field :etiqueta_busqueda %>
+                                           <%= f.label :etiqueta_busqueda,  "Etiqueta de B&uacute;squeda" %>     
+                             		   </td>
+                                  </tr>
+                                  <tr>
+
+                                  <td><%= f.text_field :stock_minimo,:size=>16,:placeholder => ' 0.00' %>
+                                        <%= f.label :stock_minimo, "Stock M&iacute;nimo" %>
+                                        <%= f.text_field :stock_maximo,:size=>16,:placeholder => ' 0.00' %>
+                                        <%= f.label :stock_maximo, "Stock M&aacute;ximo" %>
+                                        <%= f.text_field :punto_de_pedido,:size=>16,:placeholder => ' 0.00' %>
+                                        <%= f.label :punto_de_pedido, "Avisa en" %>
+                                   </td>
+
+                                   <tr>
+                                          <td><%= f.select :unidad_id, Unidad.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %>
+                                             <%= f.label :unidad_id, "Unidad Medida" %>
+                                             <%= f.select :estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %>
+                                             <%= f.label :estado_id, "Estado" %>
+                                           </td>
+
+                                  </tr>
+
+                               </table>
+                               	
+		                    </div>
+		                     <div class="tab-pane fade" id="categoria">
+                        <table style="width:360px; display:inline; float: left">
+                                                <tr>
+                                                     <th><%= f.label :rubro_id, "Rubro" %></th>
+                                                     <td><% unless Rubro.count == 0 %>
+                                                            <%=  Rubro.count > 1 ? "#{f.select :rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}}" : "#{Rubro.first.nombre}" %>
+                                                        <% end %>
+                                                     </td>
+                                                </tr>
+                                                <tr>
+                                                     <th><%= f.label :seccion_id, "Secci&oacute;n" %></th>
+                                                     <td><%=  f.select :seccion_id, Seccion.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}%></td>
+                                                </tr>
+                                                 <tr>
+                                                     <th><%= f.label :categoria_id, "Categoria" %></th>
+                                                     <td><%=  f.select :categoria_id, Categoria.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}%></td>
+                                                </tr>
+                                            </table>
+                                            <table style="width:350px; display:inline; float: left">
+                                                <tr>
+                                                       <th><%= f.label :codigo_proveedor, "C&oacute;digo Proveedor" %></th>
+                                                       <td><%= f.text_field :codigo_proveedor %></td>
+                                                  </tr>
+                                                  <tr>
+                                                       <th><%= f.label :proveedor_id, "Proveedor" %></th>
+                                                       <td><%= f.select :proveedor_id, Proveedor.find(:all).collect{|t|[t.razon_social, t.id]}, {:include_blank => true} %></td>
+                                                  </tr>
+                                                    <tr>
+                                                       <th><%= f.label :marca_id, "Marca" %></th>
+                                                       <td><%= f.select :marca_id, Marca.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                  </tr>
+                                                  
+                                             </table>
+                                             <table>
+                                                    <tr>
+                                                        <td>
+                                                              
+                                                            <%= f.label 'calificacion_a','A'%>                               
+                                                            <%= f.radio_button :calificacion, 'A', :checked => true %> 
+                                                        </td>
+                                                  </tr>
+                                                  <tr>
+                                                        <td>
+                                                            <%= f.label 'calificacion_b','B'%>
+                                                            <%= f.radio_button :calificacion, 'B', :checked => false %>
+                                                            
+                                                        </td>
+
+                                                  </tr>
+                                                  <tr>
+                                                        <td>
+                                                            <%= f.label 'calificacion_c','C'%>
+                                                            <%= f.radio_button :calificacion, 'C', :checked => false %>
+                                                            
+                                                        </td>
+                                                        
+                                                  </tr>
+
+                                                </table>
+
+                      </div>
+
+                      <div class="tab-pane fade" id="web">
+                                             <table>
+                                                  <tr>
+                                                    <td> <div style="vertical-align: middle"><%= "#{f.check_box :visible_web} Visible para la Web" %></div></td>
+                                                    <td></td>
+                                                  </tr>
+                                              </table>
+                      </div>
+              
+              
+                      <div class="tab-pane fade" id="descripcion">
+                        <table style="width:100%">
+                                <tr>
+                                  <td><%= f.text_area :descripcion , :cols => "50", :rows => "10" ,:placeholder => 'describa el producto aqui ...'%></td>
+                                </tr>
+                        </table>
+                                            
+                      </div>	
 
 
 
 
+	            </div>
 
-
-
-
-
-
-
-
+	</div>
 
 </div>
+
+ <div style="text-align: right"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %></p></div>
+
+<% end %>
+
+
+<script type="text/javascript">
+
+
+ $('#myTab a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+
+
+</script>
+
+
+
+<style type="text/css">
+	
+	#fancybox-wrap {
+	  padding:0;
+	}
+
+	#fancybox-inner {
+	position:relative;
+	}
+
+.brogertab{
+          min-height: 260px;
+          height: auto;
+    }
+
+    .tab-content{
+        background-color: white
+    }
+
+</style>
+
