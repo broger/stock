@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130816175624) do
+ActiveRecord::Schema.define(:version => 20130911203011) do
 
   create_table "categorias", :force => true do |t|
     t.string   "nombre",     :limit => 30
@@ -47,6 +47,16 @@ ActiveRecord::Schema.define(:version => 20130816175624) do
     t.datetime "updated_at"
   end
 
+  create_table "lista_precios", :force => true do |t|
+    t.integer  "codigo"
+    t.string   "nombre",     :limit => 40
+    t.string   "abrev",      :limit => 16
+    t.date     "desde"
+    t.date     "hasta"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "localidades", :force => true do |t|
     t.string   "nombre"
     t.integer  "provincia_id"
@@ -59,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20130816175624) do
     t.string   "nombre",     :limit => 20
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rubro_id"
   end
 
   create_table "marcas_rubros", :force => true do |t|
@@ -77,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20130816175624) do
     t.string   "ayuda"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "tiene_divisor"
   end
 
   create_table "menus_roles", :force => true do |t|
@@ -109,31 +121,37 @@ ActiveRecord::Schema.define(:version => 20130816175624) do
     t.integer  "cuil",           :limit => 12,  :precision => 12, :scale => 0
   end
 
+  create_table "producto_lista_precios", :force => true do |t|
+    t.integer  "producto_id"
+    t.integer  "lista_precio_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "productos", :force => true do |t|
-    t.string   "nombre",             :limit => 60
+    t.string   "nombre",            :limit => 60
     t.string   "descripcion"
     t.integer  "marca_id"
     t.integer  "unidad_id"
     t.integer  "rubro_id"
     t.integer  "seccion_id"
     t.integer  "categoria_id"
-    t.integer  "provedor_id"
     t.integer  "codigo_proveedor"
-    t.integer  "proveedor2_id"
-    t.integer  "stock_minimo"
-    t.boolean  "avisa_stock_minimo"
+    t.decimal  "stock_minimo",                    :precision => 8, :scale => 2
     t.boolean  "visible_web"
-    t.integer  "moneda_id"
-    t.integer  "deposito_id"
     t.integer  "estado_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "costo",                            :precision => 7, :scale => 2
-    t.decimal  "ganancia",                         :precision => 7, :scale => 2
-    t.decimal  "descuento",                        :precision => 5, :scale => 2
-    t.decimal  "iva",                              :precision => 7, :scale => 2
+    t.decimal  "costo",                           :precision => 8, :scale => 2
+    t.decimal  "ganancia",                        :precision => 8, :scale => 2
+    t.decimal  "descuento",                       :precision => 5, :scale => 2
+    t.decimal  "iva",                             :precision => 8, :scale => 2
     t.integer  "proveedor_id"
-    t.decimal  "stock",                            :precision => 8, :scale => 2
+    t.decimal  "stock_maximo",                    :precision => 8, :scale => 2
+    t.string   "calificacion",      :limit => 1
+    t.decimal  "punto_de_pedido",                 :precision => 8, :scale => 2
+    t.string   "codigo",            :limit => 8
+    t.string   "etiqueta_busqueda", :limit => 30
   end
 
   create_table "proveedores", :force => true do |t|

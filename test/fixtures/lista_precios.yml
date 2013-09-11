@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  codigo: 
+  nombre: 
+  abrev: 
+  desde: 
+  hasta: 2013-09-11
+
+two:
+  codigo: 
+  nombre: 
+  abrev: 
+  desde: 
+  hasta: 2013-09-11

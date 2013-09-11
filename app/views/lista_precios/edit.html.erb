@@ -1,0 +1,32 @@
+<h1>Editing lista_precio</h1>
+
+<% form_for(@lista_precio) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :codigo %><br />
+    <%= f.text_field :codigo %>
+  </p>
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :abrev %><br />
+    <%= f.text_field :abrev %>
+  </p>
+  <p>
+    <%= f.label :desde %><br />
+    <%= f.text_field :desde %>
+  </p>
+  <p>
+    <%= f.label :hasta %><br />
+    <%= f.date_select :hasta %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @lista_precio %> |
+<%= link_to 'Back', lista_precios_path %>

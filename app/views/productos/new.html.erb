@@ -140,19 +140,50 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function(){
+            $("#new_producto").validate({
+             rules: {
+                  "producto[nombre]": {required: true, rangelength: [3,60]},
+                  "producto[marca_id]": {required: true},
+                  "producto[unidad_id]": {required: true},
+                  "producto[rubro_id]": {required: true},
+                  "producto[seccion_id]": {required: true},
+                  "producto[categoria_id]": {required: true},
+                  "producto[proveedor_id]": {required: true},
+                  "producto[moneda_id]": {required: true},
+                  "producto[estado_id]": {required: true},
+                  "producto[deposito_id]": {required: true},
+                  "producto[proveedor_id]": {required: true},
+                  "producto[codigo_proveedor]": {digits: true},
+                  "producto[codigo_proveedor]": {digits: true}
 
- $('#myTab a').click(function (e) {
-      e.preventDefault();
-      $(this).tab('show');
+                  }
+            });
+
+            seccionSelec();
+            categoriaSelec();
+            marcasSelec();
+            
     });
 
+    $.validator.addMethod('Decimal', function(value, element) {
+    return this.optional(element) || /^[0-9,]+(\.\d{0,3})?$/.test(value);
+    }, "formato correcto 0000.00");
 
- var secciones = new Array();
+     $('#myTab a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show');
+        });
+
+
+    var secciones = new Array();
     <% secciones = Seccion.find(:all) %>
     <% for seccion in secciones -%>
           secciones.push(new Array(<%= seccion.rubro_id %>, "<%=h seccion.nombre %>", <%= seccion.id %>));
     <% end %>
     $('#producto_rubro_id').change(seccionSelec);
+    $('#producto_rubro_id').change(marcasSelec);
+    
 
     var categorias = new Array();
     <% categorias = Categoria.find(:all) %>
@@ -161,36 +192,98 @@
     <% end %>
     $('#producto_seccion_id').change(categoriaSelec);
 
+    var marcas = new Array();
+    <% marcas = Marca.find(:all) %>
+    <% for marca in marcas -%>
+          marcas.push(new Array(<%=h marca.rubro_id %>, "<%=h marca.nombre %>", <%=h marca.id %>));
+    <% end %>
+
+
     
+    function seccionSelec() {
+        rubro_id = $('#producto_rubro_id').val();
+        $('#producto_seccion_id').empty();
+        $('#producto_categoria_id').empty();
+        $('#producto_seccion_id').append(selec='<option></option>');
+        secciones.forEach(function(seccion){
+            if (seccion[0]==rubro_id){
+              $('#producto_seccion_id').append(selec='<option value="'+ seccion[2] +'">'+seccion[1]+'</option>');
+            }
+        });
+    }
 
-function seccionSelec() {
-    rubro_id = $('#producto_rubro_id').val();
-    $('#producto_seccion_id').empty();
-    $('#producto_categoria_id').empty();
-    $('#producto_seccion_id').append(selec='<option></option>');
-    secciones.forEach(function(seccion){
-        if (seccion[0]==rubro_id){
-          $('#producto_seccion_id').append(selec='<option value="'+ seccion[2] +'">'+seccion[1]+'</option>');
-        }
-    });
-}
+    function categoriaSelec() {
+        seccion_id = $('#producto_seccion_id').val();
+        $('#producto_categoria_id').empty();
+        $('#producto_categoria_id').append(selec='<option></option>');
+        categorias.forEach(function(categoria){
+            if (categoria[0]==seccion_id){
+                $('#producto_categoria_id').append(selec='<option value="'+ categoria[2] +'">'+categoria[1]+'</option>');
+            }
+        });
+    }
 
-function categoriaSelec() {
-    seccion_id = $('#producto_seccion_id').val();
-    $('#producto_categoria_id').empty();
-    $('#producto_categoria_id').append(selec='<option></option>');
-    categorias.forEach(function(categoria){
-        if (categoria[0]==seccion_id){
-            $('#producto_categoria_id').append(selec='<option value="'+ categoria[2] +'">'+categoria[1]+'</option>');
-        }
-    });
-}
+    function marcasSelec() {
+        rubro_id = $('#producto_rubro_id').val();
+        $('#producto_marca_id').empty();
+        $('#producto_marca_id').append(selec='<option></option>');
+        marcas.forEach(function(marca){
+            if (marca[0]==rubro_id){
+                $('#producto_marca_id').append(selec='<option value="'+ marca[2] +'">'+ marca[1]+'</option>');
+            }
+        });
+    }
+   
+     /* $('#producto_costo').keypress(totales_precio);
+           $('#producto_costo').change(totales_precio);
+           $('#producto_ganancia').keypress(totales_precio);
+           $('#producto_descuento').keypress(totales_precio);
+           $('#producto_iva').keypress(totales_precio);
+           $('#producto_iva').change(totales_precio);
+
+           function totales_precio(){
+
+            var costo =  $('#producto_costo').val();
+            var text_ganancia = $('#producto_ganancia').val();
+            var text_iva = $('#producto_iva').val();
+            var text_descuento =  $('#producto_descuento').val();
+
+            var costo = parseInt(costo);
+            
+            if (text_ganancia == null || text_ganancia == 0){
+                 ganancia = 0;
+                 }
+            else {
+                var text_ganancia = parseInt(text_ganancia);
+                ganancia = text_ganancia * costo / 100;
+            };
+
+            if (text_iva == null || text_iva == 0){
+                 iva = 0;
+                 }
+            else {
+                var text_iva = parseInt(text_iva);
+                iva = text_iva * costo / 100;
+            };
+
+            if (text_descuento == null || text_descuento == 0){
+                 descuento = 0;
+                 }
+            else {
+                var text_descuento = parseInt(text_descuento);
+                descuento = text_descuento * costo / 100;
+            };
 
 
-
-
-
-
+            precio_lista = costo + ganancia + iva ;
+            precio_contado = precio_lista - descuento;
+            
+            $('#total_ganancia').text(ganancia);
+            $('#total_iva').text(iva);
+            $('#total_desc_contado').text(descuento);
+            $('#precio_contado').text(precio_contado);
+            $('#precio_lista').text(precio_lista); 
+          } */ 
 
 </script>
 

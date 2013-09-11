@@ -1,0 +1,28 @@
+<p>
+  <b>Codigo:</b>
+  <%=h @lista_precio.codigo %>
+</p>
+
+<p>
+  <b>Nombre:</b>
+  <%=h @lista_precio.nombre %>
+</p>
+
+<p>
+  <b>Abrev:</b>
+  <%=h @lista_precio.abrev %>
+</p>
+
+<p>
+  <b>Desde:</b>
+  <%=h @lista_precio.desde %>
+</p>
+
+<p>
+  <b>Hasta:</b>
+  <%=h @lista_precio.hasta %>
+</p>
+
+
+<%= link_to 'Edit', edit_lista_precio_path(@lista_precio) %> |
+<%= link_to 'Back', lista_precios_path %>

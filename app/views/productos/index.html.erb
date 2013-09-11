@@ -103,7 +103,6 @@
     $('#buscar').submit(mostrar_loading);
     $('#rubro_id').change(seccionSelec);
     $('#rubro_id').change(marcasSelec);
-    
     $('#seccion_id').change(categoriaSelec);
     seccionSelec();
     categoriaSelec();
@@ -111,21 +110,19 @@
 
     })
 
-  $('#txtbuscar').focus;
- 
-
-
- function seccionSelec() {
-    rubro_id = $('#rubro_id').val();
-    $('#seccion_id').empty();
-    $('#categoria_id').empty();
-    $('#seccion_id').append(selec='<option></option>');
-    secciones.forEach(function(seccion){
-        if (seccion[0]==rubro_id){
-          $('#seccion_id').append(selec='<option value="'+ seccion[2] +'">'+seccion[1]+'</option>');
-        }
-    });
-  }
+    $('#txtbuscar').focus;
+    
+     function seccionSelec() {
+        rubro_id = $('#rubro_id').val();
+        $('#seccion_id').empty();
+        $('#categoria_id').empty();
+        $('#seccion_id').append(selec='<option></option>');
+        secciones.forEach(function(seccion){
+            if (seccion[0]==rubro_id){
+              $('#seccion_id').append(selec='<option value="'+ seccion[2] +'">'+seccion[1]+'</option>');
+            }
+        });
+      }
 
   function categoriaSelec() {
     seccion_id = $('#seccion_id').val();

@@ -7,7 +7,7 @@ class CreateMenus < ActiveRecord::Migration
       t.string :url
       t.string :tooltip
       t.string :ayuda
-
+      t.boolean :tiene_divisor
       t.timestamps
     end
   end

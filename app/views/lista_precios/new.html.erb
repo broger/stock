@@ -1,0 +1,86 @@
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+    <h3 >Nueva Lista de Precios</h3>
+</div>
+<div class="well" style="background-color:white">
+
+<% form_for(@lista_precio) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :codigo %><br />
+    <%= f.text_field :codigo %>
+  </p>
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :abrev %><br />
+    <%= f.text_field :abrev %>
+  </p>
+  <p>
+
+
+  </p>
+
+
+
+
+
+  </p>
+
+
+
+</div>
+<div id="pie" style="height:30px; padding:16px">
+ <div style="text-align: right"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %></p></div>
+</div>
+
+<% end %>
+
+<script type="text/javascript">
+
+
+</script>
+
+
+<style type="text/css">
+
+  .form-control{
+     border-radius: 1px;
+    font-size: 12px;
+    display: inline;
+  }
+
+  select{
+    padding: 2px;
+  }
+  
+
+  input{
+    padding-left: 4px
+  }
+
+  #fancybox-outer{
+    background-color: #f5f5f5;
+  }
+
+  label{
+    margin-right: 6px
+
+  }
+
+  table tr {
+    height: 52px
+  }
+  
+  #fancybox-wrap {
+    padding:0;
+  }
+
+  #fancybox-inner {
+  position:relative;
+  }
+
+
+</style>
+
