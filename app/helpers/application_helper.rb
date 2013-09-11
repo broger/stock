@@ -15,7 +15,7 @@ module ApplicationHelper
 
             if desplegable
               if submenu == true             
-                  salida = "#{salida} <li class='dropdown-submenu' style ='border-radius:1px'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} "
+                  salida = "#{salida} <li class='dropdown-submenu' style ='border-radius:1px'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}' >#{nodo.nombre} "
               else
                   salida = "#{salida} <li class='dropdown' style ='border-radius:1px'><a  class='dropdown-toggle' data-toggle='dropdown' href='#{nodo.url}'>#{nodo.nombre} <b class='caret'></b> "
              
@@ -23,10 +23,10 @@ module ApplicationHelper
 
 
             else
-              salida = "#{salida} <li style ='border-radius:1px' ><a  href='#{nodo.url}'>#{nodo.nombre} "
+              salida = "#{salida} <li style ='border-radius:1px' ><a  href='#{nodo.url}' #{fan} >#{nodo.nombre} "
             end
             
-            salida = "#{salida} </a>"
+            salida = "#{salida}  </a>"
 
             
             if nodo.children.count != 0 && tiene_permiso

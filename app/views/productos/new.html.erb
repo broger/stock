@@ -3,50 +3,43 @@
 </div>
 <% form_for(@producto) do |f| %>
   <%= f.error_messages %>
-<div class="well">
+<div class="well" style="background-color:white">
 	<div class="brogertab" >
 	            <ul id="myTab" class="nav nav-tabs">
 	              <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
-	              <li class=""><a href="#categoria"  data-toggle="tab">Direcci&oacute;n</a></li>
-	              <li class=""><a href="#web"        data-toggle="tab">Banco</a></li>
+	              <li class=""><a href="#categoria"  data-toggle="tab">Categoria</a></li>
+	              <li class=""><a href="#web"        data-toggle="tab">Web</a></li>
 	            </ul>
 
 				 <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
 	    					<div  class="tab-pane active"  id="general" >
                              <table >
                                  <tr>
-                                      <td>
+                                      <td style="height:20px">
+                                        <div class="form-group">
                                          <% ultimo =  Producto.count >= 1  ? "#{Producto.last.id.to_i + 1}" : "1"  %>
-                                         <%= f.text_field :codigo, :value=> ultimo, :size=>20 %>
-                                            <%= f.label :codigo, "C&oacute;digo" %>
-                                          	<%= f.text_field :nombre %><%= f.label :nombre %> 
+                                            <%= f.label :codigo, "c&oacute;digo"   %>
+                                            <%= f.text_field :codigo, :value=> ultimo, :size=>20, :style=>'margin-right:60px; width:120px; display:inline', :class=>'form-control' %>
+                                          	<%= f.label :nombre, "nombre" %><%= f.text_field :nombre , :size=>60, :class=>'form-control', :style=>'margin-right:60px; width:380px; display:inline' %> 
+                                        </div>
                                        </td>
                                  </tr>
                                  <tr>
                                        <td >
-                                           <%= f.text_field :etiqueta_busqueda %>
-                                           <%= f.label :etiqueta_busqueda,  "Etiqueta de B&uacute;squeda" %>     
+                                         <%= f.label :unidad_id, "unidad medida" %><%= f.select(:unidad_id, Unidad.find(:all).collect{|t|[t.nombre, t.id]}, {:selected=>1}, {:class => "form-control", :style => 'width:120px; height:24px' } ) %>
+                                         <%= f.label :estado_id, "estado" %><%= f.select(:estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, {:selected=>1}, {:class => "form-control", :style => 'width:120px; height:24px' } ) %>
+                                         <%= f.label :etiqueta_busqueda,  "etiqueta b&uacute;squeda" %><%= f.text_field :etiqueta_busqueda  , :size=>60 %> 
                              		   </td>
                                   </tr>
                                   <tr>
-
-                                  <td><%= f.text_field :stock_minimo,:size=>16,:placeholder => ' 0.00' %>
-                                        <%= f.label :stock_minimo, "Stock M&iacute;nimo" %>
-                                        <%= f.text_field :stock_maximo,:size=>16,:placeholder => ' 0.00' %>
-                                        <%= f.label :stock_maximo, "Stock M&aacute;ximo" %>
-                                        <%= f.text_field :punto_de_pedido,:size=>16,:placeholder => ' 0.00' %>
-                                        <%= f.label :punto_de_pedido, "Avisa en" %>
-                                   </td>
-
-                                   <tr>
-                                          <td><%= f.select :unidad_id, Unidad.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %>
-                                             <%= f.label :unidad_id, "Unidad Medida" %>
-                                             <%= f.select :estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, :selected => 1 %>
-                                             <%= f.label :estado_id, "Estado" %>
-                                           </td>
-
+                                     <td> <%= f.label :stock_minimo, "stock M&iacute;nimo" , :size=>10 %> 
+                                           <%= f.text_field :stock_minimo,:size=>16,:placeholder => ' 0.00' , :size=>10, :style=>"margin-right:30px" %> 
+                                           <%= f.label :stock_maximo, "stock M&aacute;ximo" %>
+                                           <%= f.text_field :stock_maximo,:size=>16,:placeholder => ' 0.00' , :size=>10, :style=>"margin-right:30px" %> 
+                                           <%= f.label :punto_de_pedido, "avisa en" %>
+                                           <%= f.text_field :punto_de_pedido,:size=>16,:placeholder => ' 0.00' , :size=> 10 %> 
+                                       </td>
                                   </tr>
-
                                </table>
                                	
 		                    </div>
@@ -139,9 +132,9 @@
 	</div>
 
 </div>
-
+<div id="pie" style="height:30px; padding:16px">
  <div style="text-align: right"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %></p></div>
-
+</div>
 <% end %>
 
 
@@ -154,11 +147,84 @@
     });
 
 
+ var secciones = new Array();
+    <% secciones = Seccion.find(:all) %>
+    <% for seccion in secciones -%>
+          secciones.push(new Array(<%= seccion.rubro_id %>, "<%=h seccion.nombre %>", <%= seccion.id %>));
+    <% end %>
+    $('#producto_rubro_id').change(seccionSelec);
+
+    var categorias = new Array();
+    <% categorias = Categoria.find(:all) %>
+    <% for categoria in categorias -%>
+          categorias.push(new Array(<%=h categoria.seccion_id %>, "<%=h categoria.nombre %>", <%=h categoria.id %>));
+    <% end %>
+    $('#producto_seccion_id').change(categoriaSelec);
+
+    
+
+function seccionSelec() {
+    rubro_id = $('#producto_rubro_id').val();
+    $('#producto_seccion_id').empty();
+    $('#producto_categoria_id').empty();
+    $('#producto_seccion_id').append(selec='<option></option>');
+    secciones.forEach(function(seccion){
+        if (seccion[0]==rubro_id){
+          $('#producto_seccion_id').append(selec='<option value="'+ seccion[2] +'">'+seccion[1]+'</option>');
+        }
+    });
+}
+
+function categoriaSelec() {
+    seccion_id = $('#producto_seccion_id').val();
+    $('#producto_categoria_id').empty();
+    $('#producto_categoria_id').append(selec='<option></option>');
+    categorias.forEach(function(categoria){
+        if (categoria[0]==seccion_id){
+            $('#producto_categoria_id').append(selec='<option value="'+ categoria[2] +'">'+categoria[1]+'</option>');
+        }
+    });
+}
+
+
+
+
+
+
+
 </script>
 
 
 
 <style type="text/css">
+
+  .form-control{
+     border-radius: 1px;
+    font-size: 12px;
+    display: inline;
+  }
+
+  select{
+    padding: 2px;
+  }
+  
+
+  input{
+    padding-left: 4px
+  }
+
+  #fancybox-outer{
+    background-color: #f5f5f5;
+  }
+
+  label{
+    margin-right: 6px
+
+  }
+
+  table tr {
+    height: 52px
+  }
 	
 	#fancybox-wrap {
 	  padding:0;
