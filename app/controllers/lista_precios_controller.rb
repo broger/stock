@@ -19,10 +19,11 @@ class ListaPreciosController < ApplicationController
   # GET /lista_precios/1.xml
   def show
     @lista_precio = ListaPrecio.find(params[:id])
+    @producto_listas = @lista_precio.producto_lista_precios.paginate(:page => params[:page],:per_page => 30)
+    @cant_productos = @lista_precio.producto_lista_precios.count    
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @lista_precio }
+      format.html { render :layout => false }
     end
   end
 
@@ -30,7 +31,6 @@ class ListaPreciosController < ApplicationController
   # GET /lista_precios/new.xml
   def new
     @lista_precio = ListaPrecio.new
-
      respond_to do |format|
       format.html{render :layout=>false}
     end
@@ -48,7 +48,8 @@ class ListaPreciosController < ApplicationController
 
     respond_to do |format|
       if @lista_precio.save
-        format.html { redirect_to(@lista_precio, :notice => 'ListaPrecio was successfully created.') }
+
+        format.html { redirect_to(@lista_precio, :notice => "La Nueva Lista de Precio #{@lista_precio.nombre} ha sido creada satisfactoriamente.") }
         format.xml  { render :xml => @lista_precio, :status => :created, :location => @lista_precio }
       else
         format.html { render :action => "new" }

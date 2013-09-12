@@ -1,14 +1,9 @@
 <div id="titulo" style="padding: 10px 0 6px 20px ">
     <h3 >Nueva Lista de Precios</h3>
 </div>
-<div class="well" style="background-color:white">
-
 <% form_for(@lista_precio) do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :codigo %><br />
-    <%= f.text_field :codigo %>
-  </p>
+ <%= f.error_messages %>
+<div class="well" style="background-color:white">
   <p>
     <%= f.label :nombre %><br />
     <%= f.text_field :nombre %>
@@ -18,18 +13,13 @@
     <%= f.text_field :abrev %>
   </p>
   <p>
-
-
+    <%= f.label :desde, "validez desde" %><br />
+    <%= f.text_field :desde, :size=>12,:placeholder => '__/__/____', :class=>"form-control", :id=>"desde" %>
   </p>
-
-
-
-
-
+  <p>
+    <%= f.label :hasta, "validez hasta" %><br />
+    <%= f.text_field :hasta, :size=>12,:placeholder => '__/__/____', :class=>"form-control", :id=>"hasta" %>
   </p>
-
-
-
 </div>
 <div id="pie" style="height:30px; padding:16px">
  <div style="text-align: right"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %></p></div>
@@ -39,6 +29,28 @@
 
 <script type="text/javascript">
 
+
+    $('#desde').mask('00/00/0000');
+    $('#hasta').mask('00/00/0000');
+
+    $.validator.addMethod("validar_fecha", function(value, element, params) {
+         return fecha_valida(value);
+    },'Fecha Invalida.');
+
+    $(document).ready(function () {
+
+       $("#new_lista_precio").validate({
+          rules: {
+           "lista_precio[nombre]": { required: true, minlength: 3, maxlength: 60},
+           "lista_precio[abrev]": { required: true, minlength: 2, maxlength: 20},
+           "lista_precio[abrev]": { required: true, minlength: 2, maxlength: 20},
+           "lista_precio[desde]": { required: true, validar_fecha:true},
+           "lista_precio[hasta]": { required: true, validar_fecha:true}
+          }
+        
+       });
+    });
+    
 
 </script>
 

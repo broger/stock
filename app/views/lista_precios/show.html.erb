@@ -1,28 +1,75 @@
-<p>
-  <b>Codigo:</b>
-  <%=h @lista_precio.codigo %>
-</p>
+<table>
+  <tr>
+      <td>nombre</td>
+      <td><%=h @lista_precio.nombre %></td>
+  </tr>
+  <tr>
+      <td>Abrev:</td>
+      <td><%=h @lista_precio.abrev %></td>
+  </tr>
+<tr>
+      <td>Cantidad Productos</td>
+      <td><%=h @cant_productos %></td>
+  </tr>
 
-<p>
-  <b>Nombre:</b>
-  <%=h @lista_precio.nombre %>
-</p>
-
-<p>
-  <b>Abrev:</b>
-  <%=h @lista_precio.abrev %>
-</p>
-
-<p>
-  <b>Desde:</b>
-  <%=h @lista_precio.desde %>
-</p>
-
-<p>
-  <b>Hasta:</b>
-  <%=h @lista_precio.hasta %>
-</p>
+  <tr>
+      <td><%=h "Validez desde #{@lista_precio.desde} "%></td>
+      <td><%=h "Validez hasta #{@lista_precio.hasta} "%></td>
+  </tr>
 
 
-<%= link_to 'Edit', edit_lista_precio_path(@lista_precio) %> |
-<%= link_to 'Back', lista_precios_path %>
+
+</table>
+
+<% unless @producto_listas.blank? %>
+          <div  class= "cuadro-scroll" >
+                        <table class="table" style="font-size :10px" >
+                                <thead>
+                                  <tr style="height:11px;">
+                                  <th>codigo</th>
+                                  <th>nombre</th>
+                                  <th>unidad</th>
+                                  <th>descuento</th>
+                                  <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% @producto_listas.each do |producto_lista| %>
+                                  <tr style="height:9px">
+                                      <td><%=h producto_lista.producto.codigo %></td>
+                                      <td><%=h producto_lista.producto.nombre %></td>
+                                      <td><%=h producto_lista.producto.unidad.nombre %></td>
+                                      <td><%=h producto_lista.precio %></td>
+                                      <td><%=h producto_lista.descuento %></td>
+                                      
+                                    </tr>
+                                <% end %>
+                                </tbody>
+                         </table>
+             </div>
+                        <%else%>
+                                 <div><h4><font color="red">No se encontraron resultados</font></h4></div>                                  
+                        <%end%>
+                               <div style="text-align:center" ><%= will_paginate @producto_listas, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%></div>
+     </div>
+ </div>
+
+
+
+
+
+
+
+ <style type="text/css">
+
+      .cuadro-scroll {
+           height:320px;
+           /* background-color:#F2F2F2; */
+           overflow:auto;
+           width: 80%;
+           float: left;
+          }
+
+ </style>
+  
+

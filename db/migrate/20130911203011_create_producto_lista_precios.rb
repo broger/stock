@@ -3,8 +3,9 @@ class CreateProductoListaPrecios < ActiveRecord::Migration
     create_table :producto_lista_precios do |t|
       t.integer :producto_id
       t.integer :lista_precio_id
-      t.double  :precio, :decimal => 10, :scale => 4
-      t.double  :decuento, :decimal =>10, :scale => 4
+      t.column  :precio,     "numeric(8,2)"
+      t.column  :descuento,  "numeric(8,2)"
+      
       t.timestamps
     end
   end

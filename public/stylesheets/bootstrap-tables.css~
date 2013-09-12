@@ -94,7 +94,7 @@ table {
 }
 .table tbody tr:hover td,
 .table tbody tr:hover th {
-  background-color: #F3F3F3;
+  background-color: #D1D1D1;
 }
 table .span1 {
   float: none;
