@@ -1,0 +1,16 @@
+<h1>Editing tipo_comprobante</h1>
+
+<% form_for(@tipo_comprobante) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @tipo_comprobante %> |
+<%= link_to 'Back', tipo_comprobantes_path %>

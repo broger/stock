@@ -8,7 +8,9 @@
 	            <ul id="myTab" class="nav nav-tabs">
 	              <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
 	              <li class=""><a href="#categoria"  data-toggle="tab">Categoria</a></li>
-	              <li class=""><a href="#web"        data-toggle="tab">Web</a></li>
+	              <li class=""><a href="#precios"        data-toggle="tab">Precios</a></li>
+                <li class=""><a href="#descripcion"        data-toggle="tab">Descripci&oacute;</a></li>
+                <li class=""><a href="#web"        data-toggle="tab">Web</a></li>
 	            </ul>
 
 				 <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
@@ -104,7 +106,22 @@
                                                 </table>
 
                       </div>
-
+                      <div class="tab-pane fade" id="precios">
+                                           <table>
+                                                <tr>
+                                                    <th>Lista</th>
+                                                    <th>Precio</th>
+                                                    <th>Descuento</th>
+                                                </tr>
+                                                <% ListaPrecio.all.each  do |lista| %>
+                                                      <tr>
+                                                        <td><%= lista.nombre %></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                      </tr>
+                                                <% end %>      
+                                            </table>
+                      </div>
                       <div class="tab-pane fade" id="web">
                                              <table>
                                                   <tr>

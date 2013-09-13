@@ -81,17 +81,25 @@ class ProductosController < ApplicationController
   # POST /productos
   # POST /productos.xml
   def create
+
     @producto = Producto.new(params[:producto])
 
-    respond_to do |format|
-      if @producto.save
-        format.html { redirect_to(productos_url, :notice => "El Producto #{@producto.nombre} ha sido creado satisfactoriamente.") }
-        format.xml  { render :xml => @producto, :status => :created, :location => @producto }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @producto.errors, :status => :unprocessable_entity }
-      end
-    end
+    Producto.transaction do
+
+        @producto.save
+
+        # guardar produto_lista
+        respond_to do |format|
+            if @producto.save
+                format.html { redirect_to(productos_url, :notice => "El Producto #{@producto.nombre} ha sido creado satisfactoriamente.") }
+                format.xml  { render :xml => @producto, :status => :created, :location => @producto }
+            else
+                format.html { render :action => "new" }
+                format.xml  { render :xml => @producto.errors, :status => :unprocessable_entity }
+            end
+        end
+  end
+
   end
 
   # PUT /productos/1

@@ -4,9 +4,7 @@ class Producto < ActiveRecord::Base
 	belongs_to :seccion
     belongs_to :categoria
     belongs_to :proveedor
-	belongs_to :deposito
 	belongs_to :unidad
-	belongs_to :moneda
     belongs_to :estado
     has_many :producto_lista_precios
 
@@ -18,10 +16,7 @@ class Producto < ActiveRecord::Base
 	validates_presence_of :marca_id, :message => 'es obligatorio.'
 	validates_presence_of :marca_id, :message => 'es obligatorio.'
 	validates_presence_of :categoria_id, :message => 'es obligatorio.'
-#	validates_presence_of :subcategoria_id, :message => 'es obligatorio.'
-	validates_presence_of :deposito_id, :message => 'es obligatorio.'
 	validates_presence_of :unidad_id, :message => 'es obligatorio.'
-	validates_presence_of :moneda_id, :message => 'es obligatorio.'
 
 
 end

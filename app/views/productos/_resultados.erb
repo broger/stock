@@ -17,10 +17,10 @@
                     <td><%=h producto.codigo %></td>
                     <td><%=h producto.nombre %></td>
                     <td><%=h producto.marca.nombre %></td>
-                    <td style="text-align:right; padding-right:10px">
-                           <%= link_to image_tag('iconos/16x16/zoom.png'), producto, :title=>'Ver', :class=>'fancybox' %>
-                              <%= link_to image_tag('iconos/16x16/editar.png'), edit_producto_path(producto), :title=>'Editar',:class=>'qtip' %>
-                              <%= link_to image_tag('iconos/16x16/delete.png'), producto, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
+                    <td style="text-align:right">
+                          <%= link_to "<i class='glyphicon glyphicon-search' style='font-size: 13px; color:black' ></i>", producto, :title=>'Ver', :class=>"fancybox" %>
+                         <%= link_to "<i class='glyphicon glyphicon-pencil' style='font-size: 13px; color:black' ></i>", edit_producto_path(producto), :title=>'Editar' %>
+                         <%= link_to "<i class='glyphicon glyphicon-trash' style='font-size: 13px; color:black; margin-right:12px' ></i>", producto, :title=>'Eliminar', :confirm => 'Esta Seguro?', :method => :delete %>
                     </td>
                   </tr>
               <% end %>
@@ -64,8 +64,5 @@
 
     }
 
-     .table-condensed tbody > tr > td, .table-condensed tfoot > tr > td {
-    padding: 3px;
-      }
 
 </style>

@@ -1,0 +1,20 @@
+<h1>Listing movimientos</h1>
+
+<table>
+  <tr>
+    <th>Producto</th>
+  </tr>
+
+<% @movimientos.each do |movimiento| %>
+  <tr>
+    <td><%=h movimiento.producto_id %></td>
+    <td><%= link_to 'Show', movimiento %></td>
+    <td><%= link_to 'Edit', edit_movimiento_path(movimiento) %></td>
+    <td><%= link_to 'Destroy', movimiento, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New movimiento', new_movimiento_path %>
