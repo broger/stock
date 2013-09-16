@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130911203011) do
+ActiveRecord::Schema.define(:version => 20130913222354) do
 
   create_table "categorias", :force => true do |t|
     t.string   "nombre",     :limit => 30
@@ -35,10 +35,22 @@ ActiveRecord::Schema.define(:version => 20130911203011) do
     t.datetime "updated_at"
   end
 
-  create_table "depositos", :force => true do |t|
-    t.string   "nombre",     :limit => 40
+  create_table "comprobantes", :force => true do |t|
+    t.integer  "tipo_comprobante_id"
+    t.integer  "numero",              :limit => 16, :precision => 16, :scale => 0
+    t.integer  "total",               :limit => 10, :precision => 10, :scale => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "depositos", :force => true do |t|
+    t.string   "nombre",       :limit => 40
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "localidad_id"
+    t.integer  "provincia_id"
+    t.string   "direccion",    :limit => 60
+    t.string   "telefono",     :limit => 30
   end
 
   create_table "estados", :force => true do |t|
@@ -48,7 +60,6 @@ ActiveRecord::Schema.define(:version => 20130911203011) do
   end
 
   create_table "lista_precios", :force => true do |t|
-    t.integer  "codigo"
     t.string   "nombre",     :limit => 40
     t.string   "abrev",      :limit => 16
     t.date     "desde"
@@ -105,6 +116,23 @@ ActiveRecord::Schema.define(:version => 20130911203011) do
     t.datetime "updated_at"
   end
 
+  create_table "movimientos", :force => true do |t|
+    t.integer  "producto_id"
+    t.decimal  "cantidad",       :precision => 8, :scale => 4
+    t.boolean  "afecta_stock"
+    t.integer  "deposito_id"
+    t.integer  "comprobante_id"
+    t.integer  "usuario_id"
+    t.string   "comentarios"
+    t.decimal  "costo",          :precision => 8, :scale => 4
+    t.decimal  "ganancia",       :precision => 8, :scale => 4
+    t.decimal  "iva",            :precision => 8, :scale => 4
+    t.decimal  "descuento",      :precision => 8, :scale => 4
+    t.decimal  "precio_total",   :precision => 8, :scale => 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "parametros", :force => true do |t|
     t.integer  "iva"
     t.integer  "descuento"
@@ -126,6 +154,8 @@ ActiveRecord::Schema.define(:version => 20130911203011) do
     t.integer  "lista_precio_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "precio",          :precision => 8, :scale => 4
+    t.decimal  "descuento",       :precision => 8, :scale => 2
   end
 
   create_table "productos", :force => true do |t|
@@ -204,6 +234,15 @@ ActiveRecord::Schema.define(:version => 20130911203011) do
   create_table "secciones", :force => true do |t|
     t.string   "nombre",     :limit => 30
     t.integer  "rubro_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tipo_comprobantes", :force => true do |t|
+    t.integer  "ultimo_nro",   :limit => 10, :precision => 10, :scale => 0
+    t.string   "nombre"
+    t.boolean  "registra_nro"
+    t.boolean  "afecta_stock"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

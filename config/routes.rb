@@ -1,5 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
   
+  map.resources :compras
+
+  map.resources :tipo_comprobantes
+
+  map.resources :comprobantes
+
+  map.resources :movimientos
+
   map.resources :producto_lista_precios, :collection => {:editar_x_producto => :get,
                                                          :result_x_prod => :post }
 

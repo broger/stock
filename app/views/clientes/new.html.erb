@@ -63,16 +63,16 @@
                                                                                   </table>
                                          </div>
                                          <div class="tab-pane fade" id="banco">
-                                                               <table>
-                                                                    <tr>
-                                                                       <th><%= f.label :banco_id, "Banco" %></th>
-                                                                        <td><%#= f.select :provincia_id , Banco.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                       <th><%= f.label   :cuenta_bancaria, "Cuenta Bancaria" %></th>
-                                                                        <td><%= f.text_field :cuenta_bacaria %></td>
-                                                                    </tr>
-                                                                </table>
+                                                 <table>
+                                                      <tr>
+                                                         <th><%= f.label :banco_id, "Banco" %></th>
+                                                          <td><%#= f.select :provincia_id , Banco.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
+                                                      </tr>
+                                                      <tr>
+                                                         <th><%= f.label   :cuenta_bancaria, "Cuenta Bancaria" %></th>
+                                                          <td><%= f.text_field :cuenta_bacaria %></td>
+                                                      </tr>
+                                                  </table>
                                           </div>
 
 
