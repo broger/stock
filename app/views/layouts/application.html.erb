@@ -21,10 +21,13 @@
                              'bootstrap-tables',
                              'broger',
                              'jquery.fancybox-1.3.1',
-                             'datepicker'
+                             'jquery-ui-1.10.3.custom',
+                             'jquery.autocomplete',
+                             'jquery-ui-1.10.3.custom'
                               %>
 
-    <%= javascript_include_tag  'jquery-1.10.2.min', # siempre primer jquery
+    <%= javascript_include_tag  'jquery-1.10.2.min',    # siempre primer jquery
+                                'jquery-migrate-1.2.1', # para la compatibiliddad de las versiones d jquery
                                 'jquery.fancybox-1.3.1',
                                 'bootstrap.min',
                                 'bootstrap',
@@ -49,8 +52,10 @@
                                 # Validate jquery
                                 'jquery.validate',
                                 'messages_es',
-                                'jquery.mask'
-                                
+                                'jquery.mask',
+                                #'jquery-ui-1.10.3.custom.min' #, aCA TENDRIA Q ESTAR AUTOCOMPLETAR NUEVA VERSION
+                                'jquery.autocomplete'
+                               
 
     %>
 

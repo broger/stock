@@ -2,7 +2,8 @@ class TipoComprobantesController < ApplicationController
   # GET /tipo_comprobantes
   # GET /tipo_comprobantes.xml
   def index
-    @tipo_comprobantes = TipoComprobante.all
+      @tipo_comprobantes = TipoComprobante.all
+      @tipo_comprobantes = @tipo_comprobantes.paginate :per_page => 24, :page => params[:page]
 
     respond_to do |format|
       format.html # index.html.erb

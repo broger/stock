@@ -1,6 +1,4 @@
-class ComprasController < ApplicationController
-  
-
+class PedidoComprasController < ApplicationController
   def index
    # filtros =  " "
    # unless params[:rubro_id].blank?
@@ -38,21 +36,20 @@ class ComprasController < ApplicationController
 #                    @compras = Producto.find_by_sql("#{sql_descripcion('compras','nombre',params[:txtbuscar],30,false,filtros)}")
 #                end
 #          end 
-           @compras = Comprobante.compras.all
-           @compras = @compras.paginate :per_page => 24, :page => params[:page],:include=>[:talbas,:estado_beneficiario]
+           @pedido_compras = Comprobante.pedido_compras.paginate :per_page => 24, :page => params[:page],:include=>[:talbas,:estado_beneficiario]
 
 #      end     
 
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @compras }
+      format.xml  { render :xml =>  @pedido_compras}
     end
   end
 
 
   def new
-    @comprobante = Comprobante.new
+    @comprobante = Comprobante.pedido_compra.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -60,8 +57,4 @@ class ComprasController < ApplicationController
     end
   end
 
-
-    
-  
-end #final
-
+end

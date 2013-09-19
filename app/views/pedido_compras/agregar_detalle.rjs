@@ -1,0 +1,6 @@
+#page << "$('#lis').append(#{render :partial=>'asignar_expediente'});"
+@expedientes.each do |expediente|
+	page << "if ($('#expediente_#{expediente.id}').length == 0){"
+		page.insert_html :bottom, 'lista-expedientes', :partial => 'asignar_expediente', :locals=>{:expediente=>expediente}
+	page << "}"
+end

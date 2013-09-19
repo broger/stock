@@ -1,20 +1,166 @@
-<h1>Listing tipo_comprobantes</h1>
+ <%= form_tag(tipo_comprobantes_path, :method => 'get',:id=>'buscar') %>
 
-<table>
-  <tr>
-    <th>Nombre</th>
-  </tr>
+  <div class="row" >
+     <div id="titulo" class="col-sm-12" >
+         <h2 style="margin:0">Tipos de Comprobantes</h2>
+         <hr  style=" width=100%; border-width: 1px 0 0 0; margin:0; border-color:#333333; ">
+     </div>
+     <div id="menu_izquierdo"  class="col-sm-2" >
 
-<% @tipo_comprobantes.each do |tipo_comprobante| %>
-  <tr>
-    <td><%=h tipo_comprobante.nombre %></td>
-    <td><%= link_to 'Show', tipo_comprobante %></td>
-    <td><%= link_to 'Edit', edit_tipo_comprobante_path(tipo_comprobante) %></td>
-    <td><%= link_to 'Destroy', tipo_comprobante, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+       <!-- ACORDENON -->
+       <div class="panel-group" id="accordion">
+           <div class="panel panel-default">
+             <div class="panel-heading">
+                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Registros</a></h5>
+             </div>
+             <div id="collapseOne" class="panel-collapse collapse in">
+                 <div class="panel-body"><%= link_to 'Nuevo Tipo de Comprobante', new_tipo_comprobante_path %></div>
+             </div>
+        </div>
+           <div class="panel panel-default">
+             <div class="panel-heading" style="background-color:#2197C9">
+              <h5 class="panel-title" style="background-color:#2197C9" ><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Reportes</a></h5>
+             </div>
+             <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body"> - Todos   </div>
+             </div>
+           </div>
+           <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    Tablas Relacionadas
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                 - Provincias
+                 
+                </div>
+              </div>
+            </div>
+      </div>
 
-<br />
 
-<%= link_to 'New tipo_comprobante', new_tipo_comprobante_path %>
+     </div>
+     <div  id="contenido"  class="col-sm-10"  >
+
+                      <div id="buscador" >
+                        <div id="cargando"   style="display: none; float:left">&nbsp;<%= image_tag('iconos/loader.gif')%></div>
+                        <div style="float:right"><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...', :class=>"form-control" %></div>
+                      </div>
+            
+                       <% unless @tipo_comprobantes.blank? %>
+                        <table class="table" style="font-size :13px" >
+                                <thead>
+                                  <tr style="height:12px">
+                                  <th>Nombre</th>
+                                  <th>Estado</th>
+                                  <th>Registra Nro.</th>
+                                  <th>&Uacute;ltimo Nro.</th>
+                                  <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% @tipo_comprobantes.each do |tipo_comprobante| %>
+                                  <tr style="height:9px">
+                                      <td><%=h tipo_comprobante.nombre %></td>
+                                      <td><%=h tipo_comprobante.estado.nombre %></td>
+                                      <td><%=h tipo_comprobante.registra_nro ? 'Si' : 'No' %></td>
+                                      <td><%=h tipo_comprobante.ultimo_nro %></td>
+                                      <td style="text-align:right">
+                                             <%= link_to image_tag('iconos/16x16/zoom.png'), tipo_comprobante, :title=>'Ver' %>
+                                             <%= link_to image_tag('iconos/16x16/editar.png'), edit_tipo_comprobante_path(tipo_comprobante), :title=>'Editar' %>
+                                      </td>
+                                    </tr>
+                                <% end %>
+                                </tbody>
+                        <%else%>
+                                  <tr>
+                                    <td><div><h4><font color="red">No se encontraron resultados</font></h4></div></td>
+                                  </tr>
+                         <%end%>
+                      </table>
+                       <div style="text-align:center" >
+                          <%= will_paginate @localidades, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+                        </div>
+     </div>
+ </div>
+
+ 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+         $('#txtbuscar').focus();
+         console.log();
+         $('#buscar').submit(controlar_bene);
+
+    });
+
+    function controlar_bene(){
+          if ( $('#txtbuscar') != '' && $('#buscar').valid()){
+                $('#cargando').show();
+          }
+    }
+
+
+    $("table").tablecloth({
+      theme: "default",
+      bordered: true,
+      condensed: true,
+      striped: false, // linea par gris impar blanca
+      sortable: true,  // algo de jquery
+      clean: false,
+      cleanElements: "th td",
+      customClass: "my-table"
+    });
+
+
+
+
+</script>
+
+<style type="text/css">
+
+     
+    input[type="text"] {
+       height: 24px;
+       font-size: 13px;
+       line-height: 15px;
+       border-radius: 1px;
+       width: 300px;
+    }
+
+
+    #titulo{
+      margin: 40px 0 4px 0;
+    }
+
+    #buscador{
+        height: 35px;
+        margin-bottom: 10px
+    }
+
+    #menu_izquierdo{
+      float: left;
+      padding:20px 0 0 18px;
+      /* background-color:green; */
+    }
+
+    #contenido{
+      padding:20px 30px 0 50px;
+      /*background-color:white; */
+      float: left;
+      display: inline;
+    }
+
+    .textbox_buscar{
+      float:right;
+      height: 20px
+    }
+
+</style>
+
+
+  
