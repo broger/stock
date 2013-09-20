@@ -37,10 +37,17 @@ ActiveRecord::Schema.define(:version => 20130913222354) do
 
   create_table "comprobantes", :force => true do |t|
     t.integer  "tipo_comprobante_id"
-    t.integer  "numero",              :limit => 16, :precision => 16, :scale => 0
-    t.integer  "total",               :limit => 10, :precision => 10, :scale => 0
+    t.integer  "numero",              :limit => 16,         :precision => 16, :scale => 0
+    t.integer  "total",               :limit => 10,         :precision => 10, :scale => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "aprobado"
+    t.integer  "proveedor_id"
+    t.integer  "forma_pago_id"
+    t.integer  "nro_tarjeta",         :limit => 30,         :precision => 30, :scale => 0
+    t.integer  "usuario_id"
+    t.integer  "empleado_id"
+    t.string   "observaciones",       :limit => 2147483647
   end
 
   create_table "depositos", :force => true do |t|
@@ -245,6 +252,8 @@ ActiveRecord::Schema.define(:version => 20130913222354) do
     t.boolean  "afecta_stock"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "estado_id"
+    t.string   "abrev",        :limit => 10
   end
 
   create_table "unidades", :force => true do |t|

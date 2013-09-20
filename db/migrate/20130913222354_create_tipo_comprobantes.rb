@@ -8,6 +8,9 @@ class CreateTipoComprobantes < ActiveRecord::Migration
       t.column   :ultimo_nro,     "numeric(16)"
       t.boolean  :afecta_stock
       t.integer  :tipo_movimiento_id 
+      t.integer  :estado_id 
+      t.column   :abrev,          "character(10)"
+      
       
       t.timestamps
     end

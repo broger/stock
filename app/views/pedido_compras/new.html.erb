@@ -47,22 +47,32 @@
         <%= f.error_messages %>
 	    <div id="comprobante" class= "col-sm-12" >
      		<div id="cabezera">
-     			  <div class= "datos" id= "nro_comprobante" style="width:30%"><th><%= f.label :numero, "Nº: " %></th><%= f.text_field :numero,  :value=> '0001', :size=> 20 %></div>
-     			  <div class= "datos" id= "proveedor" style="width:50%" ><%= "Proveedor #{select_tag :proveedor_id, options_from_collection_for_select(Proveedor.all, :id, :nombre) }  "%></div>
-		        <div class= "datos" style="width:20%"> <%=Time.now.strftime("%Y-%m-%d") %></div>
-            <div class= "datos" id= "observaciones" style="display:block"><%= "Observaciones #{ f.text_field :observaciones , :size=> 20}" %></div>
-            <div class= "datos" id= "deposito" ><%= "Deposito #{select_tag :deposito_id, options_from_collection_for_select(Deposito.all, :id, :nombre) }  "%></div>
+     			  <div class= "datos" id= "nro_comprobante"  style="width:170px"><th><%= f.label :numero, "Nº:" %></th><%= f.text_field :numero,  :value=> '0001', :style=>'width:140px' , :class=> 'form-control'%></div>
+     			  <div class= "datos" id= "proveedor"        style="width:350px" ><%= f.label :proveedor %><%= select_tag :proveedor_id, options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:240px', :class=>'default select' %></div>
+		        <div class= "datos"                        style="width:280px">
+                 <%= radio_button_tag 'addprod', 'sin_stock', true,  :value => 'sin_stock' %><%= label_tag 'addprod_sin_stock', 'agregar productos sin stock'%>
+                 <%= radio_button_tag 'addprod', 'todos',     false, :value => 'todos'     %><%= label_tag 'addprod_todos',     'todos'%>
+            </div>                                                                         
+            <div class= "datos" style="width:100px"><%=Time.now.strftime("%d/%m/%Y") %></div>
             
+
+          <!--  
+            <div class= "datos" id= "observaciones" style="display:block"><%= "Observaciones #{ f.text_field :observaciones , :size=> 20}" %></div>
+            <div class= "datos" id= "deposito" ><%= "Deposito #{select_tag :deposito_id, options_from_collection_for_select(Deposito.all, :id, :nombre) }  "%></div>      
+            -->
 			  </div>	
-        <div id="busca_productos">
+         <div id="busca_productos">
           <%= text_field_tag :producto, nil, :style=> "width:70%", :placeholder => ' Ingrese el nombre del Producto ...'%>
           <%= text_field_tag :cantidad, nil, :class =>'producto', :style=> "width:10%", :placeholder => ' cantidad ...' %>
-          <a  style ="font-size:16px; width:50px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar_fila()" ></a>           
+          <a  style ="font-size:16px; width:50px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar_fila(123)" ></a>           
           <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
         </div>
-        <div id="detalle">
+         <div id="detalle">
          		<div  class="scroll" sytle ="width:100%; height:300px">
-              <div id="error_detalle" style="text-align:center">El producto ya existe en la lista </div>
+                       <div id="error_detalle" style="text-align:center">El producto ya existe en la lista </div>
+             
+              
+
 
                <table id="list" >
 
@@ -90,8 +100,13 @@
 
   $(document).ready(function () {
 
+  $("#addprod_sin_stock").click(agregar_ajax)
+  $("#addprod_todos").click(agregar_ajax)
 
  });
+
+
+   
 
   //INICIO AUTOCOMPLETAR.....
      $('#producto').autocomplete('<%= todos_productos_path %>', {
@@ -114,27 +129,36 @@
      //FIN AUTOCOMPLETAR.....
 
 
+  function agregar_ajax(){
+    agrega =  $("input[name='addprod']:checked").val()
+    alert('dfadfsdf   '+ agrega );
+    jQuery.ajax({
+           type:'get',
+           //url:'<%= agregar_detalle_pedido_compras_path %>?nomenclador_id='+ $('#nomenclador_id').val() +'&codigo_practica='+$('#codigo_practica_id').val()+'&beneficiario_id='+$('#beneficiario_id').val()+'&diagnostico_id='+$('#diagnostico_id').val()+'&fecha_prescripcion='+$('#fecha_prescripcion').val()+'&b_p_id='+$('input[name=plan_especial]:checked').val()
+           url:'<%= agregar_detalle_pedido_compras_path %>?proveedor_id='+ $('#proveedor_id').val()+ '&agrega='+ agrega
+     });
+
+   };
 
 
-/*
-    // EXISTE YA EN LA LISTA ?
-    if($('#fila'+$('#producto_id').val()).length == 0 ){
-         agregar_fila()
-       }
-       else{
 
-            // ERRROR
+     function agregar_fila(id) {//,codigo,producto,unidad,stock,cant_pedida){
+          alert('fffff ' + id);
+         if( $('#fila'+id).length != 0 ){
+                // mostar error
+                alert('error ya existe');
+          }else{
+            alert ('va a ingresar')
+              fila = 'fila'+id;
+             $('#list').append("<tr id='"+fila+"'>"+
+                                                  "<td>ddddddddd</td>"+
+                                                  "<td><a id='eliminar_123' href='javascript:eliminar_fila(123)' title='Eliminar' >eliminar</a></td>"+
+                               "</tr>");
+              
+          }
+  
 
-           }
 
-     }
-
-*/
-
-
-     function agregar_fila(){
-          alert('fffff');
-          $('#list').append("<tr id="fila123"><td>ddddddddd</td><td><a id="eliminar_123" href="javascript:eliminar_fila(123)" title="Eliminar" >eliminar</a></td></td></tr>")
      };
 
      function eliminar_fila(id){
@@ -143,15 +167,35 @@
      }
 
 
+     function elimina_detalle(){
+      alert ("ento elliinr " )
+          $('#list tr').remove();
+     }
+ 
 </script>
 
 
 
 <style type="text/css">
 
-  	label{
-  		padding: 0 6px  
+    .datos{
+      display: inline-block;
+      text-align: right;
+      height: 34px;
+      background-color: #4478aa;  
+    }
+
+
+  	.datos label{
+  		padding: 0 6px;
+      font-size: 11px 
   	}
+
+    .datos input{
+      display: inline;
+      font-size: 11px 
+    }
+
 
   	#comprobante{
   		background-color: green;
@@ -174,13 +218,6 @@
       padding: 8px;
     } 
     
-  	
-
-    #cabezera .datos{
-      display: inline;
-  		height: 30px;
-  		background-color: #784512;
-  	} 
 
 
     #detalle{
@@ -189,15 +226,6 @@
       width: 100%;
       height: 300px;
       padding: 10px
-    }
-
-
-    input[type="text"] {
-         height: 24px;
-         font-size: 13px;
-         line-height: 15px;
-         border-radius: 1px;
-         width: 300px;
     }
 
 

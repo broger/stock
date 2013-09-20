@@ -1,6 +1,38 @@
 #page << "$('#lis').append(#{render :partial=>'asignar_expediente'});"
-@expedientes.each do |expediente|
-	page << "if ($('#expediente_#{expediente.id}').length == 0){"
-		page.insert_html :bottom, 'lista-expedientes', :partial => 'asignar_expediente', :locals=>{:expediente=>expediente}
-	page << "}"
-end
+
+ 
+ #unless @productos.blank?
+
+ 
+      if @limpiar
+      
+          page << "alert ('borro todo y cargo auto');"
+
+          page.call 'elimina_detalle;'
+        
+          @productos.each do |producto|
+
+               fila = "<tr id= 'fila#{producto.id}'>
+                             
+
+
+                        </tr>  "
+
+                page <<  "#{fila}"
+          end
+ 
+
+     else
+
+
+
+
+
+     end
+
+
+
+
+
+
+#end 

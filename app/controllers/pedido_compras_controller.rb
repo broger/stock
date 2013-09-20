@@ -57,4 +57,30 @@ class PedidoComprasController < ApplicationController
     end
   end
 
-end
+
+
+  def agregar_detalle
+
+      case 
+           when params[:agrega] == 'todos' then
+                   @limpiar= true
+                   @productos = Producto.find(:all, :conditions=>{:estado_id=>1, :proveedor_id => params[:proveedor_id]})
+           when params[:agrega] == 'sin_stock' then
+                   @limpiar = true
+                   @productos = Producto.find(:all, :conditions=>['estado_id = 1 AND stock <= punto_de_pedido AND proveedor_id = ?',params[:proveedor_id]])
+          when params[:agrega] == 'uno_solo' then
+                   @limpiar = false
+                  @productos = Producto.find(:all, :conditions=>{:id=>params[:producto_id]})
+       end            
+    
+
+        respond_to do |format|
+          format.js
+        end
+  end
+
+
+
+
+
+end # final

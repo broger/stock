@@ -40,6 +40,7 @@ class ComprobantesController < ApplicationController
   # POST /comprobantes
   # POST /comprobantes.xml
   def create
+     raise 
     @comprobante = Comprobante.new(params[:comprobante])
 
     respond_to do |format|

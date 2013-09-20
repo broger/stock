@@ -5,3 +5,13 @@
 
     }
 
+
+
+
+input[type="text"] {
+         height: 24px;
+         font-size: 13px;
+         line-height: 15px;
+         border-radius: 1px;
+    }
+
