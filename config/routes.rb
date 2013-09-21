@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   
+  map.resources :pedido_compras , :collection => {:agregar_detalle=>:get}
+
   map.resources :compras
 
   map.resources :tipo_comprobantes
@@ -9,8 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :movimientos
 
   map.resources :producto_lista_precios, :collection => {:editar_x_producto => :get,
-                                                         :result_x_prod => :post }
-
+                                                         :result_x_prod => :post}
   map.resources :lista_precios
 
   map.resources :clientes
@@ -31,7 +32,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :rubros
 
-  map.resources :productos , :collection => {:resultado => :post }
+  map.resources :productos , :collection => {:resultado => :post,
+                                             :todos => :get }
 
   map.resources :proveedors
 
