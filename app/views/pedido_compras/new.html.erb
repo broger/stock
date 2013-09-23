@@ -50,8 +50,10 @@
      			  <div class= "datos" id= "nro_comprobante"  style="width:170px"><th><%= f.label :numero, "Nº:" %></th><%= f.text_field :numero,  :value=> '0001', :style=>'width:140px' , :class=> 'form-control'%></div>
      			  <div class= "datos" id= "proveedor"        style="width:350px" ><%= f.label :proveedor %><%= select_tag :proveedor_id, options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:240px', :class=>'default select' %></div>
 		        <div class= "datos"                        style="width:280px">
-                 <%= radio_button_tag 'addprod', 'sin_stock', true,  :value => 'sin_stock' %><%= label_tag 'addprod_sin_stock', 'agregar productos sin stock'%>
-                 <%= radio_button_tag 'addprod', 'todos',     false, :value => 'todos'     %><%= label_tag 'addprod_todos',     'todos'%>
+                 <%#= button_tag 'addprod', 'sin_stock', true,  :value => 'sin_stock' %><%#= label_tag 'addprod_sin_stock', 'agregar productos sin stock'%>
+                 <%#= button_tag 'addprod', 'todos',     false, :value => 'todos'     %><%#= label_tag 'addprod_todos',     'todos'%>
+                 <button type="button" class="btn btn-default btn-xs"  onClick="agregar_ajax('sin_stock')" style="font-size:10px" title="Agregar productos sin stock del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>productos sin stock</button>
+                 <button type="button" class="btn btn-default btn-xs"  onClick="agregar_ajax('todos')" style="font-size:10px" title="Agregar todos los productos del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>todos los productos</button>
             </div>                                                                         
             <div class= "datos" style="width:100px"><%=Time.now.strftime("%d/%m/%Y") %></div>
             
@@ -64,25 +66,17 @@
          <div id="busca_productos">
           <%= text_field_tag :producto, nil, :style=> "width:70%", :placeholder => ' Ingrese el nombre del Producto ...'%>
           <%= text_field_tag :cantidad, nil, :class =>'producto', :style=> "width:10%", :placeholder => ' cantidad ...' %>
-          <a  style ="font-size:16px; width:50px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar_fila(123)" ></a>           
+          <a  style ="font-size:16px; width:50px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar_ajax('uno_solo')" ></a>           
           <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
-        </div>
+          <%= hidden_field_tag :agrega, nil, :id=>"agrega" %>     
          <div id="detalle">
          		<div  class="scroll" sytle ="width:100%; height:300px">
                        <div id="error_detalle" style="text-align:center">El producto ya existe en la lista </div>
-             
-              
-
-
-               <table id="list" >
+                <table id="list" >
 
 
 
-
-
-               </table>   
-
-
+                </table>   
         		</div>    			
         </div>
      		<div style="text-align:center" ><%= f.submit 'Guardar', :class=>"btn btn-danger" %> </div>
@@ -100,13 +94,9 @@
 
   $(document).ready(function () {
 
-  $("#addprod_sin_stock").click(agregar_ajax)
-  $("#addprod_todos").click(agregar_ajax)
-
  });
 
-
-   
+  
 
   //INICIO AUTOCOMPLETAR.....
      $('#producto').autocomplete('<%= todos_productos_path %>', {
@@ -129,35 +119,38 @@
      //FIN AUTOCOMPLETAR.....
 
 
+  function agregar(cantidad){
+      $('#agrega').val(cantidad);
+      agregar_ajax();
+  } 
+
   function agregar_ajax(){
-    agrega =  $("input[name='addprod']:checked").val()
-    alert('dfadfsdf   '+ agrega );
+    
     jQuery.ajax({
            type:'get',
            //url:'<%= agregar_detalle_pedido_compras_path %>?nomenclador_id='+ $('#nomenclador_id').val() +'&codigo_practica='+$('#codigo_practica_id').val()+'&beneficiario_id='+$('#beneficiario_id').val()+'&diagnostico_id='+$('#diagnostico_id').val()+'&fecha_prescripcion='+$('#fecha_prescripcion').val()+'&b_p_id='+$('input[name=plan_especial]:checked').val()
-           url:'<%= agregar_detalle_pedido_compras_path %>?proveedor_id='+ $('#proveedor_id').val()+ '&agrega='+ agrega
-     });
+           url:'<%= agregar_detalle_pedido_compras_path %>?proveedor_id='+ $('#proveedor_id').val()+ '&agrega='+ $('#agrega').val() + '&producto_id='+ $('#producto_id').val() 
+           });
 
    };
 
 
+  function agregar_detalle(filas) {
+       filas.forEach(function(fila){
+             $('#list').append(
+                  "<tr id='detalle"+fila[0]+"'>" +
+                  "<td>"+ fila[1] +"</td>"+
+                  "<td>"+ fila[2] +"</td>"  
+             );
+        });
+  } 
+
+
+
 
      function agregar_fila(id) {//,codigo,producto,unidad,stock,cant_pedida){
-          alert('fffff ' + id);
-         if( $('#fila'+id).length != 0 ){
-                // mostar error
-                alert('error ya existe');
-          }else{
-            alert ('va a ingresar')
-              fila = 'fila'+id;
-             $('#list').append("<tr id='"+fila+"'>"+
-                                                  "<td>ddddddddd</td>"+
-                                                  "<td><a id='eliminar_123' href='javascript:eliminar_fila(123)' title='Eliminar' >eliminar</a></td>"+
-                               "</tr>");
-              
-          }
-  
-
+         alert('agrega         fila sola ' + id);
+         
 
      };
 

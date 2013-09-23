@@ -1,38 +1,32 @@
-#page << "$('#lis').append(#{render :partial=>'asignar_expediente'});"
+#unless @productos.blank?
 
+  page << "alert ('borro todo y cargo auto')"
  
- #unless @productos.blank?
+  page << " var filas = new Array()"
+  for fila in @productos 
+       page << "  filas.push(new Array('#{fila.id}','#{fila.codigo}','#{fila.nombre}'))"
+  end 
 
+
+    case 
+        when @agrega == 'todos' then 
+               page << "alert ('toooto')"
  
-      if @limpiar
-      
-          page << "alert ('borro todo y cargo auto');"
+               page.call 'elimina_detalle'
+               page.call "agregar_detalle(filas)"
+        when @agrega == 'sin_stock' then  
+               page.call 'elimina_detalle'
+               page.call "agregar_detalle(filas)"
+        when @agrega == 'uno_solo' then
+               
+               page.call "agregar_fila('#{@producto.id}')"
+       
+    end
 
-          page.call 'elimina_detalle;'
-        
-          @productos.each do |producto|
 
-               fila = "<tr id= 'fila#{producto.id}'>
-                             
+    
 
-
-                        </tr>  "
-
-                page <<  "#{fila}"
-          end
- 
-
-     else
+#end     
 
 
 
-
-
-     end
-
-
-
-
-
-
-#end 
