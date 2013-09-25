@@ -54,41 +54,40 @@
                         <button type="button" class="btn btn-default btn-xs"  onClick="agregar('todos')" style="font-size:10px" title="Agregar todos los productos del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>todos los productos</button>
                   </div>                                                                         
                   <div class= "datos" style="width:100px"><%=Time.now.strftime("%d/%m/%Y") %></div>
-                   
-              </div>  
-              <div id="busca_productos">
-                  <%= text_field_tag :producto, nil, :style=> "width:70%", :placeholder => ' Ingrese el nombre del Producto ...', :class=> 'form-control'%>
-                  <%= text_field_tag :cantidad, nil,  :class=> 'form-control', :style=> "width:10%", :placeholder => ' cantidad ...' %>
-                  <a  style ="font-size:14Spx; width:40px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar('uno_solo')" ></a>           
-                  <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
-                  <%= hidden_field_tag :agrega, nil, :id=>"agrega" %>
-              </div>          
+              </div>   
+              <div id="buscar_productos">
+                        <%= text_field_tag :producto, nil, :class=> 'form-control', :placeholder => ' Ingrese el nombre del Producto ...', :style=> "width:70%; padding-right:4px"%>
+                        <%= text_field_tag :cantidad, nil,  :class=> 'form-control', :style=> "width:10%", :placeholder => ' cantidad ...' %>
+                        <a  style ="font-size:14Spx; width:40px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar('uno_solo')" ></a>           
+                        <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
+                        <%= hidden_field_tag :agrega, nil, :id=>"agrega" %>
+              </div>             
               <div id="detalle">
                         <div id="error_detalle" class="alert alert-warning fade in" style="text-align:center">
                           <i class="glyphicon glyphicon-warning-sign" ></i>
                           <label id="msj_error"></label>
-                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          <button type="button" class="close" onclick="ocultar_error()">&times;</button>
                         </div>  
-                        <table >
-                            <td>
-                              <th style="width:100px">c&oacute;digo</th>
+                        <table  style="background-color:#DBDBDB; color:#5A5A5A; font-size:12px">
+                            <td >
+                              <th style="width:100px;padding:4px 0 4px 0">c&oacute;digo</th>
                               <th style="width:320px">nombre</th>
                               <th style="width:80px">unidad</th>
                               <th style="width:80px">stock</th>
                               <th style="width:120px">pedido nuevo</th>
-                              <th style="width:auto"></th>
+                              <th style="width:280px; text-align:right"></th>
                           </td>
                         </table>
-                        <div class="cuadro-scroll" sytle ="width:100%; height:300px">
-                            <table id="list">    
+                        <div class="cuadro-scroll" sytle ="width:100%; height:300px; ">
+                            <table id="list" class="tabla_detalle">    
                               <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
                               <!-- X ACA SE AGREGA DINAMICAMENTE EL DETALLE X -->
                               <!-- X ACA SE AGREGA DINAMICAMENTE EL DETALLE X -->
                               <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX --> 
                              </table>   
                         </div>          
+                        <div style="text-align:center; margin-top:8px" ><%= f.submit 'Guardar', :class=>"btn btn-danger btn-xs" %> </div>
               </div>
-              <div style="text-align:center" ><%= f.submit 'Guardar', :class=>"btn btn-danger" %> </div>
         </div>  
      </div>
  </div>
@@ -159,14 +158,14 @@
                               "<td style='width:320px'>"+ fila[2] +"</td>"+  
                               "<td style='width:80px'>"+ fila[3] +"</td>"+  
                               "<td style='width:80px'>"+ fila[4] +"</td>"+  
-                              "<td style='width:120px'><input id='comprobante_input"+fila[0]+"' name='comprobante[input"+fila[0] +"]'></input></td>"+
-                              "<td style='width:auto'><button onClick='eliminar_fila("+ fila[0] +")''>eliminar</button></td>"+  
+                              "<td style='width:120px'><input id='comprobante_input"+fila[0]+"' name= 'comprobante[fila"+ fila[0]+"]' class='form-control input-sm' ></input></td>"+
+                              "<td style='text-align:right'><a class='glyphicon glyphicon-remove detalle_cruz' onClick='eliminar_fila("+ fila[0] +")' title='quitar de la lista'</a></td>"+  
                           "</tr>" 
-                      );
-                      
-                      $('#input'+fila[0]).val($('#cantidad').val());
+                      );    
 
-               
+                      $('#comprobante_input'+fila[0]).val($('#cantidad').val());
+
+      
             }else{
                       $('#msj_error').text('Ya existe en lista el producto '+ fila[2] + '.');
                       $('#error_detalle').show();
@@ -211,6 +210,11 @@
      });
 
 
+  function ocultar_error() {
+
+    $('#error_detalle').hide();
+  }
+
   /*  */
 
 </script>
@@ -243,38 +247,37 @@
 
 
   	#comprobante{
-  		padding: 5px 20px 0 30px;
+  		padding: 10px 20px 0 30px;
   	}
-
-
-    #busca_productos {
-      margin-top: 6px;
-    } 
 
 
     #cabezera {
       padding: 4px;
-      background-color: #e3e4e5;
-      border: 1px solid black;
+      background-color: #EBEBEB;
+      border: 1px solid #E6E6E6;
+      border-radius: 1px;
 
     } 
     
-
+    #buscar_productos {
+      margin-top: 1px;
+      padding: 6px 6px 6px 6px;
+      background-color: #EBEBEB;
+      border: 1px solid #E6E6E6;
+      border-radius: 1px;
+    }
 
     #detalle{
-      margin-top: 6px;
+      margin-top: 1px;
+      padding: 10px 20px 10px 20px;
+      background-color: #EBEBEB;
       width: 100%;
-      padding: 10px
+      border-radius: 1px;
     }
 
 
     #titulo{
       margin: 30px 0 4px 0;
-    }
-
-    #buscador{
-        height: 35px;
-        margin-bottom: 10px
     }
 
     #menu_izquierdo{
@@ -289,9 +292,11 @@
       display: inline;
     }
 
-    .textbox_buscar{
-      float:right;
-      height: 20px
+    .tabla_detalle{
+       background-color:white;
+       padding-top:6px;
+       font-size:12px;
+       width:100%
     }
 
 </style>

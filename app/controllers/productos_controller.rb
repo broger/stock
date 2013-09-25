@@ -134,9 +134,9 @@ class ProductosController < ApplicationController
 
   def todos
     unless params[:q].match(/^\d*$/)
-      @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ?',"%#{params[:q]}%"], :order => :nombre,:limit=>20)
+      @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ?',"%#{params[:q]}%"], :order => :nombre,:limit=>30)
     else
-      @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo_lugar_trabajo = ?',"#{params[:q]}"], :order => :nombre,:limit=>20)
+      @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo_lugar_trabajo = ?',"#{params[:q]}"], :order => :nombre,:limit=>30)
     end
     respond_to do |format|
       format.json{render :json => @productos.to_json}

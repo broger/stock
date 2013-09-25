@@ -36,7 +36,7 @@ class PedidoComprasController < ApplicationController
 #                    @compras = Producto.find_by_sql("#{sql_descripcion('compras','nombre',params[:txtbuscar],30,false,filtros)}")
 #                end
 #          end 
-           @pedido_compras = Comprobante.pedido_compras.paginate :per_page => 24, :page => params[:page],:include=>[:talbas,:estado_beneficiario]
+           @pedido_compras = Comprobante.pedido_compra.paginate :per_page => 24, :page => params[:page],:include=>[:talbas,:estado_beneficiario]
 
 #      end     
 
