@@ -5,8 +5,10 @@
 
     }
 
-
-
+div{ 
+	/* border: 1px solid #d1cfcf; */
+  
+}
 
 input[type="text"] {
          height: 24px;
@@ -14,4 +16,11 @@ input[type="text"] {
          line-height: 15px;
          border-radius: 1px;
     }
+
+.cuadro-scroll {
+     width:100%;
+     height:275px;
+     background-color:#F2F2F2;
+     overflow:auto;
+}
 

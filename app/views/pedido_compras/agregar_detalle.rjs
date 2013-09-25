@@ -1,32 +1,34 @@
-#unless @productos.blank?
-
-  page << "alert ('borro todo y cargo auto')"
- 
-  page << " var filas = new Array()"
-  for fila in @productos 
-       page << "  filas.push(new Array('#{fila.id}','#{fila.codigo}','#{fila.nombre}'))"
-  end 
 
 
-    case 
+unless @productos.blank?
+    page << " var filas = new Array()"
+    for fila in @productos
+      page << "  filas.push(new Array('#{fila.id}','#{fila.codigo.strip}','#{fila.nombre.strip}','#{fila.unidad.nombre.strip}','#{fila.stock}'))"
+    end 
+
+    case
         when @agrega == 'todos' then 
-               page << "alert ('toooto')"
- 
-               page.call 'elimina_detalle'
-               page.call "agregar_detalle(filas)"
-        when @agrega == 'sin_stock' then  
-               page.call 'elimina_detalle'
-               page.call "agregar_detalle(filas)"
-        when @agrega == 'uno_solo' then
                
-               page.call "agregar_fila('#{@producto.id}')"
-       
+               page << "$('#error_detalle').hide()"
+               page.call 'eliminar_detalle'
+               page.call "agregar_detalle"
+
+        when @agrega == 'sin_stock' then  
+   
+               page << "$('#error_detalle').hide()"
+               page.call 'eliminar_detalle'
+               page.call "agregar_detalle"
+
+        when @agrega == 'uno_solo' then
+               page.call "agregar_detalle"
+
     end
 
+else
 
-    
+   page.call 'eliminar_detalle'
+   page << "$('#error_detalle').show()"
+   page << "$('#msj_error').text('No Existen Productos')"
 
-#end     
 
-
-
+end

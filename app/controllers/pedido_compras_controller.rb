@@ -63,16 +63,17 @@ class PedidoComprasController < ApplicationController
 
       case 
            when params[:agrega] == 'todos' then
-                   @productos = Producto.find(:all, :conditions=>{:estado_id=>1, :proveedor_id => params[:proveedor_id]})
+                   @agrega = 'todos' 
+                   @productos = Producto.find(:all, :conditions=>{:estado_id=>1, :proveedor_id => params[:proveedor_id]}, :limit=>100)    
            when params[:agrega] == 'sin_stock' then
-                   @productos = Producto.find(:all, :conditions=>['estado_id = 1 AND stock <= punto_de_pedido AND proveedor_id = ?',params[:proveedor_id]])
+                   @agrega = 'sin_stock' 
+                   @productos = Producto.find(:all, :conditions=>['estado_id = 1 AND stock <= punto_de_pedido AND proveedor_id = ?',params[:proveedor_id]], :limit=>100)  
           when params[:agrega] == 'uno_solo' then
+                   @agrega = 'uno_solo'
                    @productos = Producto.find(:all, :conditions=>{:id=>params[:producto_id]})
-                   raise "dfdfd  #{@producto.nombre}"
-       end            
+      end            
        
-       @agrega = params[:agrega] 
-
+        
         respond_to do |format|
           format.js
         end

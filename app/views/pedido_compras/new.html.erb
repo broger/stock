@@ -1,10 +1,12 @@
   <div class="row" >
+     <% form_for(@comprobante) do |f| %>
+     <%= f.error_messages %>
      <div id="titulo" class="col-sm-12" >
-         <h2 style="margin:0">Nuevo Pedido Compra</h2>
+         <h4 style="margin:0">Nuevo Pedido Compra</h4>
          <hr style=" width=100%; border-width: 1px 0 0 0; margin:0; border-color:#333333; ">
      </div>
-     <div id="menu_izquierdo"  class="col-sm-2" >
 
+     <div id="menu_izquierdo"  class="col-sm-2" >
        <!-- ACORDENON -->
        <div class="panel-group" id="accordion">
            <div class="panel panel-default">
@@ -39,66 +41,71 @@
               </div>
             </div>
       </div>
-
-
      </div>
-     <div  id="contenido"  class="col-sm-10" >
-     	<% form_for(@comprobante) do |f| %>
-        <%= f.error_messages %>
-	    <div id="comprobante" class= "col-sm-12" >
-     		<div id="cabezera">
-     			  <div class= "datos" id= "nro_comprobante"  style="width:170px"><th><%= f.label :numero, "Nº:" %></th><%= f.text_field :numero,  :value=> '0001', :style=>'width:140px' , :class=> 'form-control'%></div>
-     			  <div class= "datos" id= "proveedor"        style="width:350px" ><%= f.label :proveedor %><%= select_tag :proveedor_id, options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:240px', :class=>'default select' %></div>
-		        <div class= "datos"                        style="width:280px">
-                 <%#= button_tag 'addprod', 'sin_stock', true,  :value => 'sin_stock' %><%#= label_tag 'addprod_sin_stock', 'agregar productos sin stock'%>
-                 <%#= button_tag 'addprod', 'todos',     false, :value => 'todos'     %><%#= label_tag 'addprod_todos',     'todos'%>
-                 <button type="button" class="btn btn-default btn-xs"  onClick="agregar_ajax('sin_stock')" style="font-size:10px" title="Agregar productos sin stock del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>productos sin stock</button>
-                 <button type="button" class="btn btn-default btn-xs"  onClick="agregar_ajax('todos')" style="font-size:10px" title="Agregar todos los productos del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>todos los productos</button>
-            </div>                                                                         
-            <div class= "datos" style="width:100px"><%=Time.now.strftime("%d/%m/%Y") %></div>
-            
-
-          <!--  
-            <div class= "datos" id= "observaciones" style="display:block"><%= "Observaciones #{ f.text_field :observaciones , :size=> 20}" %></div>
-            <div class= "datos" id= "deposito" ><%= "Deposito #{select_tag :deposito_id, options_from_collection_for_select(Deposito.all, :id, :nombre) }  "%></div>      
-            -->
-			  </div>	
-         <div id="busca_productos">
-          <%= text_field_tag :producto, nil, :style=> "width:70%", :placeholder => ' Ingrese el nombre del Producto ...'%>
-          <%= text_field_tag :cantidad, nil, :class =>'producto', :style=> "width:10%", :placeholder => ' cantidad ...' %>
-          <a  style ="font-size:16px; width:50px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar_ajax('uno_solo')" ></a>           
-          <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
-          <%= hidden_field_tag :agrega, nil, :id=>"agrega" %>     
-         <div id="detalle">
-         		<div  class="scroll" sytle ="width:100%; height:300px">
-                       <div id="error_detalle" style="text-align:center">El producto ya existe en la lista </div>
-                <table id="list" >
-
-
-
-                </table>   
-        		</div>    			
-        </div>
-     		<div style="text-align:center" ><%= f.submit 'Guardar', :class=>"btn btn-danger" %> </div>
-
-     	<% end %>
-		
-     	</div>
-
-
+     <div id="contenido" class= "col-sm-10" >
+       	  <div id="comprobante" class= "col-sm-14" >
+              <div id="cabezera">
+                  <div class= "datos" id= "nro_comprobante"  style="width:170px"><th><%= f.label :numero, "Nº:" %></th><%= f.text_field :numero,  :value=> '0001', :style=>'width:140px' , :class=> 'form-control'%></div>
+                  <div class= "datos" id= "proveedor"        style="width:350px" ><%= f.label :proveedor %><%= select_tag :proveedor_id, options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:240px', :class=> 'form-control' %></div>
+                  <div class= "datos"                        style="width:280px">
+                        <%#= button_tag 'addprod', 'sin_stock', true,  :value => 'sin_stock' %><%#= label_tag 'addprod_sin_stock', 'agregar productos sin stock'%>
+                        <%#= button_tag 'addprod', 'todos',     false, :value => 'todos'     %><%#= label_tag 'addprod_todos',     'todos'%>
+                        <button type="button" class="btn btn-default btn-xs"  onClick="agregar('sin_stock')" style="font-size:10px" title="Agregar productos sin stock del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>productos sin stock</button>
+                        <button type="button" class="btn btn-default btn-xs"  onClick="agregar('todos')" style="font-size:10px" title="Agregar todos los productos del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>todos los productos</button>
+                  </div>                                                                         
+                  <div class= "datos" style="width:100px"><%=Time.now.strftime("%d/%m/%Y") %></div>
+                   
+              </div>  
+              <div id="busca_productos">
+                  <%= text_field_tag :producto, nil, :style=> "width:70%", :placeholder => ' Ingrese el nombre del Producto ...', :class=> 'form-control'%>
+                  <%= text_field_tag :cantidad, nil,  :class=> 'form-control', :style=> "width:10%", :placeholder => ' cantidad ...' %>
+                  <a  style ="font-size:14Spx; width:40px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar('uno_solo')" ></a>           
+                  <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
+                  <%= hidden_field_tag :agrega, nil, :id=>"agrega" %>
+              </div>          
+              <div id="detalle">
+                        <div id="error_detalle" class="alert alert-warning fade in" style="text-align:center">
+                          <i class="glyphicon glyphicon-warning-sign" ></i>
+                          <label id="msj_error"></label>
+                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        </div>  
+                        <table >
+                            <td>
+                              <th style="width:100px">c&oacute;digo</th>
+                              <th style="width:320px">nombre</th>
+                              <th style="width:80px">unidad</th>
+                              <th style="width:80px">stock</th>
+                              <th style="width:120px">pedido nuevo</th>
+                              <th style="width:auto"></th>
+                          </td>
+                        </table>
+                        <div class="cuadro-scroll" sytle ="width:100%; height:300px">
+                            <table id="list">    
+                              <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+                              <!-- X ACA SE AGREGA DINAMICAMENTE EL DETALLE X -->
+                              <!-- X ACA SE AGREGA DINAMICAMENTE EL DETALLE X -->
+                              <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX --> 
+                             </table>   
+                        </div>          
+              </div>
+              <div style="text-align:center" ><%= f.submit 'Guardar', :class=>"btn btn-danger" %> </div>
+        </div>  
      </div>
  </div>
+ <% end %>
 
- 
+
+
 <script type="text/javascript">
 
-  $(document).ready(function () {
+    $(document).ready(function () {
+        $('#error_detalle').hide();
+        $('#proveedor_id').change(limpiar_detalle);
 
- });
+    });
 
-  
-
-  //INICIO AUTOCOMPLETAR.....
+   
+    //INICIO AUTOCOMPLETAR.....
      $('#producto').autocomplete('<%= todos_productos_path %>', {
          dataType: "json",
        parse: function(data) {
@@ -133,50 +140,95 @@
            });
 
    };
+ 
 
+  function limpiar_detalle(){
+      eliminar_detalle();
+      $('#error_detalle').hide();
+      limpiar_prod_cant();
+  }
 
-  function agregar_detalle(filas) {
-       filas.forEach(function(fila){
-             $('#list').append(
-                  "<tr id='detalle"+fila[0]+"'>" +
-                  "<td>"+ fila[1] +"</td>"+
-                  "<td>"+ fila[2] +"</td>"  
-             );
-        });
+  function agregar_detalle() {
+      filas.forEach(function(fila){
+            if($('#detalle'+fila[0]).length == 0 ){                         
+                      // Agrego la Fila 
+                      $('#error_detalle').hide();
+                      $('#list').prepend(
+                          "<tr id='detalle"+fila[0]+"'>" +
+                              "<td style='width:100px'>"+ fila[1] +"</td>"+
+                              "<td style='width:320px'>"+ fila[2] +"</td>"+  
+                              "<td style='width:80px'>"+ fila[3] +"</td>"+  
+                              "<td style='width:80px'>"+ fila[4] +"</td>"+  
+                              "<td style='width:120px'><input id='comprobante_input"+fila[0]+"' name='comprobante[input"+fila[0] +"]'></input></td>"+
+                              "<td style='width:auto'><button onClick='eliminar_fila("+ fila[0] +")''>eliminar</button></td>"+  
+                          "</tr>" 
+                      );
+                      
+                      $('#input'+fila[0]).val($('#cantidad').val());
+
+               
+            }else{
+                      $('#msj_error').text('Ya existe en lista el producto '+ fila[2] + '.');
+                      $('#error_detalle').show();
+            };
+
+      });
+      limpiar_prod_cant();       
   } 
 
-
-
-
-     function agregar_fila(id) {//,codigo,producto,unidad,stock,cant_pedida){
-         alert('agrega         fila sola ' + id);
-         
-
-     };
-
-     function eliminar_fila(id){
-      alert ("entro elliminar " + id)
-          $('#fila'+id).remove();
-     }
-
-
-     function elimina_detalle(){
+  function eliminar_detalle(){
       alert ("ento elliinr " )
           $('#list tr').remove();
-     }
- 
+  }
+
+
+  function eliminar_fila(id){
+        $('#detalle'+id).remove();
+  }
+
+
+  function limpiar_prod_cant(){
+      $('#producto_id').val('');
+      $('#producto').val('');
+      $('#cantidad').val('');
+  }
+
+
+   
+  $('#producto').keypress(function(event) {
+        if (event.which == '13') {
+          event.preventDefault();
+          $('#cantidad').focus();
+        }
+     });
+
+  $('#cantidad').keypress(function(event) {
+        if (event.which == '13') {
+          event.preventDefault();
+          agregar('uno_solo');
+          $('#producto').focus();
+        }
+     });
+
+
+  /*  */
+
 </script>
 
 
 
 <style type="text/css">
 
-    .datos{
+
+  .form-control{
+      display: inline-block;
+  }
+
+  .datos{
       display: inline-block;
       text-align: right;
-      height: 34px;
-      background-color: #4478aa;  
-    }
+      /*background-color: #4478aa;  */
+  }
 
 
   	.datos label{
@@ -191,39 +243,33 @@
 
 
   	#comprobante{
-  		background-color: green;
-  		height:450px;
-  		padding: px;
-  		border-width: 1px;
-  		border-color: red;
+  		padding: 5px 20px 0 30px;
   	}
 
 
     #busca_productos {
       margin-top: 6px;
-      border: 1px solid #FFFAAA;
-      padding: 4px;
     } 
 
 
     #cabezera {
-      border: 1px solid #FFFAAA;
-      padding: 8px;
+      padding: 4px;
+      background-color: #e3e4e5;
+      border: 1px solid black;
+
     } 
     
 
 
     #detalle{
       margin-top: 6px;
-      border: 1px solid #123FAF;
       width: 100%;
-      height: 300px;
       padding: 10px
     }
 
 
     #titulo{
-      margin: 40px 0 4px 0;
+      margin: 30px 0 4px 0;
     }
 
     #buscador{
@@ -233,12 +279,11 @@
 
     #menu_izquierdo{
       float: left;
-      padding:20px 0 0 18px;
+      padding: 20px 0 0 18px;
       /* background-color:green; */
     }
 
     #contenido{
-      padding:10px 30px 0 40px;
       /*background-color:white; */
       float: left;
       display: inline;
