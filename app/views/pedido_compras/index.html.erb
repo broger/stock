@@ -1,4 +1,4 @@
-<%= form_tag(compras_path, :method => 'get',:id=>'buscar') %>
+<%= form_tag(pedido_compras_path, :method => 'get',:id=>'buscar') %>
 
   <div class="row" >
      <div id="titulo" class="col-sm-12" >
@@ -51,24 +51,32 @@
                         <div style="float:right"><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...', :class=>"form-control" %></div>
                       </div>
             
-                       <% unless @compras.blank? %>
+                       <% unless @pedido_compras.blank? %>
                         <table class="table" style="font-size :13px" >
                                 <thead>
                                   <tr style="height:12px">
-                                  <th>Nombre</th>
-                                  <th>Provincia</th>
+                                  <th>n&uacute;mero</th>
+                                  <th>proveedor</th>
+                                  <th>fecha alta</th>
+                                  <th>enviado</th>
+                                  <th>fecha envio</th>
+                                  <th>factura compra</th>
                                   <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% @compras.each do |compra| %>
+                                <% @pedido_compras.each do |pd| %>
                                   <tr style="height:9px">
-                                      <td><%=h compra.nombre %></td>
-                                      <td><%=h compra.nombre %></td>
+                                      <td><%=h pd.numero %></td>
+                                      <td><%=h pd.proveedor.nombre %></td>
+                                      <td><%=h "#{pd.created_at.strftime("%Y-%m-%d %H:%M")} hs." if pd.created_at %></td>
+                                      <td><%=h pd.enviado_proveedor == true ? 'si' : 'no' %></td>
+                                      <td><%=h "#{pd.fecha_envio.strftime("%Y-%m-%d %H:%M")} hs." if pd.fecha_envio %></td>
+                                      <td>0000022</td>
                                       <td style="text-align:right">
-                                             <%= link_to image_tag('iconos/16x16/zoom.png'), compra, :title=>'Ver' %>
-                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_compras_path(compra), :title=>'Editar' %>
-                                                <%= link_to image_tag('iconos/16x16/delete.png'), compra, :title=>'Eliminar',
+                                             <%= link_to image_tag('iconos/16x16/zoom.png'), pd, :title=>'Ver' %>
+                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_pedido_compra_path(pd), :title=>'Editar' %>
+                                                <%= link_to image_tag('iconos/16x16/delete.png'), pd, :title=>'Eliminar',
                                                   :confirm => 'Esta Seguro?', :method => :delete %>
                                       </td>
                                     </tr>

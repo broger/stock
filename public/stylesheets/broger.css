@@ -41,9 +41,18 @@ input[type="text"] {
 .detalle_cruz{
        color:#d2322d;
        border-color:#d43f3a;
-       font-size:18px;
-       text-decoration:none
+       font-size:18px; 
     }
 
+.detalle_cruz a:hover{
+      text-decoration:none;
+}    
 
 
+
+.form-control {
+  height: 30px;
+  border-radius: 1px;
+  font-size: 12px
+
+}

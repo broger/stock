@@ -1,75 +1,194 @@
-<table>
-  <tr>
-      <td>nombre</td>
-      <td><%=h @lista_precio.nombre %></td>
-  </tr>
-  <tr>
-      <td>Abrev:</td>
-      <td><%=h @lista_precio.abrev %></td>
-  </tr>
-<tr>
-      <td>Cantidad Productos</td>
-      <td><%=h @cant_productos %></td>
-  </tr>
-
-  <tr>
-      <td><%=h "Validez desde #{@lista_precio.desde} "%></td>
-      <td><%=h "Validez hasta #{@lista_precio.hasta} "%></td>
-  </tr>
 
 
 
-</table>
 
-<% unless @producto_listas.blank? %>
-          <div  class= "cuadro-scroll" >
-                        <table class="table" style="font-size :10px" >
-                                <thead>
-                                  <tr style="height:11px;">
-                                  <th>codigo</th>
-                                  <th>nombre</th>
-                                  <th>unidad</th>
-                                  <th>descuento</th>
-                                  <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% @producto_listas.each do |producto_lista| %>
-                                  <tr style="height:9px">
-                                      <td><%=h producto_lista.producto.codigo %></td>
-                                      <td><%=h producto_lista.producto.nombre %></td>
-                                      <td><%=h producto_lista.producto.unidad.nombre %></td>
-                                      <td><%=h producto_lista.precio %></td>
-                                      <td><%=h producto_lista.descuento %></td>
-                                      
-                                    </tr>
-                                <% end %>
-                                </tbody>
-                         </table>
+
+<%= form_tag(lista_precios_path, :method => 'get',:id=>'buscar') %>
+
+  <div class="row" >
+     <div id="titulo" class="col-sm-12" >
+         <h2 style="margin:0">Listas de Precios</h2>
+         <hr  style=" width=100%; border-width: 1px 0 0 0; margin:0; border-color:#333333; ">
+     </div>
+     <div id="menu_izquierdo"  class="col-sm-2" >
+
+       <!-- ACORDENON -->
+       <div class="panel-group" id="accordion">
+           <div class="panel panel-default">
+             <div class="panel-heading">
+                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Registros</a></h5>
              </div>
-                        <%else%>
-                                 <div><h4><font color="red">No se encontraron resultados</font></h4></div>                                  
-                        <%end%>
-                               <div style="text-align:center" ><%= will_paginate @producto_listas, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%></div>
+             <div id="collapseOne" class="panel-collapse collapse in">
+                 <div class="panel-body"><%= link_to 'Nueva Lista de Precio', new_lista_precio_path, :class=>'fancybox' %></div>
+             </div>
+        </div>
+           <div class="panel panel-default">
+             <div class="panel-heading" style="background-color:#2197C9">
+              <h5 class="panel-title" style="background-color:#2197C9" ><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Reportes</a></h5>
+             </div>
+             <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body"> - Todos   </div>
+             </div>
+           </div>
+           <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    Tablas Relacionadas
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                 - Productos
+                 - Monedas
+                 - 
+                 
+                </div>
+              </div>
+            </div>
+      </div>
+     </div>
+     <div  id="contenido"  class="col-sm-10"  >
+                <div style="padding: 8px 0px 8px 0px; font-size:15px; background-color:#EEEEEE">
+                          <div class= "datos" style="width:160px"><label> nombre:        </label><p><%= @lista_precio.nombre %></p></div>
+                          <div class= "datos" style="width:160px"><label> abreviatura:   </label><p><%= @lista_precio.abrev %></p></div>
+                          <div class= "datos" style="width:260px"><label> validez desde: </label><p><%= @lista_precio.desde if @lista_precio.desde %></p></div>
+                          <div class= "datos" style="width:260px"><label> validez hasta: </label><p><%= @lista_precio.hasta if @lista_precio.hasta %></p></div>       
+                </div>
+                      <% unless @producto_listas.blank? %>
+                              <div  class= "cuadro-scroll" >
+                                    <table class="table" style="font-size :10px" >
+                                              <thead>
+                                                <tr style="height:11px;">
+                                                <th>codigo</th>
+                                                <th>nombre</th>
+                                                <th>unidad</th>
+                                                <th>descuento</th>
+                                                <th></th>
+                                              </tr>
+                                              </thead>
+                                              <tbody>
+                                              <% @producto_listas.each do |producto_lista| %>
+                                                <tr style="height:9px">
+                                                    <td><%=h producto_lista.producto.codigo %></td>
+                                                    <td><%=h producto_lista.producto.nombre %></td>
+                                                    <td><%=h producto_lista.producto.unidad.nombre %></td>
+                                                    <td><%=h producto_lista.precio %></td>
+                                                    <td><%=h producto_lista.descuento %></td>
+                                                    
+                                                  </tr>
+                                              <% end %>
+                                              </tbody>
+                                    </table>
+                              </div>
+                              <div style="text-align:center" ><%= will_paginate @producto_listas, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%></div>
+                      <%else%>
+                              <div><h4><font color="red">No se encontraron resultados</font></h4></div>                                  
+                      <%end%>
      </div>
  </div>
 
+ 
+<script type="text/javascript">
+
+    $.validator.addMethod("validar_fecha", function(value, element, params) {
+         return fecha_valida(value);
+    },'Fecha Invalida.');
 
 
+    $(document).ready(function () {
+         $('#txtbuscar').focus();
+         console.log();
+         $('#buscar').submit(controlar_bene);
 
+    });
 
-
-
- <style type="text/css">
-
-      .cuadro-scroll {
-           height:320px;
-           /* background-color:#F2F2F2; */
-           overflow:auto;
-           width: 80%;
-           float: left;
+    function controlar_bene(){
+          if ( $('#txtbuscar') != '' && $('#buscar').valid()){
+                $('#cargando').show();
           }
+    }
 
- </style>
+
+    $("table").tablecloth({
+      theme: "default",
+      bordered: true,
+      condensed: true,
+      striped: false, // linea par gris impar blanca
+      sortable: true,  // algo de jquery
+      clean: false,
+      cleanElements: "th td",
+      customClass: "my-table"
+    });
+
+
+</script>
+
+<style type="text/css">
+
+
+
+
+     
+    input[type="text"] {
+       height: 24px;
+       font-size: 13px;
+       line-height: 15px;
+       border-radius: 1px;
+       width: 300px;
+    }
+
+
+    #titulo{
+      margin: 40px 0 4px 0;
+    }
+
+    #buscador{
+        height: 35px;
+        margin-bottom: 10px
+    }
+
+    #menu_izquierdo{
+      float: left;
+      padding:20px 0 0 18px;
+      /* background-color:green; */
+    }
+
+    #contenido{
+      padding:20px 30px 0 50px;
+      /*background-color:white; */
+      float: left;
+      display: inline;
+    }
+
+    .textbox_buscar{
+      float:right;
+      height: 20px
+    }
+
+
+.datos{
+      display: inline-block;
+      text-align: right;
+      /*background-color: #4478aa;  */
+  }
+
+
+    .datos label{
+      padding: 0 6px;
+      font-size: 12px;
+
+    }
+
+    .datos p{
+      display: inline-block;
+    }
+
+
+
+
+</style>
+
   
 

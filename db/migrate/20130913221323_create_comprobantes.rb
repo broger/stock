@@ -4,9 +4,13 @@ class CreateComprobantes < ActiveRecord::Migration
       t.integer  :tipo_comprobante_id
       t.column   :numero, "numeric(16)"
       t.column   :total,   "numeric(10)"
+      t.integer  :forma_pago_id
+      
+      #pedido_compras
       t.boolean  :aprobado
       t.integer  :proveedor_id
-      t.integer  :forma_pago_id
+      t.boolean  :enviado_proveedor
+      t.date     :fecha_envio
       t.column   :nro_tarjeta
       t.integer  :usuario_id
       t.integer  :vendedor_id

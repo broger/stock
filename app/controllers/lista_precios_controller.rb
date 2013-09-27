@@ -23,7 +23,8 @@ class ListaPreciosController < ApplicationController
     @cant_productos = @lista_precio.producto_lista_precios.count    
 
     respond_to do |format|
-      format.html { render :layout => false }
+      format.html 
+      format.xml  { render :xml => @lista_precio}
     end
   end
 

@@ -1,4 +1,6 @@
 class PedidoComprasController < ApplicationController
+  
+
   def index
    # filtros =  " "
    # unless params[:rubro_id].blank?
@@ -36,7 +38,8 @@ class PedidoComprasController < ApplicationController
 #                    @compras = Producto.find_by_sql("#{sql_descripcion('compras','nombre',params[:txtbuscar],30,false,filtros)}")
 #                end
 #          end 
-           @pedido_compras = Comprobante.pedido_compra.paginate :per_page => 24, :page => params[:page],:include=>[:talbas,:estado_beneficiario]
+           @pedido_compras = Comprobante.pedido_compra.all
+           @pedido_compras = @pedido_compras.paginate(:per_page => 24, :page => params[:page])
 
 #      end     
 
@@ -50,17 +53,31 @@ class PedidoComprasController < ApplicationController
 
   def new
     @comprobante = Comprobante.pedido_compra.new
-
+    @ultimo_pd = TipoComprobante.find(2).ultimo_nro .to_i + 1
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @comprobante }
     end
   end
 
+  
+  def show
+    @pedido_compra = Comprobante.pedido_compra.find(params[:id])
+
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @pedido_compra }
+      end
+
+  end
+
+
+
+
 
 
   def agregar_detalle
-
       case 
            when params[:agrega] == 'todos' then
                    @agrega = 'todos' 
@@ -80,7 +97,53 @@ class PedidoComprasController < ApplicationController
   end
 
 
+  def guardar
+    Comprobante.transaction do
 
+
+      nro_repetido = Comprobante.find(:first, :conditions=>{:numero => params[:numero].to_i})
+
+      
+      if nro_repetido.blank?
+
+
+            pedido_compra = Comprobante.pedido_compra.new
+            pedido_compra.numero = params[:numero]
+            pedido_compra.proveedor_id =  params[:proveedor_id]
+            pedido_compra.observaciones=  params[:observaciones]
+            pedido_compra.usuario_id  =   current_user
+            pedido_compra.vendedor_id  =  current_user
+            pedido_compra.aprobado = true
+            pedido_compra.save!
+              
+
+            tipo_pd = TipoComprobante.find(2)
+            tipo_pd.ultimo_nro = params[:numero]
+            tipo_pd.save!
+
+            params["comprobante"].each do |k,o|
+               # producto_id = k 
+               # pedido = o        
+               mov = Movimiento.new
+               mov.producto_id = k
+               mov.cantidad = o[:pedido]
+               mov.afecta_stock = false 
+               mov.comprobante_id  = pedido_compra.id
+               mov.usuario_id = current_user
+               mov.deposito_id = params[:deposito_id]
+               mov.save!  
+            end 
+
+             redirect_to(pedido_compras_path(:id=>pedido_compra.id),:notice =>"El Pedido de Compras Nº: #{params[:numero]} ha sido creado correctamente, recuerde que esto no modifica su stock de productos." )
+      else
+         
+            redirect_to(pedido_compras_path(:id=>pedido_compra.id),:notice =>"El Pedido de Compras Nº: #{params[:numero]} ya existe." )
+
+
+      end #repetido
+
+    end  
+  end
 
 
 end # final
