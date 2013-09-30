@@ -96,10 +96,10 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-    <div class="container" style="height: 750px">
-            <div class="row" >
-                    <div  id="botonera"  class="col-sm-12" >
-                      <div id="bontones" style="float:left">
+    <div style="height:750px; widht:100%">
+            <div style="width:100%; background-color:#53B9E9" >
+              <!--      <div  id="botonera"  style="width:100%; background-color:#53B9E9" >
+                      <div id="bontones" style="width:100%; background-color:#53B9E9">
                       <a  id ="calculadora" class ="boton fancybox" href="<%= calculadora_menus_path %>" ><i class="glyphicon glyphicon-list-alt" ></i></a>
                       
                        <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
@@ -108,9 +108,8 @@
                        <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
                        <button type="button" href="" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
                       </div>
-                      <div id="atras" style="float:right; margin:10px 10px 0 0" ><%= link_to image_tag ("iconos/atras.png"), 'javascript:history.back(1)', :title=> "atras" %></div>
-
-                   </div>
+                    </div>
+                -->    
             </div>
             <div class="row" >
                      <%if flash[:notice]%>
@@ -125,12 +124,10 @@
                               <button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
                         </div>
                      <%end%>
-                  </div>
-            <div class="row">
-                    <div  class="col-sm-12">
+             </div>
+             <div style="width:100%">
                                <%= yield %>
-                    </div>
-            </div>
+             </div>
         </div>
 </body>
 <footer>
@@ -168,7 +165,7 @@
       box-shadow: 0 1px 0 rgba(255,255,255,.1); */
   
    body {
-        padding-top: 60px;
+        padding-top: 40px;
         /* background-color:rgb(192, 148, 176) */
 
       }
@@ -213,17 +210,17 @@
       color:#ffffff;
       font-size: 13px;
       text-decoration: none;
-       background-color:#27A9E3
+       background-color:#262626
      }
 
      .panel-heading{
-         background-color:#27A9E3; 
+         background-color:#262626; 
          padding: 20px 15px;
            border-radius: 1px;
      }
 
      .panel-default > .panel-heading {
-       background-color:#27A9E3
+       background-color:#262626
      }
 
     .panel-group{
