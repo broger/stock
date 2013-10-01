@@ -1,18 +1,71 @@
-<div style="width: 400px; padding:0 0 50px 10px ">
-
-	<div style="border-bottom: 3px solid #eee; padding: 10px" >
-		<h4><%=h @localidad.nombre %></h4>
-	</div>
-
-<br />
-
-<p>
-  <b>Provincia:</b>
-  <%=h @localidad.provincia.nombre %>
-</p>
-
-<br />
-
-
-
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+    <h3>Localidad</h3>
 </div>
+<div class="well" style="background-color:white">
+			  <div class="datos">
+			        <%= label_tag :nombre, 'nombre:' %><%=  @localidad.nombre %>
+      		  </div>
+      		  <div class="datos">
+			        <%= label_tag :provincia, 'provincia:' %><%=  @localidad.provincia.nombre %>
+      		  </div>
+      		  <div class="datos">
+			        <%= label_tag :fecha_alta, 'alta:' %><%= "#{@localidad.created_at.strftime("%d-%m-%Y %H:%M")} hs." if @localidad.created_at %>
+      		  </div>
+      		  <div class="datos">
+			        <%= label_tag :fecha_update, '&uacute;ltima actualizaci&oacute;n:' %><%=  "#{@localidad.updated_at.strftime("%d-%m-%Y %H:%M")} hs." if @localidad.updated_at %>
+      		  </div>
+			  	
+</div>
+<div id="pie" style="height:30px; padding:16px">
+ <div style="text-align: right"><%= button_to_function 'Volver', "cerrarFancy()", :class=>"btn btn-danger" %></div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+            $("#new_localidad").validate({
+             rules: {
+                 // "producto[nombre]": {required: true, rangelength: [3,60]},
+                 // "producto[codigo_proveedor]": {digits: true}
+
+                  }
+            });
+
+    });
+
+    function cerrarFancy() {
+    	$('#fancybox-close').click();
+    }
+
+ </script>
+
+
+
+<style type="text/css">
+
+
+  .datos{
+  	margin-top: 10px
+  }
+
+  #fancybox-outer{
+    background-color: #f5f5f5;
+  }
+
+  label{
+    margin-right: 6px
+
+  }
+
+	
+	#fancybox-wrap {
+	  padding:0;
+	}
+
+	#fancybox-inner {
+	position:relative;
+	}
+
+
+</style>

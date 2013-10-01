@@ -48,11 +48,11 @@ input[type="text"] {
       text-decoration:none;
 }    
 
-
-
 .form-control {
   height: 30px;
   border-radius: 1px;
-  font-size: 12px
-
+  font-size: 12px;
 }
+
+
+

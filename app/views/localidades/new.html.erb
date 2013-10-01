@@ -1,17 +1,65 @@
-<div class="modal" id="loginModal">
-    Test Content
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+    <h3 >Nueva Localidad</h3>
 </div>
+<% form_for(@localidad) do |f| %>
+  <%= f.error_messages %>
+<div class="well" style="background-color:white">
+			  <div class="datos">
+			        <%= f.label :nombre %>
+      				<%= f.text_field :nombre, :class=>'form-control', :style=>'font-size:13px; height:36px' %>
+      				<br />
+			  </div>
+			  <div class="datos">
+    				<%= f.label  :provincia_id %>
+  					<%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true},  :class=>'form-control', :style=>'font-size:13px; height:36px' %>
+  					<br />
+  			  </div>	
+</div>
+<div id="pie" style="height:30px; padding:16px">
+ <div style="text-align: right"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %></p></div>
+</div>
+<% end %>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+            $("#new_localidad").validate({
+             rules: {
+                 // "producto[nombre]": {required: true, rangelength: [3,60]},
+                 // "producto[codigo_proveedor]": {digits: true}
+
+                  }
+            });
+
+    });
+
+ </script>
+
+
+
+<style type="text/css">
 
 
 
 
+  #fancybox-outer{
+    background-color: #f5f5f5;
+  }
 
-  <script type="text/javascript">
- $('#loginModal').modal()
+  label{
+    margin-right: 6px
+
+  }
+
+	
+	#fancybox-wrap {
+	  padding:0;
+	}
+
+	#fancybox-inner {
+	position:relative;
+	}
 
 
-</script>
-
-
-
-
+</style>

@@ -11,6 +11,7 @@ class LocalidadesController < ApplicationController
        @localidades = Localidad.paginate(:page => params[:page],:per_page => 6,:conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
     end
 
+    @busqueda = params[:txtbuscar]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,7 +23,10 @@ class LocalidadesController < ApplicationController
   # GET /localidads/1.xml
   def show
     @localidad = Localidad.find(params[:id])
-     
+    
+    respond_to do |format|
+      format.html{render :layout=>false}
+    end
   end
 
   # GET /localidads/new
@@ -82,7 +86,7 @@ class LocalidadesController < ApplicationController
     @localidad.destroy
 
     respond_to do |format|
-      format.html { redirect_to(localidads_url) }
+      format.html { redirect_to(localidades_url, :notice => 'La Localidad ha sido eliminada satisfactoriamente.') }
       format.xml  { head :ok }
     end
   end
