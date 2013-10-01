@@ -132,6 +132,15 @@ class ProductoListaPreciosController < ApplicationController
  end
 
 
+ def actualizar_x_producto
+
+        raise "entro"
+
+
+
+ end
+
+
 
 
 

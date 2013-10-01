@@ -1,20 +1,18 @@
 <h1>Editing moneda</h1>
 
-<% form_for(@moneda) do |f| %>
+<% form_for(@parametros) do |f| %>
   <%= f.error_messages %>
 
   <p>
-    <%= f.label : %><br />
-    <%= f.text_field : %>
+    <%= f.label  :iva %><br />
+    <%= f.text_field :iva %>
   </p>
   <p>
-    <%= f.label : %><br />
-    <%= f.text_field : %>
+    <%= f.label :iva %><br />
+    <%= f.text_field :iva %>
   </p>
   <p>
-    <%= f.submit 'Update' %>
+    <%= f.submit 'Actualizar Parametros' %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @moneda %> |
-<%= link_to 'Back', monedas_path %>

@@ -1,0 +1,172 @@
+<%= form_tag(pedido_compras_path, :method => 'get',:id=>'buscar') %>
+
+  <div class="row" >
+     <div id="titulo" class="col-sm-12" >
+         <h2 style="margin:0">Pedidos de Compras</h2>
+         <hr  style=" width=100%; border-width: 1px 0 0 0; margin:0; border-color:#333333; ">
+     </div>
+     <div id="menu_izquierdo"  class="col-sm-2" >
+
+       <!-- ACORDENON -->
+       <div class="panel-group" id="accordion">
+           <div class="panel panel-default">
+             <div class="panel-heading">
+                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Registros</a></h5>
+             </div>
+             <div id="collapseOne" class="panel-collapse collapse in">
+                 <div class="panel-body"><%= link_to 'Nuevo Pedido Compra', new_pedido_compra_path %></div>
+             </div>
+        </div>
+           <div class="panel panel-default">
+             <div class="panel-heading" style="background-color:#2197C9">
+              <h5 class="panel-title" style="background-color:#2197C9" ><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Reportes</a></h5>
+             </div>
+             <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body"> - Todos   </div>
+             </div>
+           </div>
+           <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    Tablas Relacionadas
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                 - Proveedores
+                 
+                </div>
+              </div>
+            </div>
+      </div>
+
+
+     </div>
+     <div  id="contenido"  class="col-sm-10"  >
+
+                      <div id="buscador" >
+                        <div id="cargando"   style="display: none; float:left">&nbsp;<%= image_tag('iconos/loader.gif')%></div>
+                        <div style="float:right"><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...', :class=>"form-control" %></div>
+                      </div>
+            
+                       <% unless @pedido_compras.blank? %>
+                        <table class="table" style="font-size :13px" >
+                                <thead>
+                                  <tr style="height:12px">
+                                  <th>n&uacute;mero</th>
+                                  <th>proveedor</th>
+                                  <th>fecha alta</th>
+                                  <th>enviado</th>
+                                  <th>fecha envio</th>
+                                  <th>factura compra</th>
+                                  <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% @pedido_compras.each do |pd| %>
+                                  <tr style="height:9px">
+                                      <td><%=h pd.numero %></td>
+                                      <td><%=h pd.proveedor.nombre %></td>
+                                      <td><%=h "#{pd.created_at.strftime("%Y-%m-%d %H:%M")} hs." if pd.created_at %></td>
+                                      <td><%=h pd.enviado_proveedor == true ? 'si' : 'no' %></td>
+                                      <td><%=h "#{pd.fecha_envio.strftime("%Y-%m-%d %H:%M")} hs." if pd.fecha_envio %></td>
+                                      <td>0000022</td>
+                                      <td style="text-align:right">
+                                             <%= link_to image_tag('iconos/16x16/zoom.png'), pd, :title=>'Ver' %>
+                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_pedido_compra_path(pd), :title=>'Editar' %>
+                                                <%= link_to image_tag('iconos/16x16/delete.png'), pd, :title=>'Eliminar',
+                                                  :confirm => 'Esta Seguro?', :method => :delete %>
+                                      </td>
+                                    </tr>
+                                <% end %>
+                                </tbody>
+                        <%else%>
+                                  <tr>
+                                    <td><div><h4><font color="red">No se encontraron resultados</font></h4></div></td>
+                                  </tr>
+                         <%end%>
+                      </table>
+                       <div style="text-align:center" >
+                          <%= will_paginate @compras, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+                        </div>
+     </div>
+ </div>
+
+ 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+         $('#txtbuscar').focus();
+         console.log();
+         $('#buscar').submit(controlar_bene);
+
+    });
+
+    function controlar_bene(){
+          if ( $('#txtbuscar') != '' && $('#buscar').valid()){
+                $('#cargando').show();
+          }
+    }
+
+
+    $("table").tablecloth({
+      theme: "default",
+      bordered: true,
+      condensed: true,
+      striped: false, // linea par gris impar blanca
+      sortable: true,  // algo de jquery
+      clean: false,
+      cleanElements: "th td",
+      customClass: "my-table"
+    });
+
+
+
+
+</script>
+
+<style type="text/css">
+
+     
+    input[type="text"] {
+       height: 24px;
+       font-size: 13px;
+       line-height: 15px;
+       border-radius: 1px;
+       width: 300px;
+    }
+
+
+    #titulo{
+      margin: 40px 0 4px 0;
+    }
+
+    #buscador{
+        height: 35px;
+        margin-bottom: 10px
+    }
+
+    #menu_izquierdo{
+      float: left;
+      padding:20px 0 0 18px;
+      /* background-color:green; */
+    }
+
+    #contenido{
+      padding:20px 30px 0 50px;
+      /*background-color:white; */
+      float: left;
+      display: inline;
+    }
+
+    .textbox_buscar{
+      float:right;
+      height: 20px
+    }
+
+</style>
+
+
+  

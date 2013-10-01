@@ -81,25 +81,3 @@ class ParametrosController < ApplicationController
     end
   end
 end
-
-<style type="text/css">
- 
- input[type="text"] {
-   height: 22px;
-   font-size: 13px;
-   line-height: 15px;
-   margin-bottom: 0px;
-}
-
-
-
-.link_filtros{
-  font-size: 11px;
-}
-
-.filtros_select{
-  font-size: 11px;
-  height: 21px;
-  width:100px
-}
-</style>

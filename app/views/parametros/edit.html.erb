@@ -3,75 +3,101 @@
 
 <h2>Parametros del Sistema</h2>
 
-<br />
-<br />
 
-<fieldset>
-  <legend><p> Empresa </p> </legend>
-<table>
-  <tr>
-      <th><%= f.label :nombre_empresa %></th><td><%= f.text_field :nombre_empresa %></td><th style="padding-left:20px"><%= f.label :cuil %></th><td><%= f.text_field :cuil %></td>
-  </tr>
-  <tr>
-      <th><%= f.label :telefono1, "Telefono 1" %></th><td><%= f.text_field :telefono1 %></td><th style="padding-left:20px"><%= f.label :telefono2, "Telefono 2"  %></th><td><%= f.text_field :telefono2 %></td>
-  </tr>
-  <tr>
-      <th><%= f.label :celular1, "Celular 1" %></th><td><%= f.text_field :celular1 %></td><th style="padding-left:20px"><%= f.label :celular2, "Celular2"  %></th><td><%= f.text_field :celular2 %></td>
-  </tr>
-  <tr>
-      <th><%= f.label :direccion %></th><td><%= f.text_field :direccion %></td><th style="padding-left:20px"></th><td></td>
-  </tr>
-  <tr>
-      <th><%= f.label :provincia_id %></th><td><%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td><th style="padding-left:20px"><%= f.select :localidad_id, Localidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-  </tr>
+<div style="background-color:#efefef; margin-top:15px; width:100%; padding:10px 20px 20px 20px" >
+  <h4 style="margin-botton:5px">Empresa</h4>
+    <table>
+      <tr>
+          <th style="width:120px"><%= f.label :nombre_empresa %></th><td><%= f.text_field :nombre_empresa, :class=>"form-control" %></td>
+          <th ><%= f.label :cuil %></th><td><%= f.text_field :cuil, :class=>"form-control"  %></td>
+          <th ><%= f.label :mail %></th><td><%= f.text_field :mail, :class=>"form-control"  %></td>
+          <th ><%= f.label :mail %></th><td><%= f.text_field :mail, :class=>"form-control"  %></td>
+      </tr>
+      <tr>
+          <th style="width:120px"><%= f.label :telefono1, "Telefono 1" %></th><td><%= f.text_field :telefono1, :class=>"form-control"  %></td>
+          <th ><%= f.label :telefono2, "Telefono 2"  %></th><td><%= f.text_field :telefono2, :class=>"form-control"  %></td>
+          <th ><%= f.label :celular1, "Celular 1" %></th><td><%= f.text_field :celular1, :class=>"form-control"  %></td>
+          <th ><%= f.label :celular2, "Celular2"  %></th><td><%= f.text_field :celular2, :class=>"form-control"  %></td>
+      </tr>
+      <tr>
+          <th ><%= f.label :provincia_id %></th><td><%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}, :class=>"form-control"  %></td>
+          <th ><%= f.label :localidad_id %></th><td><%= f.select :localidad_id, Localidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}, :class=>"form-control"  %></td>
+          <th><%= f.label :direccion %></th><td><%= f.text_field :direccion, :class=>"form-control"  %></td>
+          <th>&nbsp;</th><td>&nbsp;</td>
+      </tr>
+    </table>
+</div>
 
-</table>
-</fieldset>
 
-<fieldset>
-  <legend> <p> Productos </p> </legend>
-<table>
-   <tr>
-      <th><%= f.label :iva, "IVA para Productos" %></th><td><%= f.text_field :iva %></td><th style="padding-left:20px"><%= f.label :descuento %></th><td><%= f.text_field :descuento %></td>
-  </tr>
-  
-</table>
-</fieldset>
+<div style="background-color:#efefef; margin-top:15px; width:100%; padding:10px 20px 20px 20px" >
+  <h4 style="margin-botton:5px">Productos</h4>
+    <table>
+      <tr>
+          <th><%= f.label :iva %></th><td><%= f.text_field :iva, :class=>"form-control" %></td>
+          <th style="padding-left:10px"><%= f.label :mail %></th><td><%= f.text_field :mail, :class=>"form-control"  %></td>
+          <th style="padding-left:10px"><%= f.label :mail %></th><td><%= f.text_field :mail, :class=>"form-control"  %></td>
+      </tr>
+    </table>
+</div>
 
-<br />
-<br />
-
-  <p> <%= f.submit 'Guardar' %>  </p>
+          <div style="text-align:center; margin-top:8px" ><%= f.submit 'Actualizar Parametros', :class=>"btn btn-danger " %> </div>
 <% end %>
 
 
-<%= link_to 'Show', @parametro %> | <%= link_to 'VolverBack', parametros_path %>
+<script type="text/javascript">
 
+    var localidades = new Array();
+    <% localidades = Localidad.find(:all, :order => "nombre") %>
+    <% for localidad in localidades %>
+           localidades.push(new Array(<%= localidad.provincia_id %>, "<%=h localidad.nombre %>", <%= localidad.id %>));
+    <% end %>
+
+    $(document).ready(function(){
+
+       $('#parametro_provincia_id').change(provinciaSelec); 
+
+    });
+
+    function provinciaSelec() {
+            alert('asdf')
+            provincia_id = $('#parametro_provincia_id').val();
+            $('#parametro_localidad_id').empty();
+            $('#parametro_localidad_id').append('<option></option>');
+            localidades.forEach(function(localidad){
+                  if (localidad[0]==provincia_id){
+                    $('#parametro_localidad_id').append(selec='<option value="'+ localidad[2] +'">'+localidad[1]+'</option>');
+                  }
+              });
+     }
+
+</script>
 
 <style type="text/css">
 
-     fieldset {
-          border: 1px solid #ccc;
-          padding: 10px;
-      }
+    table{
+        width:100%;
+        }
 
-
-    table
-    {
-    width:100%;
-    }
     th{ 
-      
        text-align: right;
-       padding-right: 7px;
-
-
+       padding-right:7px;
+       width:110px
       }
+
+
     tr{
-      height:40px;
+      height:45px;
      }
+
+
      table label{
         font-size: 11px;
       }
 
-  </style>
+</style>
+
+
+
+
+
+

@@ -8,11 +8,11 @@
 
 <% @monedas.each do |moneda| %>
   <tr>
-    <td><%=h moneda. %></td>
-    <td><%=h moneda. %></td>
+    <td><%=h moneda.nombre  %></td>
+    <td><%=h moneda.simbolo %></td>
     <td><%= link_to 'Show', moneda %></td>
     <td><%= link_to 'Edit', edit_moneda_path(moneda) %></td>
-    <td><%= link_to 'Destroy', moneda, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', moneda, :confirm => 'Esta seguro?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

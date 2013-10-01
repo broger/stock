@@ -1,0 +1,59 @@
+<%= form_tag({:action=>'actualizar_x_producto',:controller=>'producto_lista_precios'}, {:id=>'producto_lista'}) %>
+ 
+<% unless @producto_listas.blank? %>
+      <table class="tb_cab_detalle">
+             <tr style="height:12px">
+                 <th style="width:120px">codigo</th>
+                 <th style="width:350px">nombre</th>
+                 <th style="width:60px">unidad</th>
+                 <th style="width:100px">precio</th>
+                 <th style="width:100px">descuento</th>
+                 <th ></th>               
+             </tr>
+
+      </table>      
+      <div  class= "cuadro-scroll" >
+                <table>
+              <tbody>
+              <% @producto_listas.each do |producto_lista| %>
+                <tr >
+                    <td style="width:120px" ><%=h producto_lista.producto.codigo %></td>
+                    <td style="width:350px" ><%=h producto_lista.producto.nombre.strip %></td>
+                    <td style="width:60px" ><%=h producto_lista.producto.unidad.nombre %></td>
+                    <td><%= text_field_tag "producto_lista[#{producto_lista.id}][precio]", producto_lista.precio, :id=> producto_lista.id, :class=>'form-control input-sm' %></td>
+                    <td style="width:100px" ><%=h producto_lista.descuento %></td>
+                    <td style="text-align:right; padding-right:10px">
+                       <%= link_to image_tag('iconos/16x16/delete.png'), producto_lista, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
+                    </td>
+                  </tr>
+              <% end %>
+              </tbody> 
+          </table>
+      </div>
+<%else%>
+      <div style="margin: 40px 0 0 20px; font-style: oblique"><h5><font color="red">No se encontraron resultados, modifique sus parametros de busqueda y vuelva a intenar Suerte!!</font></h5></div>
+<%end%>
+              <div style="text-align:center; margin-top:8px" ><%= submit_tag 'Actualizar', :class=>"btn btn-danger btn-xs" %> </div>
+
+<style type="text/css">
+
+    .cuadro-scroll {
+     height:340px;
+     /* background-color:#F2F2F2; */
+     overflow:auto;
+     width: 100%;
+     float: left;
+     font-size: 11px;
+     margin-bottom: 8px
+    }
+
+
+    .tb_cab_detalle {
+      font-size: 11px;
+      margin: 0 0 2px 0;      
+      padding: 2px;
+      background-color:#F2F2F2
+    }
+
+   
+</style>

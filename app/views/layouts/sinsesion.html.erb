@@ -1,7 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+
   <head>
-    <title>Control-Stock</title>
-    <%= javascript_include_tag :all %>
-    <%= stylesheet_link_tag 'bootstrap', 'bootstrap-responsive', 'bootstrap-responsive.min' %>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>SISTEMA STOCK</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+
+    <link rel="shortcut icon" href="http://localhost/opt/ioscordev/images/gobierno/escudo_icono32x32.ico" type="image/x-icon" />
+
+ 
+    <%= stylesheet_link_tag  'bootstrap',
+                             'tablecloth',
+                             'prettify.css',
+                             'bootstrap-tables',
+                             'broger',
+                             'jquery.fancybox-1.3.1',
+                             'jquery-ui-1.10.3.custom',
+                             'jquery.autocomplete',
+                             'jquery-ui-1.10.3.custom'
+                              %>
+
+    <%= javascript_include_tag  'jquery-1.10.2.min',    # siempre primer jquery
+                                'jquery-migrate-1.2.1', # para la compatibiliddad de las versiones d jquery
+                                'jquery.fancybox-1.3.1',
+                                'bootstrap.min',
+                                'bootstrap',
+                                'broger',
+                                'holder',
+                                'affix',
+                                'alert',
+                                'button',
+                                'carousel',
+                                'collapse',
+                                'modal',
+                                'dropdown',
+                                'popover', 
+                                'scrollspy',
+                                'tab',
+                                'tooltip',
+                                'transition',
+                                # tablas 
+                                'jquery.metadata',
+                                'jquery.tablecloth',
+                                'jquery.tablesorter.min',
+                                # Validate jquery
+                                'jquery.validate',
+                                'messages_es',
+                                'jquery.mask',
+                                #'jquery-ui-1.10.3.custom.min' #, aCA TENDRIA Q ESTAR AUTOCOMPLETAR NUEVA VERSION
+                                'jquery.autocomplete'
+                               
+
+    %>
+
+     <%#= csrf_meta_tag %>
+
+
   </head>
   <body>
    
@@ -15,17 +75,15 @@
       <div class="portada_cuerpo" >
         
         <div class="col-sm-3 " style="padding:60px 0 0 60px">
-          <div class="well sidebar-nav" style="border-radius:1px; background-color:rgba(250,250,250, 0.15)">
+          <div class="well sidebar-nav" style="border-radius:1px; border:1px solid rgb(134, 134, 134); background-color:rgba(250,250,250, 0.15)">
             <%=  yield %>
           </div>
         </div>
         <div class="col-sm-9" style="padding:180px 0 0 160px">
           <div  style="color:#ffffff">
             <h1 style= " font-size:70px; color: #fff; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);">Bienvenido</h1>
-            <p> Sistema de Control de Stock. </p>
-            <p>
-              Versi&oacute;n: 0.0.1.
-            </p>
+            <p> Sistema de Control de Stock  </p>
+            <p> Versi&oacute;n: 0.0.1 - 01/07/2013 </p>
             </div>
       </div>
 
@@ -34,7 +92,6 @@
 <footer>
   <div style="background-color: #ffffff;  height:2px; width:100%"></div>
 </footer>
-
 
 
 
@@ -56,25 +113,4 @@
     }
    
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

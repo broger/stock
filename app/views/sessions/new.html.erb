@@ -1,42 +1,41 @@
 <% form_tag session_path do -%>
-<fieldset>
-    <h4 style="color:#ffffff">Ingrese sus datos</h4>
-        <% if flash[:error] %>
-      <div class="alert alert-block alert-error">
+    <h4 style="color:#ffffff; margin-botton:20px">Ingrese sus datos</h4>
+      
+      <% if flash[:error] %>
+      <div class="alert alert-block alert-error"; style="background-color:rgba(250,250,250, 0.18)">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <h4>Error!</h4>
+        <h5><b>Error!</b></h5>
         <%= flash[:error] %>
       </div>
     <% end %>
 
     <% if flash[:notice] %>
-      <div >
+      <div class="alert alert-block alert-error"; style="background-color:rgba(250,250,250, 0.18)">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <%= flash[:notice] %>
       </div>
     <% end %>
   
-  <table>
-    <tr>
-      <tr><%= text_field_tag 'login', @login, :placeholder => "usuario", :size => '30' %></tr>
-    </tr>
-    <tr>
-      <tr><%= password_field_tag 'password', nil, :placeholder => "contraseña", :size => '30'  %></tr>
-    </tr>
+ 
+    <%= text_field_tag 'login', @login, :placeholder => "usuario", :style=>'width:100%; font-size:14px;height:30px; padding-left:4px; margin:15px 0 0 0'%>
+    <%= password_field_tag 'password', nil, :placeholder => "contraseña", :style=>'width:100%; height:30px; padding-left:4px; margin:10px 0 20px 0' %>
+    <%= submit_tag 'Ingresar', :class=> 'btn btn-sm btn-default', :style=>'border-radius:1px' %>
+    
+
   </table>
   
-  <br />
-    <br />
-
+  
 <!-- Uncomment this if you want this functionality
-<p><%= label_tag 'remember_me', 'Remember me' %>
-<%= check_box_tag 'remember_me', '1', @remember_me %></p>
+<p><%#= label_tag 'remember_me', 'Remember me' %>
+   <%#= check_box_tag 'remember_me', '1', @remember_me %></p>
 -->
-<p><%= submit_tag 'Ingresar', :class=> 'class="btn btn-sm btn-default' %></p>
-  </fieldset>
+
 <% end -%>
 
 
 
 
+<style type="text/css">
+  
 
+</style>
