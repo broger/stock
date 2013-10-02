@@ -2,9 +2,9 @@
 <% unless @productos.blank? %>
 
       <div  class= "cuadro-scroll" >
-          <table>
+          <table >
               <thead>
-                <tr style="height:12px">
+                <tr style="height:12px; font-size:12px">
                   <th>codigo</th>
                   <th>nombre</th>
                   <th>marca</th>
@@ -14,11 +14,11 @@
               <tbody>
               <% @productos.each do |producto| %>
                 <tr >
-                    <td><%=h producto.codigo %></td>
+                    <td onclick="ver_registro()" style="cursor: pointer"><%=h producto.codigo %></td>
                     <td><%=h producto.nombre %></td>
                     <td><%=h producto.marca.nombre %></td>
                     <td style="text-align:right">
-                          <%= link_to "<i class='glyphicon glyphicon-search' style='font-size: 13px; color:black' ></i>", producto, :title=>'Ver', :class=>"fancybox" %>
+                          <%= link_to "<i class='glyphicon glyphicon-search' style='font-size: 13px; color:black' ></i>", producto, :title=>'Ver', :class=>"fancybox", :id=>'ver' %>
                          <%= link_to "<i class='glyphicon glyphicon-pencil' style='font-size: 13px; color:black' ></i>", edit_producto_path(producto), :title=>'Editar' %>
                          <%= link_to "<i class='glyphicon glyphicon-trash' style='font-size: 13px; color:black; margin-right:12px' ></i>", producto, :title=>'Eliminar', :confirm => 'Esta Seguro?', :method => :delete %>
                     </td>
@@ -40,7 +40,16 @@
 
 
 
+<script type="text/javascript">
+  
+      function ver_registro(){
 
+         $('#ver').click();
+
+      }
+
+
+</script>
 
 <style type="text/css">
 
@@ -51,6 +60,15 @@
      overflow:auto;
      width: 100%;
      float: left;
+     font-size: 11px;
+    }
+
+    .tabla_prod {
+
+    }
+
+    .tabla_prod > table > tr > td{
+        font-size: 11px;
     }
 
 </style>

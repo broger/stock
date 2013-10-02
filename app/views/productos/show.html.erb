@@ -7,28 +7,47 @@
                 <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
                 <li class=""><a href="#categoria "  data-toggle="tab">Categoria</a></li>
                 <li class=""><a href="#precios"        data-toggle="tab">Precios</a></li>
-                <li class=""><a href="#descripcion"        data-toggle="tab">Descripci&oacute;nss</a></li>
+                <li class=""><a href="#descripcion"        data-toggle="tab">Descripci&oacute;n</a></li>
                 <li class=""><a href="#web"        data-toggle="tab">Web</a></li>
               </ul>
 
          <div id="myTabContent" class="tab-content" style="padding:20px">
                 <div  class="tab-pane active"  id="general" >
-                        <table>
+                         <table style="float:left; margin:0 180px 0 20px">
+                               <tr>
+                                <td><%= label_tag :a, "c&oacute;digo:" %><%=  @producto.codigo %></td>
+                              </tr>
                               <tr>
-                                <td style="width:320px"><%= label_tag :a, "c&oacute;digo:" %><%=  @producto.codigo %></td><td style="width:450px"><%= label_tag :a, "nombre:" %><%=  @producto.nombre %></td>
+                                <td><%= label_tag :a, "estado:" %><%=  @producto.estado.nombre %></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "stock m&iacute;nimo:" %><%=  @producto.stock_minimo %></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "stock m&aacute;ximo:" %><%=  @producto.stock_maximo %></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "avisa en:" %><%=  @producto.punto_de_pedido %></td>
                               </tr>
                         </table>
-                         <table>
+                        <table style="display:inline">
                               <tr>
-                                <td style="width:320px"><%= label_tag :a, "estado:" %><%=  @producto.estado.nombre %></td><td style="width:450px"><%= label_tag :a, "unidad de medida:" %><%=  @producto.unidad.nombre %></td>
+                                <td><%= label_tag :a, "nombre:" %><%=  @producto.nombre %></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "unidad medida:" %><%=  @producto.unidad.nombre %></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "fecha alta:" %><%=  "#{@producto.created_at.strftime("%d/%m/%Y")} hs." if @producto.created_at %></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "&uacute;ltima actualizaci&oacute;n:" %><%=   "#{@producto.updated_at.strftime("%d/%m/%Y")} hs." if @producto.updated_at %></td>
+                              </tr>
+                              <tr>
+                                <td></td>
                               </tr>
                         </table>
-                           <div style="text-aling:left; border:1px;" >
-                              <%= label_tag :a, "stock m&iacute;nimo:" %><%=  @producto.stock_minimo %>
-                              <%= label_tag :a, "stock m&aacute;ximo:" %><%=  @producto.stock_minimo %>
-                              <%= label_tag :a, "avisa en:" %><%=  @producto.stock_minimo %> 
-                           </div>
-                           
+
                             
                 </div>
                  <div class="tab-pane fade" id="categoria">
@@ -59,9 +78,8 @@
         </div>
   </div>
 </div>
-<div id="pie" style="height:30px; padding:16px">
- <!-- <div style="text-align: right"><p> <%#= button_function_tag  'volver', "cerrarFancy()" , :class=>"btn btn-danger" %></p></div>
-  -->
+<div id="pie" style="height:80px; padding-right:20px">
+ <div style="text-align: right"><%= button_to_function 'Volver', "cerrarFancy()", :class=>"btn btn-danger" %></div>
 </div>
 
 
@@ -76,30 +94,28 @@
           $(this).tab('show');
         });
 
+
+
 </script>
 
 
 
 <style type="text/css">
 
-  select{
-    padding: 2px;
-  }
-  
-
-  input{
-    padding-left: 4px
-  }
 
   #fancybox-outer{
     background-color: #f5f5f5;
   }
 
   label{
-    margin-right: 6px
+    margin-right: 9px;
+    font-size: 12px
 
   }
 
+  table tr{
+    height: 30px
+  }
   
   #fancybox-wrap {
     padding:0;
@@ -109,7 +125,7 @@
   position:relative;
   }
 
-.brogertab{
+  .brogertab{
           min-height: 260px;
           height: auto;
     }
@@ -118,33 +134,6 @@
         background-color: white
     }
 
-
-    .datos{
-          display: inline;
-          text-align: left;
-      }
-
-
-        .datos label{
-          padding: 0 6px;
-          font-size: 12px;
-          padding-bottom: 20px 
-        }
-
-        .datos input{
-          display: inline;
-          font-size: 11px 
-        }
-
-        .datos select{
-          display: inline;
-          font-size: 12px;
-          height:28px 
-        }
-
-        textarea{
-          font-size: 14px
-        }
 
 </style>
 

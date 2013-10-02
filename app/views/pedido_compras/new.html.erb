@@ -43,8 +43,8 @@
        	  <div id="comprobante" class= "col-sm-14" >
               <div id="cabezera">
                   <div class= "datos" style="width:220px"><%= label_tag :numero, "Nº:" %><%= text_field_tag :numero, @ultimo_pd, :style=>'width:70%', :class=> 'form-control'%></div>
-                  <div class= "datos" style="width:300px" ><%= label_tag :proveedor %><%= select_tag :proveedor_id, options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:200px', :class=> 'form-control' %></div>
-                  <div class= "datos" style="width:200px"><%= label_tag :deposito_id %><%= select_tag :deposito_id, options_from_collection_for_select(Deposito.all, :id, :nombre) , :style=>'width:70%', :class=> 'form-control' %></div>
+                  <div class= "datos" style="width:300px" ><%= label_tag :proveedor %><%= select_tag :proveedor_id, '<option></option>' + options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:200px', :class=> 'form-control' %></div>
+                  <div class= "datos" style="width:200px"><%= label_tag :deposito_id %><%= select_tag :deposito_id, '<option></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre) , :style=>'width:70%', :class=> 'form-control' %></div>
                   <div class= "datos" style="width:200px"><%= label_tag :observaciones %><%= text_field_tag :observaciones, nil, :class=>'form-control', :style=>'width:100px' %></div>               
               </div>   
               <div id="buscar_productos">
@@ -97,12 +97,19 @@
 
 <script type="text/javascript">
 
+   
     $(document).ready(function () {
         $('#error_detalle').hide();
         $('#proveedor_id').change(limpiar_detalle);
-
+        $('#numero').attr('readonly', true);
+        $("#comprobante").validate({
+             rules: {
+             "proveedor_id": {required:true},
+             "deposito_id": {required:true}
+             }
+        });
     });
-
+    $('#proveedor_id').focus();
    
     //INICIO AUTOCOMPLETAR.....
      $('#producto').autocomplete('<%= todos_productos_path %>', {
@@ -162,8 +169,14 @@
                               "<td style='width:30px; text-align:right'><a class='glyphicon glyphicon-remove detalle_cruz' onClick='eliminar_fila("+ fila[0] +")' title='quitar de la lista'</a></td>"+  
                           "</tr>" 
                       );    
+                      if ($('#cantidad').val() == ''){
+                        $('#comprobante_input'+fila[0]).val(fila[5])
+                      }else{
+                        $('#comprobante_input'+fila[0]).val($('#cantidad').val())
+                      };
+                      $('#comprobante_input'+fila[0]).addClass('required');
+                      //$('#comprobante_input'+fila[0]).addClass('digits');
 
-                      $('#comprobante_input'+fila[0]).val($('#cantidad').val());
 
       
             }else{

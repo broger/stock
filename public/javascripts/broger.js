@@ -1,3 +1,7 @@
+
+
+
+
 function format_error(div_id, html) {
             var newHtml = "<div class='ui-state-error ui-corner-all' style='padding: 0 .7em; '>";
             newHtml += "<p><span class='ui-icon ui-icon-alert' style='float: left; margin-right: .3em;'>";
@@ -103,3 +107,9 @@ function mes_valido(value){
 };
 
 
+
+// FANCYBOX
+
+  function cerrarFancy() {
+      $('#fancybox-close').click();
+  }

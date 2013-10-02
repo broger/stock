@@ -74,9 +74,6 @@ class PedidoComprasController < ApplicationController
 
 
 
-
-
-
   def agregar_detalle
       case 
            when params[:agrega] == 'todos' then
@@ -85,6 +82,7 @@ class PedidoComprasController < ApplicationController
            when params[:agrega] == 'sin_stock' then
                    @agrega = 'sin_stock' 
                    @productos = Producto.find(:all, :conditions=>['estado_id = 1 AND stock <= punto_de_pedido AND proveedor_id = ?',params[:proveedor_id]], :limit=>100)  
+
           when params[:agrega] == 'uno_solo' then
                    @agrega = 'uno_solo'
                    @productos = Producto.find(:all, :conditions=>{:id=>params[:producto_id]})
