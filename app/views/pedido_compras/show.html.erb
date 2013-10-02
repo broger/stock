@@ -1,1 +1,337 @@
-show pedido compra
+<div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
+  <div class="container" ><h3>Pedido de Compra</h3></div>  
+</div>
+<div class ="container">
+  <div class="row" >
+      <div id="menu_izquierdo"  class="col-sm-2" >
+       <!-- ACORDENON -->
+       <div class="panel-group" id="accordion">
+           <div class="panel panel-default">
+             <div class="panel-heading">
+                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Registros</a></h5>
+             </div>
+             <div id="collapseOne" class="panel-collapse collapse in">
+             </div>
+        </div>
+           <div class="panel panel-default">
+             <div class="panel-heading" style="background-color:#2197C9">
+              <h5 class="panel-title" style="background-color:#2197C9" ><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Reportes</a></h5>
+             </div>
+             <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body"> - Todos   </div>
+             </div>
+           </div>
+           <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    Tablas Relacionadas
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                 - Compras
+                 - Productos              
+                </div>
+              </div>
+            </div>
+      </div>
+     </div>
+     <div id="contenido" class= "col-sm-10" >
+       	  <div id="comprobante" class= "col-sm-14" >
+              <div id="cabezera">
+                  <div class= "datos" style="width:100px"><%= label_tag  :a, "Nº:" %><%= @pedido_compra.numero %></div>
+                  <div class= "datos" style="width:200px" ><%= label_tag :a, "proveedor:" %><%= @pedido_compra.proveedor.nombre %></div>
+                  <div class= "datos" style="width:160px"><%= label_tag  :a, "deposito:" %><%= @pedido_compra.deposito.nombre %></div>
+                  <div class= "datos" style="width:160px"><%= label_tag  :a, "fecha:" %><%= "#{@pedido_compra.created_at.strftime("%d-%m-%Y")} hs." if @pedido_compra.created_at %></div>
+                  <div class= "datos" style="width:160px"><%= label_tag  :a, "observaciones:" %><%=  @pedido_compra.observaciones %></div>               
+              </div>             
+              <div id="detalle">
+                  <table  class="tabla_cab_detalle">
+                                <tr style="text-align:left">
+                                  <th style="width:100px;padding:4px 0 4px 0">c&oacute;digo</th>
+                                  <th style="width:320px">nombre</th>
+                                  <th style="width:80px">unidad</th>
+                                  <th style="width:120px">cantidad</th>
+                                  <th style="width:300px"></th>
+                                </tr> 
+                    </table>
+                    <table id="list" class="tabla_detalle">    
+                    <% @detalle.each do |mov| %>
+                          <tr>
+                              <td style='width:100px'><%= mov.producto.codigo %></td>
+                              <td style='width:320px'><%= mov.producto.nombre %></td>  
+                              <td style='width:80px' ><%= mov.producto.unidad.nombre %></td>  
+                              <td style='width:80px'><%= mov.cantidad %></td>
+                              <td></td>
+                          </tr> 
+                     <% end %>
+                    </table> 
+
+                 <div style="text-align:left; margin-right:20px" >
+                         <%= will_paginate @detalle, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+                 </div>     
+              </div>
+              <br />
+              <br />              
+        </div>  
+     </div>
+ </div>
+
+
+<script type="text/javascript">
+
+
+   $.validator.addMethod("contarDetalle", function (value, element, param) {   
+        if ($('#list >tbody >tr').length == 0){
+          alert ( "Debe existir al menos un producto en el detalle del pedido. " );
+          return false;
+       }
+       else return true;
+       }, "Debe existir al menos un producto en el detalle del pedido.");
+
+
+   
+    $(document).ready(function () {
+        $('#error_detalle').hide();
+        $('#proveedor_id').change(limpiar_detalle);
+        $('#numero').attr('readonly', true);
+        $("#comprobante").validate({
+             rules: {
+             "boton_guardar": {contarDetalle:true},
+             "proveedor_id": {required:true},
+             "deposito_id": {required:true},
+             "cantidad": {number:true},
+             contarDetalle:true  
+             }
+        });
+    });
+    $('#proveedor_id').focus();
+   
+    //INICIO AUTOCOMPLETAR.....
+     $('#producto').autocomplete('<%= todos_productos_path %>', {
+         dataType: "json",
+       parse: function(data) {
+         return $.map(data, function(row) {
+           return {
+             data: row.producto,
+             value: $.trim(row.producto.nombre),
+             result: $.trim(row.producto.nombre)
+           }
+         });
+       },
+       formatItem: function(item) {
+           return item.codigo+"-"+item.nombre;
+       }
+      }).result(function(e, item) {
+        $("#producto_id").val(item.id);
+      });
+     //FIN AUTOCOMPLETAR.....
+
+
+  function agregar(cantidad){
+      $('#agrega').val(cantidad);
+      agregar_ajax();
+  } 
+
+  function agregar_ajax(){
+
+    jQuery.ajax({
+           type:'get',
+           //url:'<%= agregar_detalle_pedido_compras_path %>?nomenclador_id='+ $('#nomenclador_id').val() +'&codigo_practica='+$('#codigo_practica_id').val()+'&beneficiario_id='+$('#beneficiario_id').val()+'&diagnostico_id='+$('#diagnostico_id').val()+'&fecha_prescripcion='+$('#fecha_prescripcion').val()+'&b_p_id='+$('input[name=plan_especial]:checked').val()
+           url:'<%= agregar_detalle_pedido_compras_path %>?proveedor_id='+ $('#proveedor_id').val()+ '&agrega='+ $('#agrega').val() + '&producto_id='+ $('#producto_id').val() 
+           });
+
+    };
+ 
+
+  function limpiar_detalle(){
+      eliminar_detalle();
+      $('#error_detalle').hide();
+      limpiar_prod_cant();
+  }
+
+  function agregar_detalle() {
+      filas.forEach(function(fila){
+            if($('#detalle'+fila[0]).length == 0 ){                         
+                      // Agrego la Fila 
+                      $('#error_detalle').hide();
+                      $('#list').prepend(
+                          "<tr id='detalle"+fila[0]+"'>" +
+                              "<td style='width:100px'>"+ fila[1] +"</td>"+
+                              "<td style='width:320px'>"+ fila[2] +"</td>"+  
+                              "<td style='width:80px'>"+ fila[3] +"</td>"+  
+                              "<td style='width:80px'>"+ fila[4] +"</td>"+  
+                              "<td style='width:120px'><input id='comprobante_input"+fila[0]+"' name= 'comprobante["+ fila[0]+"][pedido]' class='form-control input-sm' ></input></td>"+
+                              "<td style='width:30px; text-align:right'><a class='glyphicon glyphicon-remove detalle_cruz' onClick='eliminar_fila("+ fila[0] +")' title='quitar de la lista'</a></td>"+  
+                          "</tr>" 
+                      );    
+                      if ($('#cantidad').val() == ''){
+                        $('#comprobante_input'+fila[0]).val(fila[5])
+                      }else{
+                        $('#comprobante_input'+fila[0]).val($('#cantidad').val())
+                      };
+                      $('#comprobante_input'+fila[0]).addClass('required');
+                      $('#comprobante_input'+fila[0]).addClass('number');
+                      
+                      //$('#comprobante_input'+fila[0]).addClass('digits');
+
+
+      
+            }else{
+                      $('#msj_error').text('Ya existe en lista el producto '+ fila[2] + '.');
+                      $('#error_detalle').show();
+            };
+
+      });
+      limpiar_prod_cant();       
+  } 
+
+  function eliminar_detalle(){
+          $('#list tr').remove();
+  }
+
+
+  function eliminar_fila(id){
+        $('#detalle'+id).remove();
+  }
+
+
+  function limpiar_prod_cant(){
+      $('#producto_id').val('');
+      $('#producto').val('');
+      $('#cantidad').val('');
+  }
+
+
+   
+  $('#producto').keypress(function(event) {
+        if (event.which == '13') {
+          event.preventDefault();
+          $('#cantidad').focus();
+        }
+     });
+
+  $('#cantidad').keypress(function(event) {
+        if (event.which == '13') {
+          event.preventDefault();
+          agregar('uno_solo');
+          $('#producto').focus();
+        }
+     });
+
+
+  function ocultar_error() {
+
+    $('#error_detalle').hide();
+  }
+
+  /*  */
+
+</script>
+
+
+
+<style type="text/css">
+
+    #titulo{
+      padding: 16px 0px 8px 90px;
+    }
+
+    #herramientas{
+        width: 100%;
+        background-color:#53B9E9;
+        padding: 0 20px 8px 0;
+        text-align: right;
+    }
+
+    #menu_izquierdo{
+      float: left;
+      padding: 14px 0 0 18px;
+      /* background-color:green; */
+    }
+
+    #contenido{
+      /*background-color:white; */
+      padding: 14px 0 0 20px;
+      float: left;
+      display: inline;
+    }
+
+
+    .tabla_cab_detalle{
+        padding:6px 20px 6px 10px;
+        background-color:#DBDBDB;
+        color:#5A5A5A;
+        font-size:12px;
+        width:100%;
+        display:block
+    }
+    
+    .tabla_detalle{
+       padding:6px 20px 6px 10px;
+       background-color:white;
+       font-size:12px;
+       width:100%;
+       display:block
+    }
+
+
+
+  .form-control{
+      display: inline-block;
+  }
+
+  .datos{
+      display: inline-block;
+      text-align: left;
+      height: 44px;
+      padding: 6px 0 6px 0;
+      /*background-color: #4478aa;  */
+  }
+
+
+  	.datos label{
+  		padding: 0 6px;
+      font-size: 11px 
+  	}
+
+    .datos input{
+      display: inline;
+      font-size: 11px 
+    }
+
+
+
+
+    #cabezera {
+      padding: 8px 20px 0px 20px;
+      background-color: #EBEBEB;
+      border: 1px solid #E6E6E6;
+      border-radius: 1px;
+
+
+    } 
+    
+    #buscar_productos {
+      padding: 8px 20px 0px 20px;
+      margin-top: 1px;
+      background-color: #EBEBEB;
+      border: 1px solid #E6E6E6;
+      border-radius: 1px;
+    }
+
+    #detalle{
+      margin-top: 1px;
+      padding: 10px 20px 10px 20px;
+      background-color: #EBEBEB;
+      width: 100%;
+      border-radius: 1px;
+    }
+ 
+    
+</style>
+
+
+  

@@ -1,6 +1,5 @@
 class PedidoComprasController < ApplicationController
   
-
   def index
    # filtros =  " "
    # unless params[:rubro_id].blank?
@@ -64,6 +63,7 @@ class PedidoComprasController < ApplicationController
   
   def show
     @pedido_compra = Comprobante.pedido_compra.find(params[:id])
+    @detalle =  @pedido_compra.movimientos.paginate(:per_page => 14, :page => params[:page])
 
       respond_to do |format|
         format.html # show.html.erb
@@ -119,27 +119,39 @@ class PedidoComprasController < ApplicationController
             tipo_pd.ultimo_nro = params[:numero]
             tipo_pd.save!
 
-            params["comprobante"].each do |k,o|
-               # producto_id = k 
-               # pedido = o        
-               mov = Movimiento.new
-               mov.producto_id = k
-               mov.cantidad = o[:pedido]
-               mov.afecta_stock = false 
-               mov.comprobante_id  = pedido_compra.id
-               mov.usuario_id = current_user
-               mov.deposito_id = params[:deposito_id]
-               mov.save!  
-            end 
 
-             redirect_to(pedido_compras_path(:id=>pedido_compra.id),:notice =>"El Pedido de Compras Nº: #{params[:numero]} ha sido creado correctamente, recuerde que esto no modifica su stock de productos." )
-      else
-         
-            redirect_to(pedido_compras_path(:id=>pedido_compra.id),:notice =>"El Pedido de Compras Nº: #{params[:numero]} ya existe." )
+            unless params["comprobante"].blank?   
+
+                params["comprobante"].each do |k,o|
+                   # producto_id = k 
+                   # pedido = o        
+                   mov = Movimiento.new
+                   mov.producto_id = k
+                   mov.cantidad = o[:pedido]
+                   mov.afecta_stock = false 
+                   mov.comprobante_id  = pedido_compra.id
+                   mov.usuario_id = current_user
+                   mov.deposito_id = params[:deposito_id]
+                   mov.save!  
+                end 
+
+                ok = true
+                noticia =  "El Pedido de Compras Nº: #{params[:numero]} ha sido creado correctamente, recuerde que esto no modifica su stock de productos."
+
+            
+            else
+                ok = false
+                noticia = "No existen productos en el detalle del pedido de compras."
+            end
+            
 
 
+                  else
+            ok = false
+            noticia = "El Pedido de Compras Nº: #{params[:numero]} ya existe."
+            
       end #repetido
-
+      redirect_to(pedido_compras_path(:id=>pedido_compra.id),:notice =>noticia)
     end  
   end
 

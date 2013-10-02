@@ -97,6 +97,16 @@
 
 <script type="text/javascript">
 
+
+   $.validator.addMethod("contarDetalle", function (value, element, param) {   
+        if ($('#list >tbody >tr').length == 0){
+          alert ( "Debe existir al menos un producto en el detalle del pedido. " );
+          return false;
+       }
+       else return true;
+       }, "Debe existir al menos un producto en el detalle del pedido.");
+
+
    
     $(document).ready(function () {
         $('#error_detalle').hide();
@@ -104,8 +114,11 @@
         $('#numero').attr('readonly', true);
         $("#comprobante").validate({
              rules: {
+             "boton_guardar": {contarDetalle:true},
              "proveedor_id": {required:true},
-             "deposito_id": {required:true}
+             "deposito_id": {required:true},
+             "cantidad": {number:true},
+             contarDetalle:true  
              }
         });
     });
@@ -175,6 +188,8 @@
                         $('#comprobante_input'+fila[0]).val($('#cantidad').val())
                       };
                       $('#comprobante_input'+fila[0]).addClass('required');
+                      $('#comprobante_input'+fila[0]).addClass('number');
+                      
                       //$('#comprobante_input'+fila[0]).addClass('digits');
 
 

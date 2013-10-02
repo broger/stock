@@ -1,8 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   
   map.resources :pedido_compras , :collection => {:agregar_detalle=>:get,
-                                                  :guardar =>:get 
-                                                 }
+                                                  :guardar =>:get
+                                                 },
+                                  :member =>{:show => :get}
 
   map.resources :compras
 
