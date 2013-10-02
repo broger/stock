@@ -7,8 +7,8 @@
     <div class="container">
       <div id="cargando"   style="display: none; float:left">&nbsp;<%= image_tag('iconos/loader.gif')%></div>
         <%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...', :class=>"form-control" , :style=> "display:initial"%>
-        <div class="link_filtros" id="ver_filtros" title="filtros" onclick="ver_filtros()">&nbsp;<i class="glyphicon glyphicon-filter" style="color#ffffff" ></i></div>  
-        <div class="link_filtros" id="ocultar_filtros" onclick="ocultar_filtros()" style="display:none"><i class="glyphicon glyphicon-filter" ></i></div>
+        <div class="link_filtros" id="ver_filtros" title="filtros" onclick="ver_filtros()">&nbsp;<i class="glyphicon glyphicon-filter" style="color:#ffffff" ></i></div>  
+        <div class="link_filtros" id="ocultar_filtros" onclick="ocultar_filtros()" style="display:none; color:#ffffff"><i class="glyphicon glyphicon-filter" ></i><p style="display:inline; font-size:12px">ocultar</p></div>
     </div>
   </div>
 
