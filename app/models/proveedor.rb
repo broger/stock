@@ -2,6 +2,8 @@ class Proveedor < ActiveRecord::Base
 	belongs_to :provincia
 	belongs_to :localidad
 	belongs_to :estado
+	has_many   :comprobantes
+	
 
 	validates_presence_of :nombre, :message => 'es obligatorio.'
     validates_uniqueness_of :nombre,:message => "ya existe"

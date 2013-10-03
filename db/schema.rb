@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130913222354) do
+ActiveRecord::Schema.define(:version => 20131003210910) do
 
   create_table "categorias", :force => true do |t|
     t.string   "nombre",     :limit => 30
@@ -36,18 +36,21 @@ ActiveRecord::Schema.define(:version => 20130913222354) do
   end
 
   create_table "comprobantes", :force => true do |t|
-    t.integer  "tipo_comprobante_id"
-    t.integer  "numero",              :limit => 16,         :precision => 16, :scale => 0
-    t.integer  "total",               :limit => 10,         :precision => 10, :scale => 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "aprobado"
-    t.integer  "proveedor_id"
-    t.integer  "forma_pago_id"
-    t.integer  "nro_tarjeta",         :limit => 30,         :precision => 30, :scale => 0
-    t.integer  "usuario_id"
-    t.integer  "empleado_id"
-    t.string   "observaciones",       :limit => 2147483647
+    t.integer   "tipo_comprobante_id"
+    t.integer   "numero",              :limit => 16,         :precision => 16, :scale => 0
+    t.integer   "total",               :limit => 10,         :precision => 10, :scale => 0
+    t.datetime  "created_at"
+    t.datetime  "updated_at"
+    t.boolean   "aprobado"
+    t.integer   "proveedor_id"
+    t.integer   "forma_pago_id"
+    t.integer   "nro_tarjeta",         :limit => 30,         :precision => 30, :scale => 0
+    t.integer   "usuario_id"
+    t.integer   "vendedor_id"
+    t.string    "observaciones",       :limit => 2147483647
+    t.boolean   "enviado_proveedor"
+    t.timestamp "fecha_envio",         :limit => 29
+    t.integer   "deposito_id"
   end
 
   create_table "depositos", :force => true do |t|
@@ -127,7 +130,6 @@ ActiveRecord::Schema.define(:version => 20130913222354) do
     t.integer  "producto_id"
     t.decimal  "cantidad",       :precision => 8, :scale => 4
     t.boolean  "afecta_stock"
-    t.integer  "deposito_id"
     t.integer  "comprobante_id"
     t.integer  "usuario_id"
     t.string   "comentarios"
@@ -138,6 +140,7 @@ ActiveRecord::Schema.define(:version => 20130913222354) do
     t.decimal  "precio_total",   :precision => 8, :scale => 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "deposito_id"
   end
 
   create_table "parametros", :force => true do |t|
@@ -189,6 +192,7 @@ ActiveRecord::Schema.define(:version => 20130913222354) do
     t.decimal  "punto_de_pedido",                 :precision => 8, :scale => 2
     t.string   "codigo",            :limit => 8
     t.string   "etiqueta_busqueda", :limit => 30
+    t.decimal  "stock",                           :precision => 8, :scale => 4
   end
 
   create_table "proveedores", :force => true do |t|
@@ -254,6 +258,12 @@ ActiveRecord::Schema.define(:version => 20130913222354) do
     t.datetime "updated_at"
     t.integer  "estado_id"
     t.string   "abrev",        :limit => 10
+  end
+
+  create_table "tipo_pagos", :force => true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "unidades", :force => true do |t|
