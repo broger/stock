@@ -1,5 +1,6 @@
 class Localidad < ActiveRecord::Base
 	belongs_to :provincia
+	has_many   :clientes
   
   
   validates_presence_of :provincia_id, :message => "es un campo Obligatorio."
