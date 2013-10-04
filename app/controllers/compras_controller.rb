@@ -2,7 +2,6 @@ class ComprasController < ApplicationController
   
 
   def index
-
            @compras = Comprobante.compra.find(:all, :order=>'created_at DESC')
            @compras = @compras.paginate :per_page => 24, :page => params[:page],:include=>[:talbas,:estado_beneficiario]
 
@@ -27,7 +26,6 @@ class ComprasController < ApplicationController
 
  def agregar_detalle
      
-     raise "llego   ccccccccccc"
      @productos = Producto.find(:all, :conditions=>{:id=>params[:producto_id]})
      
      respond_to do |format|

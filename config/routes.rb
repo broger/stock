@@ -1,11 +1,16 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :tipo_pagos
+
   
   map.resources :pedido_compras , :collection => {:agregar_detalle=>:get,
                                                   :guardar =>:get
                                                  },
                                   :member =>{:show => :get}
 
-  map.resources :compras
+  map.resources :compras,         :collection => {:agregar_detalle=>:get,
+                                                  :guardar =>:get
+                                                 },
+                                  :member =>{:show => :get}
 
   map.resources :tipo_comprobantes
 

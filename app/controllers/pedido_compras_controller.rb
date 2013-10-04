@@ -1,7 +1,7 @@
 class PedidoComprasController < ApplicationController
   
   def index
-           @pedido_compras = Comprobante.pedido_compra.find(:all, :order=>'created_at DESC'
+           @pedido_compras = Comprobante.pedido_compra.find(:all, :order=>'created_at DESC')
            @pedido_compras = @pedido_compras.paginate(:per_page => 24, :page => params[:page])
 
     respond_to do |format|
@@ -9,7 +9,6 @@ class PedidoComprasController < ApplicationController
       format.xml  { render :xml =>  @pedido_compras}
     end
   end
-
 
   def new
     @comprobante = Comprobante.pedido_compra.new
@@ -32,7 +31,6 @@ class PedidoComprasController < ApplicationController
       end
 
   end
-
 
 
   def agregar_detalle

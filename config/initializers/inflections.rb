@@ -18,6 +18,8 @@ ActiveSupport::Inflector.inflections do |inflect|
     inflect.irregular 'parametro','parametros'
     inflect.irregular 'cliente','clientes'
     inflect.irregular 'producto_lista_precio','producto_lista_precios'
+    inflect.irregular 'tipo_pago','tipo_pagos'
+    
     
     
     
