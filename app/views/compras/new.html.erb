@@ -63,10 +63,11 @@
                         <table  class="tabla_cab_detalle">
                                 <tr style="text-align:left">
                                   <th style="width:100px;padding:4px 0 4px 0">c&oacute;digo</th>
-                                  <th style="width:320px">nombre</th>
+                                  <th style="width:500px">nombre</th>
                                   <th style="width:80px">unidad</th>
                                   <th style="width:120px">cantidad</th>
-                                  <th style="width:300px">precio costo</th>
+                                  <th style="width:300px">precio unit.</th>
+                                  <th style="width:300px">total</th>
                                 </tr> 
                         </table>
                         <div class="cuadro-scroll" sytle ="width:100%; height:300px; ">
@@ -80,7 +81,7 @@
                         <div id="totales" style="text-align:right; margin-top:8px" >
                               <p><%= "subtotal: "%></p><label id="subtotal">1550 $</label> 
                               <p><%= "iva #{Parametro.first.iva} % :" %></p><label id="iva_disc">343.50 $</label> 
-                              <label id= "total_gral" class="total_general">8888.550 $</label>
+                              <label id= "total_gral" class="total_gral">8888.550 $</label>
 
                         </div>
                         <div style="text-align:center; margin-top:8px" ><%= submit_tag 'Guardar' ,:id=>'boton_guardar', :class=>"btn btn-danger btn-xs" %> </div>
@@ -170,34 +171,58 @@
                       $('#error_detalle').hide();
                       $('#list').prepend(
                           "<tr id='detalle"+fila[0]+"'>" +
-                              "<td style='width:100px'>"+ fila[1] +"</td>"+
-                              "<td style='width:320px'>"+ fila[2] +"</td>"+  
-                              "<td style='width:80px'>"+ fila[3] +"</td>"+    
-                              "<td style='width:120px'><input id='input_cant"+fila[0]+"' name= 'comprobante["+ fila[0]+"][cant]' class='form-control input-sm' ></input></td>"+
-                              "<td style='width:120px'><input id='input_costo"+fila[0]+"' name= 'comprobante["+ fila[0]+"][costo]' class='form-control input-sm' ></input></td>"+
-                              "<td style='width:30px; text-align:right'><a class='glyphicon glyphicon-remove detalle_cruz' onClick='eliminar_fila("+ fila[0] +")' title='quitar de la lista'</a></td>"+  
-                              "<td style='width:80px'></td>"+    
+                              "<td style='width:90px'>"+ fila[1] +"</td>"+
+                              "<td style='width:400px'>"+ fila[2] +"</td>"+  
+                              "<td style='width:60px'>"+ fila[3] +"</td>"+    
+                              "<td style='width:90px'><input id='input_cant"+fila[0]+"'   name= 'comprobante["+ fila[0]+"][cant]'   class='form-control input-sm'  style='width:80px; height:25px' ></input></td>"+
+                              "<td style='width:90px'><input id='input_costo"+fila[0]+"'  name= 'comprobante["+ fila[0]+"][costo]'  class='form-control input-sm'  style='width:80px; height:25px' ></input></td>"+
+                              "<td style='width:300px; text-align:right; padding:0px' ><label id='label_total"+fila[0]+"' name= 'comprobante["+ fila[0]+"][total]'  class='total_fila' >0.00</label></td>"+
+                              "<td style='width:10px; text-align:right'><a class='glyphicon glyphicon-remove detalle_cruz' onClick='eliminar_fila("+ fila[0] +")' title='quitar de la lista'</a></td>"+   
                           "</tr>" 
                       );    
                       //cantidad
                       $('#input_cant'+fila[0]).val($('#cantidad').val())
                       $('#input_cant'+fila[0]).addClass('required');
                       $('#input_cant'+fila[0]).addClass('number');
-                      $('#input_cant'+fila[0]).live("change","actualiza_totales('"+fila[0]+"')");
-                      
+                      $('#input_cant'+fila[0]).on('change',function(){total_fila(fila[0])})
                       //costos
                       $('#input_costo'+fila[0]).addClass('required');
-                      $('#input_costo'+fila[0]).addClass('number');        
-                     
-      
+                      $('#input_costo'+fila[0]).addClass('number');                      
+                      $('#input_costo'+fila[0]).on('change',function(){total_fila(fila[0])});
             }else{
                       $('#msj_error').text('Ya existe en lista el producto '+ fila[2] + '.');
                       $('#error_detalle').show();
+
+
             };
 
       });
       limpiar_prod_cant();       
   } 
+
+
+// ACTUALIZAR TOTALES 
+/*
+
+$("#detalle").on("change", "input", function() {
+    alert($(this).val());
+
+       $(".total_fila").each(function (index) {
+                 alert( $(this).val());
+
+       });          
+});
+
+
+  $(function(){
+    $('#tabla').on({
+        click : function() {…},
+        mouseenter: function() {…},
+        mouseleave: function() {…}
+    }, 'a.borrar');
+    });
+ */
+    
 
   function eliminar_detalle(){
           $('#list tr').remove();
@@ -206,6 +231,7 @@
 
   function eliminar_fila(id){
         $('#detalle'+id).remove();
+        actualiza_totales();
   }
 
 
@@ -239,9 +265,23 @@
   }
 
 
-  function actualiza_totales(id){
-    alert('ddfadfSFADFS ' + id);
-  }
+  function total_fila(id){
+    total = parseFloat($('#input_cant'+id).val()) * parseFloat($('#input_costo'+id).val());  
+    $('#label_total'+id).text(total); 
+    alert('ddfadfSFADFS ' + $('#label_total'+id).text());
+    actualiza_totales();
+   }
+
+
+   function actualiza_totales() {
+      alert ("totales");
+      total = 0
+      $(".total_fila").each(function (index) {
+            total = total + parseFloat($(this).text());
+      });  
+      $('#total_gral').text(total) ;
+  
+   }   
 
   /*  */
 
@@ -298,6 +338,14 @@
   .form-control{
       display: inline-block;
   }
+
+  .total_fila{
+    padding: 0px;
+    font-size: 14px;
+
+  }
+
+
 
   .datos{
       display: inline-block;
