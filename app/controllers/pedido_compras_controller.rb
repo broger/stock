@@ -58,7 +58,7 @@ class PedidoComprasController < ApplicationController
     Comprobante.transaction do
 
 
-      nro_repetido = Comprobante.find(:first, :conditions=>{:numero => params[:numero].to_i})
+      nro_repetido = Comprobante.pedido_compra.find(:first, :conditions=>{:numero => params[:numero].to_i})
 
       
       if nro_repetido.blank?

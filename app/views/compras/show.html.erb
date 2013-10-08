@@ -1,0 +1,199 @@
+<div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
+  <div class="container" ><h3>Factura Compra</h3></div>  
+</div>
+<div class ="container">
+  <div class="row" >
+      <div id="menu_izquierdo"  class="col-sm-2" >
+       <!-- ACORDENON -->
+       <div class="panel-group" id="accordion">
+           <div class="panel panel-default">
+             <div class="panel-heading">
+                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Registros</a></h5>
+             </div>
+             <div id="collapseOne" class="panel-collapse collapse in">
+             </div>
+        </div>
+           <div class="panel panel-default">
+             <div class="panel-heading" style="background-color:#2197C9">
+              <h5 class="panel-title" style="background-color:#2197C9" ><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Reportes</a></h5>
+             </div>
+             <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body"> - Todos   </div>
+             </div>
+           </div>
+           <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    Tablas Relacionadas
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                 - Compras
+                 - Productos              
+                </div>
+              </div>
+            </div>
+      </div>
+     </div>
+        <div id="contenido" class= "col-sm-10" >
+       	  <div id="comprobante" class= "col-sm-14" >
+              <div id="cabezera">
+                  <div class= "datos" style="width:100px"><%= label_tag  :a, "Nº:" %><%= @compra.numero %></div>
+                  <div class= "datos" style="width:200px" ><%= label_tag :a, "proveedor:" %><%= @compra.proveedor.nombre %></div>
+                  <div class= "datos" style="width:160px"><%= label_tag  :a, "deposito:" %><%= @compra.deposito.nombre %></div>
+                  <div class= "datos" style="width:160px"><%= label_tag  :a, "fecha:" %><%= "#{@compra.created_at.strftime("%d-%m-%Y")} hs." if @compra.created_at %></div>
+                  <div class= "datos" style="width:160px"><%= label_tag  :a, "observaciones:" %><%=  @compra.observaciones %></div>               
+              </div>             
+              <div id="detalle">
+                  <table  class="tabla_cab_detalle">
+                                <tr style="text-align:left">
+                                  <th style="width:100px;padding:4px 0 4px 0">c&oacute;digo</th>
+                                  <th style="width:320px">nombre</th>
+                                  <th style="width:80px">unidad</th>
+                                  <th style="width:120px">cantidad</th>
+                                  <th style="width:300px"></th>
+                                </tr> 
+                    </table>
+                    <table id="list" class="tabla_detalle">    
+                    <% @detalle.each do |mov| %>
+                          <tr>
+                              <td style='width:100px'><%= mov.producto.codigo %></td>
+                              <td style='width:320px'><%= mov.producto.nombre %></td>  
+                              <td style='width:80px' ><%= mov.producto.unidad.nombre %></td>  
+                              <td style='width:80px'><%= mov.cantidad %></td>
+                              <td></td>
+                          </tr> 
+                     <% end %>
+                    </table> 
+
+                 <div style="text-align:left; margin-right:20px" >
+                         <%= will_paginate @detalle, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+                         <button type="button" class="btn-default">volver</button>
+                         <button type="button" class="btn-default glyphicon glyphicon-pencil">editar</button>
+                         <button type="button" class="btn-default glyphicon glyphicon-print">imprimir</button>
+                         <button type="button" class="btn-default glyphicon glyphicon-envelope">enviar mail</button>
+
+                                                         
+          
+
+                 </div>  
+
+              </div>
+              <br />
+              <br />              
+        </div>  
+     </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+
+
+
+<style type="text/css">
+
+    #titulo{
+      padding: 16px 0px 8px 90px;
+    }
+
+    #herramientas{
+        width: 100%;
+        background-color:#53B9E9;
+        padding: 0 20px 8px 0;
+        text-align: right;
+    }
+
+    #menu_izquierdo{
+      float: left;
+      padding: 14px 0 0 18px;
+      /* background-color:green; */
+    }
+
+    #contenido{
+      /*background-color:white; */
+      padding: 14px 0 0 20px;
+      float: left;
+      display: inline;
+    }
+
+
+    .tabla_cab_detalle{
+        padding:6px 20px 6px 10px;
+        background-color:#DBDBDB;
+        color:#5A5A5A;
+        font-size:12px;
+        width:100%;
+        display:block
+    }
+    
+    .tabla_detalle{
+       padding:6px 20px 6px 10px;
+       background-color:white;
+       font-size:12px;
+       width:100%;
+       display:block
+    }
+
+
+
+  .form-control{
+      display: inline-block;
+  }
+
+  .datos{
+      display: inline-block;
+      text-align: left;
+      height: 44px;
+      padding: 6px 0 6px 0;
+      /*background-color: #4478aa;  */
+  }
+
+
+  	.datos label{
+  		padding: 0 6px;
+      font-size: 11px 
+  	}
+
+    .datos input{
+      display: inline;
+      font-size: 11px 
+    }
+
+
+
+
+    #cabezera {
+      padding: 8px 20px 0px 20px;
+      background-color: #EBEBEB;
+      border: 1px solid #E6E6E6;
+      border-radius: 1px;
+
+
+    } 
+    
+    #buscar_productos {
+      padding: 8px 20px 0px 20px;
+      margin-top: 1px;
+      background-color: #EBEBEB;
+      border: 1px solid #E6E6E6;
+      border-radius: 1px;
+    }
+
+    #detalle{
+      margin-top: 1px;
+      padding: 10px 20px 10px 20px;
+      background-color: #EBEBEB;
+      width: 100%;
+      border-radius: 1px;
+    }
+ 
+    
+</style>
+
+
+  
