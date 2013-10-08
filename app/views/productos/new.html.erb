@@ -22,7 +22,7 @@
                             <div class= "datos" ><%= f.label :unidad_id, "unidad medida" %><%= select_tag :unidad_id, options_from_collection_for_select(Unidad.all, :id, :nombre) , :style=>'width:100px', :class=> 'form-control' %></div>
                             <div class= "datos" style="margin-left:20px">
                               <%= f.label :stock_minimo, "stock m&iacute;nimo"%><%= f.text_field :stock_minimo, :placeholder => '0.00', :style=>'width:80px', :class=>'form-control' %>
-                              <%= f.label :stock_minimo, "stock m&aacute;ximo"%><%= f.text_field :stock_maximo, :placeholder => '0.00', :style=>'width:80px', :class=>'form-control' %> 
+                              <%= f.label :stock_ideal, "stock ideal"%><%= f.text_field :stock_ideal, :placeholder => '0.00', :style=>'width:80px', :class=>'form-control' %> 
                               <%= f.label :stock_minimo, "avisa en"%><%= f.text_field :punto_de_pedido, :placeholder => '0.00', :style=>'width:80px', :class=>'form-control' %> 
                             </div> 
                             

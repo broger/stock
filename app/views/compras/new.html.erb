@@ -1,10 +1,10 @@
+<div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
+  <div class="container" ><h3>Nueva Factura Compra</h3></div>  
+</div>
+<div class ="container">
   <div class="row" >
-     <div id="titulo" class="col-sm-12" >
-         <h2 style="margin:0">Nueva Compra</h2>
-         <hr style=" width=100%; border-width: 1px 0 0 0; margin:0; border-color:#333333; ">
-     </div>
+   <%= form_tag({:action=>'guardar', :controller=>'compras'}, {:id=>'comprobante'}) %>
      <div id="menu_izquierdo"  class="col-sm-2" >
-
        <!-- ACORDENON -->
        <div class="panel-group" id="accordion">
            <div class="panel panel-default">
@@ -12,7 +12,6 @@
                   <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Registros</a></h5>
              </div>
              <div id="collapseOne" class="panel-collapse collapse in">
-                 <div class="panel-body"><%= link_to 'Nueva Localidad', new_compra_path %></div>
              </div>
         </div>
            <div class="panel panel-default">
@@ -33,77 +32,267 @@
               </div>
               <div id="collapseThree" class="panel-collapse collapse">
                 <div class="panel-body">
-                 - Proveedores
-                 - Productos
-                 
+                 - Pedido Compras
+                 - Productos              
                 </div>
               </div>
             </div>
       </div>
-
-
      </div>
-     <div  id="contenido"  class="col-sm-10" >
-     	<% form_for(@comprobante) do |f| %>
-        <%= f.error_messages %>
-	    <div id="comprobante" class= "col-sm-12" >
-     		<div id="cabezera">
-     			  <div class= "datos" id= "nro_comprobante" style="width:30%"><th><%= f.label :numero, "Nº: " %></th><%= f.text_field :numero,  :value=> '0001', :size=> 20 %></div>
-     			  <div class= "datos" id= "proveedor" style="width:50%" ><%= "Proveedor #{select_tag :proveedor_id, options_from_collection_for_select(Proveedor.all, :id, :nombre) }  "%></div>
-		        <div class= "datos" style="width:20%"> <%=Time.now.strftime("%Y-%m-%d") %></div>
-            <div class= "datos" id= "observaciones" style="display:block"><%= "Observaciones #{ f.text_field :observaciones , :size=> 20}" %></div>
-            <div class= "datos" id= "deposito" ><%= "Deposito #{select_tag :deposito_id, options_from_collection_for_select(Deposito.all, :id, :nombre) }  "%></div>
-            
-			  </div>	
-        <div id="busca_productos">
-          <%= text_field_tag :producto, nil, :style=> "width:70%", :placeholder => ' Ingrese el nombre del Producto ...'%>
-          <%= text_field_tag :cantidad, nil, :class =>'producto', :style=> "width:10%", :placeholder => ' cantidad ...' %>
-          <a  style ="font-size:16px; width:50px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar_producto()" ></a>           
-          <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
-        </div>
-        <div id="detalle">
-         		<div  class="scroll">
+     <div id="contenido" class= "col-sm-10" >
+          <div id="comprobante" class= "col-sm-14" >
+              <div id="cabezera">
+                  <div class= "datos" style="width:220px"><%= label_tag  :numero, "Nº:" %><%= text_field_tag :numero, nil, :style=>'width:70%', :class=> 'form-control'%></div>
+                  <div class= "datos" style="width:300px" ><%= label_tag :proveedor %><%= select_tag :proveedor_id, '<option></option>' + options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:200px', :class=> 'form-control' %></div>
+                  <div class= "datos" style="width:200px"><%= label_tag  :deposito_id %><%= select_tag :deposito_id,'Deposito entrega' '<option></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre) , :style=>'width:70%', :class=> 'form-control' %></div>
+                  <div class= "datos" style="width:200px"><%= label_tag  :observaciones %><%= text_field_tag :observaciones, nil, :class=>'form-control', :style=>'width:100px' %></div>               
+              </div>   
+              <div id="buscar_productos">
+                        <%= text_field_tag :producto,      nil, :class=> 'form-control', :placeholder => ' Ingrese el nombre del Producto ...', :style=> "width:40%; padding-right:4px"%>
+                        <%= text_field_tag :cantidad,      nil, :class=> 'form-control', :style=> "width:10%", :placeholder => ' cantidad ...' %>
+                        <a  style ="font-size:14px; width:40px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar('uno_solo')" ></a>           
+                        <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
+                        <%= hidden_field_tag :agrega, nil, :id=>"agrega" %>
+              </div>             
+              <div id="detalle">
+                        <div id="error_detalle" class="alert alert-warning fade in" style="text-align:center">
+                          <i class="glyphicon glyphicon-warning-sign" ></i>
+                          <label id="msj_error"></label>
+                          <button type="button" class="close" onclick="ocultar_error()">&times;</button>
+                        </div>  
+                        <table  class="tabla_cab_detalle">
+                                <tr style="text-align:left">
+                                  <th style="width:100px;padding:4px 0 4px 0">c&oacute;digo</th>
+                                  <th style="width:450px">nombre</th>
+                                  <th style="width:60px">unidad</th>
+                                  <th style="width:80px">cantidad</th>
+                                  <th style="width:80px">precio unit.</th>
+                                  <th style="width:235px; text-align:right">total</th>
+                                  <th style="width:55px;"></th>
+                                </tr> 
+                        </table>
+                        <div class="cuadro-scroll" sytle ="width:100%; height:300px; ">
+                            <table id="list" class="tabla_detalle">    
+                              <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+                              <!-- X ACA SE AGREGA DINAMICAMENTE EL DETALLE X -->
+                              <!-- X ACA SE AGREGA DINAMICAMENTE EL DETALLE X -->
+                              <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX --> 
+                             </table>   
+                        </div>  
+                        <div id="totales" style="text-align:right; margin-top:8px" >
+                              <p><%= "subtotal: "%></p><label id="subtotal">0.00 $</label> 
+                              <p><%= "iva #{Parametro.first.iva} %: " %></p><label id="iva_disc">0.00 $</label> 
+                              <label id= "total_gral" class="total_gral">0.00</label><label class="total_gral" style="margin-right:62px">&nbsp;$</label>
 
-
-        		</div>    			
-        </div>
-     		<div style="text-align:center" ><%= f.submit 'Guardar', :class=>"btn btn-danger" %> </div>
-
-     	<% end %>
-		
-     	</div>
-
-
+                        </div>
+                        <div style="text-align:center; margin-top:8px" ><%= submit_tag 'Guardar' ,:id=>'boton_guardar', :class=>"btn btn-danger btn-xs" %> </div>
+                      </div>
+              <br />
+              <br />
+              <br />
+              <br />              
+        </div>  
      </div>
  </div>
 
- 
+
 <script type="text/javascript">
 
-  $(document).ready(function () {
 
-
-   //INICIO AUTOCOMPLETAR.....
-     $('#producto').autocomplete('<%= todos_productos_path %>', {
-         dataType: "json",
-       parse: function(data) {
-         return $.map(data, function(row) {
-           return {
-             data: row.producto,
-             value: $.trim(row.producto.nombre),
-             result: $.trim(row.producto.nombre)
-           }
-         });
-       },
-       formatItem: function(item) {
-           return item.codigo+"-"+item.nombre;
+/*   $.validator.addMethod("contarDetalle", function (value, element, param) {   
+        if ($('#list >tbody >tr').length == 0){
+          alert ( "Debe existir al menos un producto en el detalle del pedido. " );
+          return false;
        }
-      }).result(function(e, item) {
-        $("#producto_id").val(item.id);
-      });
-     //FIN AUTOCOMPLETAR.....
+       else return true;
+       }, "Debe existir al menos un producto en el detalle del pedido."); */
 
- });
+    $(document).ready(function () {
+        $('#error_detalle').hide();
+        $('#proveedor_id').change(limpiar_detalle);
+        $('#numero').focus;
+        $("#comprobante").validate({
+             rules: {
+             "proveedor_id": {required:true},
+             "numero":{required:true},
+             "deposito_id": {required:true},
+             "cantidad": {number:true},
+             contarDetalle:true  
+             }
+        });
+    });
+
+    //INICIO AUTOCOMPLETAR.....
+
+       $('#producto').autocomplete('<%= todos_productos_path %>', {
+           dataType: "json",
+
+            extraParams: {proveedor_id: function() { return $("#proveedor_id").val(); } },
+            delay:200,
+            selectOnly:true,
+            mustMatch:1,
+
+         parse: function(data) {
+           return $.map(data, function(row) {
+             return {
+               data: row.producto,
+               value: $.trim(row.producto.nombre),
+               result: $.trim(row.producto.nombre)
+             }
+           });
+         },
+         formatItem: function(item) {
+             return item.codigo+"-"+item.nombre;
+         }
+        }).result(function(e, item) {
+          $("#producto_id").val(item.id);
+        });
+    //FIN AUTOCOMPLETAR.....
+
+
+  function agregar(cantidad){
+      $('#agrega').val(cantidad);
+      agregar_ajax();
+  } 
+
+  function agregar_ajax(){
+
+    jQuery.ajax({
+           type:'get',
+           //url:'<%= agregar_detalle_pedido_compras_path %>?nomenclador_id='+ $('#nomenclador_id').val() +'&codigo_practica='+$('#codigo_practica_id').val()+'&beneficiario_id='+$('#beneficiario_id').val()+'&diagnostico_id='+$('#diagnostico_id').val()+'&fecha_prescripcion='+$('#fecha_prescripcion').val()+'&b_p_id='+$('input[name=plan_especial]:checked').val()
+           url:'<%= agregar_detalle_compras_path %>?proveedor_id='+ $('#proveedor_id').val()+ '&agrega='+ $('#agrega').val() + '&producto_id='+ $('#producto_id').val() 
+           });
+
+    };
+ 
+
+  function limpiar_detalle(){
+      eliminar_detalle();
+      $('#error_detalle').hide();
+      limpiar_prod_cant();
+  }
+
+  function agregar_detalle() {
+      filas.forEach(function(fila){
+            if($('#detalle'+fila[0]).length == 0 ){                         
+                      // Agrego la Fila 
+                      $('#error_detalle').hide();
+                      $('#list').prepend(
+                          "<tr id='detalle"+fila[0]+"'>" +
+                              "<td style='width:90px'>"+ fila[1] +"</td>"+
+                              "<td style='width:450px'>"+ fila[2] +"</td>"+  
+                              "<td style='width:60px'>"+ fila[3] +"</td>"+    
+                              "<td style='width:90px'><input id='input_cant"+fila[0]+"'   name= 'comprobante["+ fila[0]+"][cant]'   class='form-control input-sm'  style='width:80px; height:25px' ></input></td>"+
+                              "<td style='width:90px'><input id='input_costo"+fila[0]+"'  name= 'comprobante["+ fila[0]+"][costo]'  class='form-control input-sm'  style='width:80px; height:25px' ></input></td>"+
+                              "<td style='width:250px; text-align:right; padding:0px' ><label id='label_total"+fila[0]+"' name= 'comprobante["+ fila[0]+"][total]'  class='total_fila' >0.00</label></td>"+
+                              "<td style='width:10px; text-align:right'><a class='glyphicon glyphicon-remove detalle_cruz' onClick='eliminar_fila("+ fila[0] +")' title='quitar de la lista'</a></td>"+   
+                          "</tr>" 
+                      );    
+                      //cantidad
+                      $('#input_cant'+fila[0]).val($('#cantidad').val())
+                      $('#input_cant'+fila[0]).addClass('required');
+                      $('#input_cant'+fila[0]).addClass('number');
+                      $('#input_cant'+fila[0]).on('change',function(){total_fila(fila[0])})
+                      //costos
+                      $('#input_costo'+fila[0]).val('0')
+                      $('#input_costo'+fila[0]).addClass('required');
+                      $('#input_costo'+fila[0]).addClass('number');                      
+                      $('#input_costo'+fila[0]).on('change',function(){total_fila(fila[0])});
+            }else{
+                      $('#msj_error').text('Ya existe en lista el producto '+ fila[2] + '.');
+                      $('#error_detalle').show();
+
+
+            };
+
+      });
+      limpiar_prod_cant();       
+  } 
+
+
+// ACTUALIZAR TOTALES 
+/*
+
+$("#detalle").on("change", "input", function() {
+    alert($(this).val());
+
+       $(".total_fila").each(function (index) {
+                 alert( $(this).val());
+
+       });          
+});
+
+
+  $(function(){
+    $('#tabla').on({
+        click : function() {…},
+        mouseenter: function() {…},
+        mouseleave: function() {…}
+    }, 'a.borrar');
+    });
+ */
+    
+
+  function eliminar_detalle(){
+          $('#list tr').remove();
+  }
+
+
+  function eliminar_fila(id){
+        $('#detalle'+id).remove();
+        actualiza_totales();
+  }
+
+
+  function limpiar_prod_cant(){
+      $('#producto_id').val('');
+      $('#producto').val('');
+      $('#cantidad').val('');
+  }
+
+
+   
+  $('#producto').keypress(function(event) {
+        if (event.which == '13') {
+          event.preventDefault();
+          $('#cantidad').focus();
+        }
+     });
+
+  $('#cantidad').keypress(function(event) {
+        if (event.which == '13') {
+          event.preventDefault();
+          agregar('uno_solo');
+          $('#producto').focus();
+        }
+     });
+
+
+  function ocultar_error() {
+
+    $('#error_detalle').hide();
+  }
+
+
+  function total_fila(id){
+    total = parseFloat($('#input_cant'+id).val()) * parseFloat($('#input_costo'+id).val());  
+    $('#label_total'+id).text(total); 
+    //alert('ddfadfSFADFS ' + $('#label_total'+id).text());
+    actualiza_totales();
+   }
+
+
+   function actualiza_totales() {
+      //alert ("totales");
+      total = 0.00;
+      $(".total_fila").each(function (index) {
+            total = total + parseFloat($(this).text());
+      });  
+      $('#total_gral').text(total) ;
+  
+   }   
+
+  /*  */
 
 </script>
 
@@ -111,85 +300,133 @@
 
 <style type="text/css">
 
-  	label{
-  		padding: 0 6px  
-  	}
-
-  	#comprobante{
-  		background-color: green;
-  		height:450px;
-  		padding: px;
-  		border-width: 1px;
-  		border-color: red;
-  	}
-
-
-    #busca_productos {
-      margin-top: 6px;
-      border: 1px solid #FFFAAA;
-      padding: 4px;
-    } 
-
-
-    #cabezera {
-      border: 1px solid #FFFAAA;
-      padding: 8px;
-    } 
-    
-  	
-
-    #cabezera .datos{
-      display: inline;
-  		height: 30px;
-  		background-color: #784512;
-  	} 
-
-
-    #detalle{
-      margin-top: 6px;
-      border: 1px solid #123FAF;
-      width: 100%;
-      height: 300px;
-      padding: 10px
-    }
-
-
-    input[type="text"] {
-         height: 24px;
-         font-size: 13px;
-         line-height: 15px;
-         border-radius: 1px;
-         width: 300px;
-    }
-
-
     #titulo{
-      margin: 40px 0 4px 0;
+      padding: 16px 0px 8px 90px;
     }
 
-    #buscador{
-        height: 35px;
-        margin-bottom: 10px
+    #herramientas{
+        width: 100%;
+        background-color:#53B9E9;
+        padding: 0 20px 8px 0;
+        text-align: right;
     }
 
     #menu_izquierdo{
       float: left;
-      padding:20px 0 0 18px;
+      padding: 14px 0 0 18px;
       /* background-color:green; */
     }
 
     #contenido{
-      padding:10px 30px 0 40px;
       /*background-color:white; */
+      padding: 14px 0 0 20px;
       float: left;
       display: inline;
     }
 
-    .textbox_buscar{
-      float:right;
-      height: 20px
+
+    .tabla_cab_detalle{
+        padding:6px 20px 6px 10px;
+        background-color:#DBDBDB;
+        color:#5A5A5A;
+        font-size:12px;
+        width:100%;
+        display:block
+    }
+    
+    .tabla_detalle{
+       padding:6px 20px 6px 10px;
+       background-color:white;
+       font-size:12px;
+       width:100%;
+       display:block
     }
 
+
+
+  .form-control{
+      display: inline-block;
+  }
+
+  .total_fila{
+    padding: 0px;
+    font-size: 14px;
+    margin: 0 30px 0 0px;
+
+
+  }
+
+
+
+  .datos{
+      display: inline-block;
+      text-align: left;
+      height: 44px;
+      padding: 6px 0 6px 0;
+      /*background-color: #4478aa;  */
+  }
+
+
+    .datos label{
+      padding: 0 6px;
+      font-size: 11px 
+    }
+
+    .datos input{
+      display: inline;
+      font-size: 11px 
+    }
+
+    #cabezera {
+      padding: 8px 20px 0px 20px;
+      background-color: #EBEBEB;
+      border: 1px solid #E6E6E6;
+      border-radius: 1px;
+    } 
+    
+    #buscar_productos {
+      padding: 8px 20px 5px 20px;
+      margin-top: 1px;
+      background-color: #EBEBEB;
+      border: 1px solid #E6E6E6;
+      border-radius: 1px;
+    }
+
+    #detalle{
+      margin-top: 1px;
+      padding: 10px 20px 10px 20px;
+      background-color: #EBEBEB;
+      width: 100%;
+      border-radius: 1px;
+    }
+ 
+
+    #totales p{
+      display: inline-block;
+      margin-right: 4px
+    }
+
+    #subtotal{
+      display: inline-block;
+      text-decoration: bold;
+      font-size: 16px;
+      margin-right: 60px
+    }
+
+    #iva_disc{
+      display: inline-block;
+      text-decoration: bold;
+      font-size: 16px;
+      margin-right: 80px;
+    }
+    
+    #total_gral {
+      font-size: 18px;
+      text-decoration: bold;
+      display: inline-block;
+
+    }
+    
 </style>
 
 

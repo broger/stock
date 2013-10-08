@@ -76,7 +76,7 @@
                                       <td><%=h "#{pd.fecha_envio.strftime("%Y-%m-%d %H:%M")} hs." if pd.fecha_envio %></td>
                                       <td>0000022</td>
                                       <td style="text-align:right">
-                                             <%= link_to image_tag('iconos/16x16/zoom.png'), pd, :title=>'Ver' %>
+                                             <%= link_to image_tag('iconos/16x16/zoom.png'), show_pedido_compra_path(pd), :title=>'Ver' %>
                                                 <%= link_to image_tag('iconos/16x16/editar.png'), edit_pedido_compra_path(pd), :title=>'Editar' %>
                                                 <%= link_to image_tag('iconos/16x16/delete.png'), pd, :title=>'Eliminar',
                                                   :confirm => 'Esta Seguro?', :method => :delete %>

@@ -1,5 +1,5 @@
 <div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
-  <div class="container" ><h3>Pedido de Compra</h3></div>  
+  <div class="container" ><h3>Factura Compra</h3></div>  
 </div>
 <div class ="container">
   <div class="row" >
@@ -41,11 +41,11 @@
         <div id="contenido" class= "col-sm-10" >
        	  <div id="comprobante" class= "col-sm-14" >
               <div id="cabezera">
-                  <div class= "datos" style="width:100px"><%= label_tag  :a, "Nº:" %><%= @pedido_compra.numero %></div>
-                  <div class= "datos" style="width:200px" ><%= label_tag :a, "proveedor:" %><%= @pedido_compra.proveedor.nombre %></div>
-                  <div class= "datos" style="width:160px"><%= label_tag  :a, "deposito:" %><%= @pedido_compra.deposito.nombre %></div>
-                  <div class= "datos" style="width:160px"><%= label_tag  :a, "fecha:" %><%= "#{@pedido_compra.created_at.strftime("%d-%m-%Y")} hs." if @pedido_compra.created_at %></div>
-                  <div class= "datos" style="width:160px"><%= label_tag  :a, "observaciones:" %><%=  @pedido_compra.observaciones %></div>               
+                  <div class= "datos" style="width:100px"><%= label_tag  :a, "Nº:" %><%= @compra.numero %></div>
+                  <div class= "datos" style="width:200px" ><%= label_tag :a, "proveedor:" %><%= @compra.proveedor.nombre %></div>
+                  <div class= "datos" style="width:160px"><%= label_tag  :a, "deposito:" %><%= @compra.deposito.nombre %></div>
+                  <div class= "datos" style="width:160px"><%= label_tag  :a, "fecha:" %><%= "#{@compra.created_at.strftime("%d-%m-%Y")} hs." if @compra.created_at %></div>
+                  <div class= "datos" style="width:160px"><%= label_tag  :a, "observaciones:" %><%=  @compra.observaciones %></div>               
               </div>             
               <div id="detalle">
                   <table  class="tabla_cab_detalle">

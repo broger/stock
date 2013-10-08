@@ -32,7 +32,24 @@
 
 <% end -%>
 
+<script type="text/javascript">
+  
+  $('#login').keypress(function(event) {
+        if (event.which == '13') {
+          event.preventDefault();
+          $('#password').focus();
+        }
+  });
 
+
+
+   $("#login").focus();
+
+
+
+
+
+</script>
 
 
 <style type="text/css">

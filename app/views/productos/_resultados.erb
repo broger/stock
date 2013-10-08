@@ -7,6 +7,8 @@
                 <tr style="height:12px; font-size:12px">
                   <th>codigo</th>
                   <th>nombre</th>
+                  <th>stock</th>
+                  <th>unidad</th>
                   <th>marca</th>
                   <th></th>
                 </tr>
@@ -16,6 +18,8 @@
                 <tr >
                     <td onclick="ver_registro()" style="cursor: pointer"><%=h producto.codigo %></td>
                     <td><%=h producto.nombre %></td>
+                    <td><%=h producto.stock %></td>
+                    <td><%=h producto.unidad.nombre %></td>
                     <td><%=h producto.marca.nombre %></td>
                     <td style="text-align:right">
                           <%= link_to "<i class='glyphicon glyphicon-search' style='font-size: 13px; color:black' ></i>", producto, :title=>'Ver', :class=>"fancybox", :id=>'ver' %>

@@ -17,7 +17,7 @@ class CreateProductos < ActiveRecord::Migration
 	    t.integer :codigo_proveedor
 
       t.double  :stock_minimo, :decimal => 7, :scale => 4
-      t.double  :stock_maximo, :decimal => 7, :scale => 4
+      t.double  :stock_ideal, :decimal => 7, :scale => 4
       t.double  :punto_pedido, :decimal => 7, :scale => 4
       
 

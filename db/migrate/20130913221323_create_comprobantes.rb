@@ -15,6 +15,7 @@ class CreateComprobantes < ActiveRecord::Migration
       t.integer  :usuario_id
       t.integer  :vendedor_id
       t.string   :observaciones
+      t.column   :costos, "numeric(10,4)"
 
     end
   end

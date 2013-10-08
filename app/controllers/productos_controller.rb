@@ -133,11 +133,28 @@ class ProductosController < ApplicationController
 
 
   def todos
-    unless params[:q].match(/^\d*$/)
-      @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ?',"%#{params[:q]}%"], :order => :nombre,:limit=>30)
+
+    unless params[:proveedor_id].blank?
+        # 1ro buscar x CODIGO
+        @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo = ? and proveedor_id = ?', params[:q], params[:proveedor_id]])
+       
+        # 2do si no existe buscar x NOMBRE 
+        if @productos.blank?
+          @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ? and proveedor_id = ?',"%#{params[:q]}%", params[:proveedor_id]], :order => :nombre,:limit=>30)
+        end
+
     else
-      @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo_lugar_trabajo = ?',"#{params[:q]}"], :order => :nombre,:limit=>30)
-    end
+    
+        # 1ro buscar x CODIGO
+        @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo = ?', params[:q] ])
+       
+        # 2do si no existe buscar x NOMBRE 
+        if @productos.blank?
+          @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ? ','%#{params[:q]}%' ], :order => :nombre,:limit=>30)
+        end
+    
+    end    
+
     respond_to do |format|
       format.json{render :json => @productos.to_json}
     end
