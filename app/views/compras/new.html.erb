@@ -43,8 +43,16 @@
           <div id="comprobante" class= "col-sm-14" >
               <div id="cabezera">
                   <div class= "datos" style="width:220px"><%= label_tag  :numero, "Nº:" %><%= text_field_tag :numero, nil, :style=>'width:70%', :class=> 'form-control'%></div>
-                  <div class= "datos" style="width:300px" ><%= label_tag :proveedor %><%= select_tag :proveedor_id, '<option></option>' + options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:200px', :class=> 'form-control' %></div>
-                  <div class= "datos" style="width:200px"><%= label_tag  :deposito_id %><%= select_tag :deposito_id,'Deposito entrega' '<option></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre) , :style=>'width:70%', :class=> 'form-control' %></div>
+                  
+                  <% if @pedido_compra %>
+                      <div class= "datos" style="width:300px" ><%= label_tag :proveedor %><%= @pedido_compra.proveedor.nombre :class=> 'form-control' %></div>
+                      <%=  hidden_field_tag :proveedor_id, @pedido_compra.proveedor_id %>
+                      <div class= "datos" style="width:300px" ><%= label_tag :deposito %><%= @pedido_compra.deposito.nombre :class=> 'form-control' %></div>
+                      <%=  hidden_field_tag :deposito_id, @pedido_compra.deposito_id %>
+                  <% else %>   
+                       <div class= "datos" style="width:300px" ><%= select_tag :proveedor_id, '<option></option>' + options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:200px', :class=> 'form-control' %></div>
+                       <div class= "datos" style="width:200px"><%= label_tag   :deposito_id %><%= select_tag :deposito_id,'Deposito entrega' '<option></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre) , :style=>'width:70%', :class=> 'form-control' %></div>
+                  <% end %>  
                   <div class= "datos" style="width:200px"><%= label_tag  :observaciones %><%= text_field_tag :observaciones, nil, :class=>'form-control', :style=>'width:100px' %></div>               
               </div>   
               <div id="buscar_productos">
@@ -52,7 +60,7 @@
                         <%= text_field_tag :cantidad,      nil, :class=> 'form-control', :style=> "width:10%", :placeholder => ' cantidad ...' %>
                         <a  style ="font-size:14px; width:40px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar('uno_solo')" ></a>           
                         <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
-                        <%= hidden_field_tag :agrega, nil, :id=>"agrega" %>
+                        <%= hidden_field_tag :total_factura, nil %>
               </div>             
               <div id="detalle">
                         <div id="error_detalle" class="alert alert-warning fade in" style="text-align:center">
@@ -72,7 +80,31 @@
                                 </tr> 
                         </table>
                         <div class="cuadro-scroll" sytle ="width:100%; height:300px; ">
-                            <table id="list" class="tabla_detalle">    
+                            <table id="list" class="tabla_detalle">
+
+
+
+                              <% if @pedido_compra %>
+
+                                      <% @pedido_compra.movimientos.each do |pc| %>
+                                             <% ide = pc.producto.id %>
+                                             <tr id='detalle'+ <%= ide %> >
+                                                <td style='width:90px'></td>
+                                                <td style='width:450px'></td> 
+                                                <td style='width:60px'></td>  
+                                                <td style='width:90px'><input id='input_cant'+<%= ide %>   name= 'comprobante['+ <%= ide %> +'][cant]'  class='form-control input-sm'  style='width:80px; height:25px' ><%= pc.cantidad %></input></td>
+                                                <td style='width:90px'><input id='input_costo'+<%= ide %>  name= 'comprobante['+ <%= ide %> +'][costo]'  class='form-control input-sm'  style='width:80px; height:25px' ></input></td>
+                                                <td style='width:250px; text-align:right; padding:0px' ><label id='label_total'+ <%= ide %> name= 'comprobante['+ <%= ide %> +'][total]'  class='total_fila' >0.00</label></td>
+                                                <td style='width:10px; text-align:right'><a class='glyphicon glyphicon-remove detalle_cruz' onClick='eliminar_fila('+ <%= ide %> +')' title='quitar de la lista'</a></td>
+                                            </tr> 
+                       
+                                      <% end %>
+
+                               <% end %>
+
+
+
+
                               <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
                               <!-- X ACA SE AGREGA DINAMICAMENTE EL DETALLE X -->
                               <!-- X ACA SE AGREGA DINAMICAMENTE EL DETALLE X -->
@@ -114,12 +146,17 @@
         $("#comprobante").validate({
              rules: {
              "proveedor_id": {required:true},
-             "numero":{required:true},
+             "numero":{required:true, digits:true},
              "deposito_id": {required:true},
              "cantidad": {number:true},
              contarDetalle:true  
              }
         });
+
+
+
+
+
     });
 
     //INICIO AUTOCOMPLETAR.....
@@ -289,7 +326,9 @@ $("#detalle").on("change", "input", function() {
             total = total + parseFloat($(this).text());
       });  
       $('#total_gral').text(total) ;
-  
+      $('#total_factura').val(total) ;
+
+
    }   
 
   /*  */

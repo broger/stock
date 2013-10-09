@@ -9,7 +9,7 @@ class UsersController < ApplicationController
    def index
     @usuario = User.new
     if params[:txtbuscar].blank?
-       @usuarios = User.paginate(:page => params[:page],,:per_page => 6,:order => 'name')
+       @usuarios = User.paginate(:page => params[:page],:per_page => 6,:order => 'name')
     else
        @usuarios = User.paginate(:page => params[:page],:per_page => 6,:conditions=> ['lower(name) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "name")
     end

@@ -51,10 +51,8 @@ class ComprasController < ApplicationController
   def guardar
     Comprobante.transaction do
 
-      nro_repetido = Comprobante.compra.find(:first, :conditions=>{:numero => params[:numero].to_i})
 
-      if nro_repetido.blank?
-
+        
             compra = Comprobante.compra.new
             compra.numero = params[:numero]
             compra.proveedor_id =  params[:proveedor_id]
@@ -62,13 +60,12 @@ class ComprasController < ApplicationController
             compra.usuario_id  =   current_user
             compra.deposito_id = params[:deposito_id]
             compra.aprobado = true
+            compra.total =  params[:total_factura]
             compra.save!
 
             tipo_compra = TipoComprobante.find(1)
             tipo_compra.ultimo_nro = params[:numero]
             tipo_compra.save!
-
-            validacion_total = 0
             
             unless params["comprobante"].blank?   
 
@@ -85,41 +82,33 @@ class ComprasController < ApplicationController
                    mov.usuario_id = current_user
                    mov.deposito_id = params[:deposito_id]
                    mov.costo = o[:costo]
-
+                   mov.precio_total = (o[:cant].to_f * o[:costo].to_f)
                    mov.save!  
-
             
                    # actualiza stock del producto
                    producto = Producto.find(k)
                    producto.stock =  producto.stock.to_f + o[:cant].to_f
                    producto.save!
 
-
-                   # CALCULAR TOTAL 
-                   #total = o[:pedido] * o[:costo]
-                   #validacion_total =+ total
-
-                   #if validacion_total == total_facturado 
-
-
-                   #end
-
                 end 
+                   
+                
+                total_mov = Movimiento.sum(:precio_total, :conditions=>['comprobante_id = ?',compra.id])
 
-                ok = true
-                noticia =  "La Factura de Compras Nº: #{params[:numero]} ha sido creado correctamente, el stock de los productos incluidos a sido modificado."
-            
+                if total_mov.to_f == params[:total_factura].to_f
+                     ok = true
+                     noticia =  "La Factura de Compras Nº: #{params[:numero]} ha sido creado correctamente, el stock de los productos incluidos a sido modificado."
+                else
+                     raise  " Error: diferencia en la suma total de moviminetos con el parametro total_factura. Contactese con el Adminsitrador gracias!."
+
+                end
+               
             else
                 ok = false
                 noticia = "No existen productos en el detalle de la factura de compras."
             end
  
-      else
-            ok = false
-            noticia = "La Factura de Compras Nº: #{params[:numero]} ya existe."
-            
-      end #repetido
-      redirect_to(show_compra_path(:id=>compra.id),:notice =>noticia)
+           redirect_to(show_compra_path(:id=>compra.id),:notice =>noticia)
     end  
   end
 

@@ -11,7 +11,9 @@ class CreateParametros < ActiveRecord::Migration
       t.column  :celular2, "character(50)"
       t.integer :localidad_id
       t.integer :provincia_id
+      t.integer :moneda_id
       t.column  :cuil, "numeric(12)"
+
 
       t.timestamps
     end

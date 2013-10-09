@@ -24,11 +24,6 @@ class CreateProductos < ActiveRecord::Migration
       t.boolean :visible_web
       t.column  :calificacion, "character(1)"
 
-      t.double  :costo, :decimal => 7, :scale => 2
-      t.double  :ganancia, :decimal=> 7, :scale => 2
-      t.double  :descuento_contado, :decimal => 7, :scale => 2
-      t.double  :iva, :decimal => 7, :scale => 2
-
    	  t.integer :estado_id
 
         	

@@ -64,6 +64,7 @@
                                   <tr style="height:12px">
                                   <th>n&uacute;mero</th>
                                   <th>proveedor</th>
+                                  <th>total</th>
                                   <th>fecha alta</th>
                                   <th>pedido compra</th>
                                   <th></th>
@@ -74,6 +75,7 @@
                                   <tr style="height:9px">
                                       <td><%=h compra.numero %></td>
                                       <td><%=h compra.proveedor.nombre %></td>
+                                      <td><%=h "#{compra.total} #{Parametro.first.moneda.simbolo}" %></td>
                                       <td><%=h "#{compra.created_at.strftime("%Y-%m-%d %H:%M")} hs." if compra.created_at %></td>
                                       <td>0000022</td>
                                       <td style="text-align:right">

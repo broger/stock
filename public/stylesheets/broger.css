@@ -1,4 +1,11 @@
+ 
+ .linkTitulo {
+     color: white;
+     text-decoration: none
+ }
+
  label.error {
+      font-size: 11px;
       color: red;
       font-style:italic;
       margin-left:6px

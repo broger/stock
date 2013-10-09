@@ -1,5 +1,5 @@
 <div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
-  <div class="container" ><h3>Factura Compra</h3></div>  
+  <div class="container" ><h3 ><%= link_to 'Factura de Compras', compras_path(), :style=>'color: white;text-decoration: none'  %></h3></div>  
 </div>
 <div class ="container">
   <div class="row" >
@@ -72,12 +72,10 @@
                  <div style="text-align:left; margin-right:20px" >
                          <%= will_paginate @detalle, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
                          <button type="button" class="btn-default">volver</button>
+                        <button type="button" class="btn-default">Crear Otra Factura de Compras</button>
                          <button type="button" class="btn-default glyphicon glyphicon-pencil">editar</button>
                          <button type="button" class="btn-default glyphicon glyphicon-print">imprimir</button>
                          <button type="button" class="btn-default glyphicon glyphicon-envelope">enviar mail</button>
-
-                                                         
-          
 
                  </div>  
 
