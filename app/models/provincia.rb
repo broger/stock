@@ -1,5 +1,7 @@
 class Provincia < ActiveRecord::Base
 	has_many :localidades
+	has_many :clientes
+
 
 	validates_presence_of :nombre, :message => 'es obligatorio.'
     validates_uniqueness_of :nombre,:message => "ya existe"

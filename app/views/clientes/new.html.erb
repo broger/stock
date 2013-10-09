@@ -1,122 +1,140 @@
-<h4>Nuevo cliente</h4><hr style="margin-top: 0px; padding-top: 0px;  margin-bottom:25px" />
-
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+    <h3>Nuevo Cliente</h3>
+</div>
 <% form_for(@cliente) do |f| %>
   <%= f.error_messages %>
+<div class="well" style="background-color:white">
+  <div class="brogertab" >
+              <ul id="myTab" class="nav nav-tabs">
+                <li class="active"><a href="#general"          data-toggle="tab">Generales</a></li>
+          <!-- <li                ><a href="#direccion"        data-toggle="tab">Direcci&oacute;n</a></li>-->
+                <li               ><a href="#cuenta_corriente" data-toggle="tab">Cuenta Corriente</a></li>
+              </ul>
 
+         <div id="myTabContent" class="tab-content" style="padding:20px">
+                <div  class="tab-pane active"  id="general" >
+                    <table style="float:left; margin:0 180px 0 20px">
+                              <tr>
+                                <td><%= f.label :nombre %></td><td><%= f.text_field :nombre, :class=>'form-control' %></td>
+                              </tr>
+                              <tr>
+                                <td><%= f.label :cuil %></td><td><%= f.text_field :cuil, :class=>'form-control' %></td>
+                              </tr>
+                              <tr>
+                                <td><%= f.label :email %></td><td><%= f.text_field :email, :class=>'form-control' %></td>
+                              </tr>
+                              <tr>
+                                <td><%= f.label :telefono %></td><td><%= f.text_field :telefono, :class=>'form-control' %></td>
+                              </tr>
+                              <tr>
+                                <td><%= f.label :celular %></td><td><%= f.text_field :celular, :class=>'form-control' %></td>
+                              </tr>
+                        </table>
 
-<div class="well">
+                        <table tyle="float:left; margin:0 180px 0 20px; display:inline">
+                              <tr>
+                                <td><%= f.label :estado_id %></td><td><%= f.select :estado_id , Estado.find(:all, :order =>'id').collect{|t|[t.nombre, t.id]}, :class=>'form-control' %></td>
+                              </tr> 
+                              <tr>
+                                <td><%= f.label :provincia_id %></td><td><%= f.select :provincia_id , Provincia.find(:all, :order =>'nombre').collect{|t|[t.nombre, t.id]}, :class=>'form-control' %></td>
+                              </tr> 
+                              <tr>
+                                <td><%= f.label :localidad_id %></td><td><%= f.select :localidad_id , Localidad.find(:all, :order =>'nombre').collect{|t|[t.nombre, t.id]}, :class=>'form-control' %></td>
+                              </tr>  
+                              <tr>
+                                <td></td><td></td>
+                              </tr> 
+                              <tr>
+                                <td></td><td></td>
+                              </tr> 
+                        </table>
+                </div>
+                <!-- <div class="tab-pane fade" id="direccion"> </div> -->
 
-<div class="brogertab" >
-            <ul id="myTab" class="nav nav-tabs">
-              <li class="active"><a href="#general"    data-toggle="tab">Generales</a></li>
-              <li class=""><a href="#direccion"  data-toggle="tab">Direcci&oacute;n</a></li>
-              <li class=""><a href="#banco"        data-toggle="tab">Banco</a></li>
-            </ul>
-
-  <div id="myTabContent" class="tab-content" style="padding:10px 0px 0px 30px">
-    <div  class="tab-pane active"  id="general" >
-                                         <table>
-                                              <tr>
-                                                <th><%= f.label :codigo %></th>
-                                                <td> <%=  Cliente.count >= 1  ? "#{Cliente.last.id.to_i + 1}" : "1"  %></td>
-                                              </tr>
-                                              <tr>
-                                                <th><%= f.label :nombre %></th>
-                                                <td><%= f.text_field :nombre %></td>
-                                              </tr>
-                                              <tr>
-                                                <th><%= f.label :cuil %></th>
-                                                <td><%= f.text_field :cuil %></td>
-                                              </tr>
-                                              <tr>
-                                                 <th><%= f.label :estado_id, "Estado" %></th>
-                                                 <td><%= f.select :estado_id , Estado.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-                                              </tr>
-                                             <tr>
-                                                <th><%= f.label :telefono %></th>
-                                                <td><%= f.text_field :telefono %></td>
-                                              </tr>
-                                              <tr>
-                                                <th><%= f.label :celular %></th>
-                                                <td><%= f.text_field :celular %></td>
-                                              </tr>
-                                              <tr>
-                                                <th><%= f.label :email %></th>
-                                                <td><%= f.text_field :email %></td>
-                                              </tr>
-                                          </table>
-                                </div>
-                                          <div class="tab-pane fade" id="direccion">
-                                                       <table>
-                                                            <tr>
-                                                               <th><%= f.label :provincia_id, "Provincia" %></th>
-                                                                <td><%= f.select :provincia_id , Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-                                                            </tr>
-                                                            <tr>
-                                                               <th><%= f.label   :localidad_id, "Localidad" %></th>
-                                                                <td><%= f.select :localidad_id, Localidad.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-                                                            </tr>
-                                                            <tr>
-                                                               <th><%= f.label :direccion, "Direcci&oacute;n" %></th>
-                                                                <td><%= f.text_field :direccion %></td>
-                                                            </tr>
-                                                                                  </table>
-                                         </div>
-                                         <div class="tab-pane fade" id="banco">
-                                                 <table>
-                                                      <tr>
-                                                         <th><%= f.label :banco_id, "Banco" %></th>
-                                                          <td><%#= f.select :provincia_id , Banco.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-                                                      </tr>
-                                                      <tr>
-                                                         <th><%= f.label   :cuenta_bancaria, "Cuenta Bancaria" %></th>
-                                                          <td><%= f.text_field :cuenta_bacaria %></td>
-                                                      </tr>
-                                                  </table>
-                                          </div>
-
-
-
-            </div>
-
+                <div class="tab-pane fade" id="cuenta_corriente">
+                                          
+                </div>
+        </div>
+  </div>
+</div>  
+<div id="pie" style="height:30px; padding:16px">
+    <div style="text-align: right"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %></p></div>
 </div>
-
-<div style="float:right"><%= f.submit 'Guardar', :class=>"btn btn-danger" %> &nbsp; <%= button_to_function "Cancelar", "alert('close el fancybox')" %></div>
-</div>
-
-
 <% end %>
 
 
-  <script type="text/javascript">
-     $(document).ready(function(){
-        $("#new_cliente").validate({
-         rules: {
-              "cliente[razon_social]": {required: true, minlength: 3, maxlength:30},
-              "cliente[email]": {email: true},
-              "cliente[cuil]": { digits: true, rangelength: [1,11]},
-              "cliente[cuenta_banacaria]": {digits: true},
-              "cliente[provincia_id]": {required: true},
-              "cliente[localidad_id]": {required: true},
-              "cliente[estado_id]": {required: true},
-              "cliente[telefono1]": {digits: true},
-              "cliente[telefono2]": {digits: true},
-              "cliente[celular1]": {digits: true},
-              "cliente[celular2]": {digits: true}
-         }
-        });
-     });
+<script type="text/javascript">
+
+    var localidades = new Array();
+    <% localidades = Localidad.find(:all) %>
+    <% for localidad in localidades -%>
+          localidades.push(new Array(<%= localidad.provincia_id %>, "<%=h localidad.nombre %>", <%= localidad.id %>));
+    <% end %>
+    $('#provincia_id').change(localidadSelec);
+    
+
+    $(document).ready(function(){
+            $("#new_cliente").validate({
+             rules: {
+                  "cliente[nombre]": {required: true, rangelength: [3,60]},
+                   }
+            });
+            localidadSelec();
+    });
+
 
      $('#myTab a').click(function (e) {
-         e.preventDefault();
-         $(this).tab('show');
-     })
+          e.preventDefault();
+          $(this).tab('show');
+        });
+
+   
+     function localidadSelec() {
+        provincia_id = $('#cliente_provincia_id').val();
+        $('#cliente_localidad_id').empty();
+        $('#cliente_localidad_id').append(selec='<option></option>');
+        localidades.forEach(function(localidad){
+            if (localidad[0]==provincia_id){
+                $('#cliente_localidad_id').append(selec='<option value="'+ localidad[2] +'">'+ localidad[1]+'</option>');
+            }
+        });
+    } 
+
+</script>
 
 
-  </script>
 
 <style type="text/css">
-    .brogertab{
+
+  select{
+    padding: 2px;
+  }
+  
+
+  input{
+    padding-left: 4px
+  }
+
+  #fancybox-outer{
+    background-color: #f5f5f5;
+  }
+
+ label{
+    margin: 0  16px 6px;
+    font-size: 12px
+
+  }
+
+  
+  #fancybox-wrap {
+    padding:0;
+  }
+
+  #fancybox-inner {
+  position:relative;
+  }
+
+.brogertab{
           min-height: 260px;
           height: auto;
     }
@@ -126,18 +144,16 @@
     }
 
 
-    table
-    {
-    width:100%;
-    }
-    th{
-       text-align: left;
-      }
-    tr{
-      height:40px;
-     }
-     table label{
-        font-size: 11px;
-      }
+        textarea{
+          font-size: 14px
+        }
 
-  </style>
+
+
+  table tr{
+    height: 30px;
+  }
+  
+
+</style>
+

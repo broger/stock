@@ -9,7 +9,7 @@ jQuery.extend(jQuery.validator.messages, {
   url: "URL inválida.",
   date: "Fecha inválida.",
   dateISO: "Por favor, escriba una fecha (ISO) válida.",
-  number: "Número entero inválido.",
+  number: "El formato correcto es 0000.00 ",
   digits: "Sólo dígitos.",
   creditcard: "Por favor, escribe un número de tarjeta válido.",
   equalTo: "Por favor, escriba el mismo valor de nuevo.",

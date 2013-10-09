@@ -1,13 +1,130 @@
-<p>
-  <b>Nombre:</b>
-  <%=h @cliente.nombre %>
-</p>
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+    <h3> Cliente</h3>
+</div>
+<div class="well" style="background-color:white">
+  <div class="brogertab" >
+              <ul id="myTab" class="nav nav-tabs">
+                <li class="active"><a href="#general"          data-toggle="tab">Generales</a></li>
+          <!-- <li                ><a href="#direccion"        data-toggle="tab">Direcci&oacute;n</a></li>-->
+                <li               ><a href="#cuenta_corriente" data-toggle="tab">Cuenta Corriente</a></li>
+              </ul>
 
-<p>
-  <b>Localidad:</b>
-  <%=h @cliente.localidad_id %>
-</p>
+         <div id="myTabContent" class="tab-content" style="padding:20px">
+                <div  class="tab-pane active"  id="general" >
+                    <table style="float:left; margin:0 180px 0 20px">
+                              <tr>
+                                <td><%= label_tag :a, "nombre:" %></td><td><%= @cliente.nombre %></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "cuil:" %></td><td><%= @cliente.cuil %></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "email:" %></td><td><%= @cliente.email %></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "telefono:" %></td><td><%= @cliente.telefono %></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "celular:" %></td><td><%= @cliente.celular %></td>
+                              </tr>
+                        </table>
+
+                        <table tyle="float:left; margin:0 180px 0 20px; display:inline">
+                              <tr>
+                                <td><%= label_tag :a, "estado_id:" %></td><td><%= @cliente.estado.nombre %></td>
+                              </tr> 
+                              <tr>
+                                <td><%= label_tag :a, "provincia:" %></td><td><%= @cliente.provincia.nombre %></td>
+                              </tr> 
+                              <tr>
+                                <td><%= label_tag :a, "localidad:" %></td><td><%= @cliente.localidad.nombre %></td>
+                              </tr>  
+                              <tr>
+                                <td></td><td></td>
+                              </tr> 
+                              <tr>
+                                <td></td><td></td>
+                              </tr> 
+                        </table>
+                </div>
+                <!-- <div class="tab-pane fade" id="direccion"> </div> -->
+                <div class="tab-pane fade" id="cuenta_corriente">                            
+                       <!-- disponible para la version completa  -->
+                </div>
+        </div>
+  </div>
+</div>  
+<div id="pie" style="height:30px; padding:16px">
+ <div style="text-align: right"><%= button_to_function 'Volver', "cerrarFancy()", :class=>"btn btn-danger" %></div>
+</div>
 
 
-<%= link_to 'Edit', edit_cliente_path(@cliente) %> |
-<%= link_to 'Back', clientes_path %>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+    });
+
+     $('#myTab a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show');
+        });
+
+
+</script>
+
+
+
+<style type="text/css">
+
+  select{
+    padding: 2px;
+  }
+  
+
+  input{
+    padding-left: 4px
+  }
+
+  #fancybox-outer{
+    background-color: #f5f5f5;
+  }
+
+ label{
+    margin: 0  16px 6px;
+    font-size: 12px
+
+  }
+
+  
+  #fancybox-wrap {
+    padding:0;
+  }
+
+  #fancybox-inner {
+  position:relative;
+  }
+
+.brogertab{
+          min-height: 260px;
+          height: auto;
+    }
+
+    .tab-content{
+        background-color: white
+    }
+
+
+        textarea{
+          font-size: 14px
+        }
+
+
+
+  table tr{
+    height: 30px;
+  }
+  
+
+</style>
+

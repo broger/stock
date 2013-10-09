@@ -1,26 +1,27 @@
 class ClientesController < ApplicationController
-  # GET /clientes
-  # GET /clientes.xml
-   def index
+
+
+  def index
     if params[:txtbuscar].blank?
-       @clientes = Cliente.paginate(:page => params[:page],:order => "nombre")
+       @clientes = Cliente.paginate(:page => params[:page],:per_page => 6,:order => "nombre")
     else
-       @clientes = Cliente.paginate(:page => params[:page],:conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
+       @clientes = Cliente.paginate(:page => params[:page],:per_page => 6,:conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
     end
+
+    @busqueda = params[:txtbuscar]
+
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @clientes }
     end
   end
 
-  # GET /clientes/1
-  # GET /clientes/1.xml
+
   def show
     @cliente = Cliente.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @cliente }
+      format.html{render :layout=>false}
     end
   end
 
@@ -28,10 +29,9 @@ class ClientesController < ApplicationController
   # GET /clientes/new.xml
   def new
     @cliente = Cliente.new
-
+ 
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @cliente }
+      format.html{render :layout=>false}
     end
   end
 
