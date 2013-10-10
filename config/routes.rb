@@ -3,12 +3,14 @@ ActionController::Routing::Routes.draw do |map|
 
   
   map.resources :pedido_compras , :collection => {:agregar_detalle=>:get,
-                                                  :guardar =>:get
+                                                  :guardar =>:get,
+                                                  :elimnar =>:get
                                                  },
                                   :member =>{:show => :get}
 
   map.resources :compras,         :collection => {:agregar_detalle=>:get,
-                                                  :guardar =>:get
+                                                  :guardar =>:get,
+                                                  :eliminar => :get
                                                  },
                                   :member =>{:show => :get}
 

@@ -62,7 +62,7 @@
                                   <th>fecha alta</th>
                                   <th>enviado</th>
                                   <th>fecha envio</th>
-                                  <th>factura compra</th>
+                                  <th>Nº factura compra</th>
                                   <th></th>
                                 </tr>
                                 </thead>
@@ -74,9 +74,10 @@
                                       <td><%=h "#{pd.created_at.strftime("%Y-%m-%d %H:%M")} hs." if pd.created_at %></td>
                                       <td><%=h pd.enviado_proveedor == true ? 'si' : 'no' %></td>
                                       <td><%=h "#{pd.fecha_envio.strftime("%Y-%m-%d %H:%M")} hs." if pd.fecha_envio %></td>
-                                      <td>0000022</td>
+                                      <td><%= link_to pd.comprobante.numero, show_compra_path(:id => pd.comprobante.id) unless  pd.comp_relacionado_id.nil?%></td>
                                       <td style="text-align:right">
-                                             <%= link_to image_tag('iconos/16x16/zoom.png'), show_pedido_compra_path(pd), :title=>'Ver' %>
+                                                <%= link_to "f", new_compra_url(:pedido_compra_id => pd.id),  :style=>"color:black; font:bold; font-size:18px; margin-right:6px", :title=>'Crear Factura de Compra' if pd.comp_relacionado_id.nil?  %>
+                                                <%= link_to image_tag('iconos/16x16/zoom.png'), show_pedido_compra_path(pd), :title=>'Ver' %>
                                                 <%= link_to image_tag('iconos/16x16/editar.png'), edit_pedido_compra_path(pd), :title=>'Editar' %>
                                                 <%= link_to image_tag('iconos/16x16/delete.png'), pd, :title=>'Eliminar',
                                                   :confirm => 'Esta Seguro?', :method => :delete %>

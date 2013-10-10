@@ -71,6 +71,7 @@ class PedidoComprasController < ApplicationController
             pedido_compra.usuario_id  =   current_user
             pedido_compra.vendedor_id  =  current_user
             pedido_compra.aprobado = true
+            pedido_compra.deposito_id =  params[:deposito_id]
             pedido_compra.save!
               
 
@@ -86,7 +87,7 @@ class PedidoComprasController < ApplicationController
                    # pedido = o        
                    mov = Movimiento.new
                    mov.producto_id = k
-                   mov.cantidad = o[:pedido]
+                   mov.cantidad = o[:pedido].to_f
                    mov.afecta_stock = false 
                    mov.comprobante_id  = pedido_compra.id
                    mov.usuario_id = current_user

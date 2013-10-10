@@ -44,7 +44,7 @@
               <div id="cabezera">
                   <div class= "datos" style="width:220px"><%= label_tag :numero, "Nº:" %><%= text_field_tag :numero, @ultimo_pd, :style=>'width:70%', :class=> 'form-control'%></div>
                   <div class= "datos" style="width:300px" ><%= label_tag :proveedor %><%= select_tag :proveedor_id, '<option></option>' + options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:200px', :class=> 'form-control' %></div>
-                  <div class= "datos" style="width:200px"><%= label_tag :deposito_id %><%= select_tag :deposito,'Deposito entrega' '<option></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre) , :style=>'width:70%', :class=> 'form-control' %></div>
+                  <div class= "datos" style="width:200px"><%= label_tag :deposito_id,'Deposito entrega' %><%= select_tag :deposito_id '<option></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre) , :style=>'width:70%', :class=> 'form-control' %></div>
                   <div class= "datos" style="width:200px"><%= label_tag :observaciones %><%= text_field_tag :observaciones, nil, :class=>'form-control', :style=>'width:100px' %></div>               
               </div>   
               <div id="buscar_productos">
@@ -124,9 +124,17 @@
     });
     $('#proveedor_id').focus();
    
+ 
+
+
+
     //INICIO AUTOCOMPLETAR.....
      $('#producto').autocomplete('<%= todos_productos_path %>', {
          dataType: "json",
+         extraParams: {proveedor_id: function() { return $("#proveedor_id").val(); } },
+         delay:200,
+         selectOnly:true,
+         mustMatch:1,
        parse: function(data) {
          return $.map(data, function(row) {
            return {

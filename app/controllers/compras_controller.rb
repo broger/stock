@@ -14,8 +14,7 @@ class ComprasController < ApplicationController
 
   def new
     @comprobante = Comprobante.compra.new
-
-    @ultimo_nro = TipoComprobante.find(2).ultimo_nro + 1
+    @pedido_compra = Comprobante.pedido_compra.find(params[:pedido_compra_id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,7 +34,19 @@ class ComprasController < ApplicationController
 
   end
 
+  def eliminar
+    
+    compra = Comprobante.find(params[:id])
+    compra.destroy
 
+    if compra.destroy
+        flash[:notice] = "La Factura de compra se elimin&oacute; satisfactoriamente."
+    else
+        flash[:notice] = "Error al eliminar."
+    end     
+      redirect_to(compras_url)
+        
+  end 
 
 
  def agregar_detalle
@@ -61,12 +72,16 @@ class ComprasController < ApplicationController
             compra.deposito_id = params[:deposito_id]
             compra.aprobado = true
             compra.total =  params[:total_factura]
+            compra.comp_relacionado_id = params[:comp_relacioando_id]  if params[:comp_relacionado_id]
             compra.save!
 
-            tipo_compra = TipoComprobante.find(1)
-            tipo_compra.ultimo_nro = params[:numero]
-            tipo_compra.save!
-            
+            # RELACIONO EL PEDIDO COMPRA CON LA FACTURA COMPRA
+            if params[:comp_relacionado_id]
+                 pd = Comprobante.pedido_compra.find(params[:comp_relacionado_id])
+                 pd.comp_relacionado_id = compra.id
+                 pd.save!
+            end  
+
             unless params["comprobante"].blank?   
 
                 params["comprobante"].each do |k,o|
@@ -76,13 +91,13 @@ class ComprasController < ApplicationController
                    # nuevo movimiento
                    mov = Movimiento.new
                    mov.producto_id = k
-                   mov.cantidad = o[:cant]
+                   mov.cantidad = o[:cant].to_f
                    mov.afecta_stock = true
                    mov.comprobante_id  = compra.id
                    mov.usuario_id = current_user
                    mov.deposito_id = params[:deposito_id]
-                   mov.costo = o[:costo]
-                   mov.precio_total = (o[:cant].to_f * o[:costo].to_f)
+                   mov.costo = o[:costo].to_f
+                   mov.precio_total = o[:cant].to_f * o[:costo].to_f
                    mov.save!  
             
                    # actualiza stock del producto
