@@ -14,8 +14,13 @@ class ComprasController < ApplicationController
 
   def new
     @comprobante = Comprobante.compra.new
-    @pedido_compra = Comprobante.pedido_compra.find(params[:pedido_compra_id])
 
+    if params[:pedido_compra_id]
+        @pedido_compra = Comprobante.pedido_compra.find(params[:pedido_compra_id])
+    else
+        @pedido_compra
+    end
+      
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @comprobante }

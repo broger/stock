@@ -113,3 +113,24 @@ function mes_valido(value){
   function cerrarFancy() {
       $('#fancybox-close').click();
   }
+
+
+
+
+
+// COMPROBANTE EN GRAL 
+// todos los elementos tienen el mismo nombre.
+
+  function ver_obs() {
+      $('#ver_obs').hide();
+      $('#ocultar_obs').show();
+      $('#obs').show();
+      $('#observaciones').focus();
+      
+  }
+
+  function ocultar_obs() {
+      $('#ver_obs').show();
+      $('#ocultar_obs').hide();
+      $('#obs').hide();
+  }

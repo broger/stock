@@ -1,4 +1,4 @@
-<div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
+<div id="titulo"  >
   <div class="container" ><h3>Nuevo Pedido Compra</h3></div>  
 </div>
 <div class ="container">
@@ -42,24 +42,24 @@
      <div id="contenido" class= "col-sm-10" >
        	  <div id="comprobante" class= "col-sm-14" >
               <div id="cabezera">
-                  <div class= "datos" style="width:220px"><%= label_tag :numero, "Nº:" %><%= text_field_tag :numero, @ultimo_pd, :style=>'width:70%', :class=> 'form-control'%></div>
+                  <div class= "datos" style="width:160px"><%= label_tag :numero, "Nº:" %><%= text_field_tag :numero, @ultimo_pd, :style=>'width:70%', :class=> 'form-control'%></div>
                   <div class= "datos" style="width:300px" ><%= label_tag :proveedor %><%= select_tag :proveedor_id, '<option></option>' + options_from_collection_for_select(Proveedor.all, :id, :nombre) , :style=>'width:200px', :class=> 'form-control' %></div>
-                  <div class= "datos" style="width:200px"><%= label_tag :deposito_id,'Deposito entrega' %><%= select_tag :deposito_id '<option></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre) , :style=>'width:70%', :class=> 'form-control' %></div>
-                  <div class= "datos" style="width:200px"><%= label_tag :observaciones %><%= text_field_tag :observaciones, nil, :class=>'form-control', :style=>'width:100px' %></div>               
-              </div>   
+                  <% Deposito.count ==  1  ? seleccionado = 1 : seleccionado = 0 %>
+                  <div class= "datos" style="width:280px"><%= label_tag :deposito_id, 'Deposito entrega' %><%= select_tag :deposito_id, '<option value=0></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre, seleccionado),  :style=>'width:50%', :class=> 'form-control' %></div>
+                  <div class= "datos" style="width:180px"><%= label_tag :ver_obs, "Observaciones",  :onclick=> "ver_obs()", :class=>'link_azul', :id=>"ver_obs" %><%= label_tag :a, "Ocultar observaciones",  :onclick=> "ocultar_obs()", :class=>'link_azul', :id=>"ocultar_obs" %></div>               
+                  <div id="obs" class= "datos" style="heigt:40px"><%= label_tag :observaciones %><%= text_field_tag :observaciones, nil, :class=>'form-control', :style=>'width:89%' %></div>   
+              </div>             
               <div id="buscar_productos">
                         <%= text_field_tag :producto,      nil, :class=> 'form-control', :placeholder => ' Ingrese el nombre del Producto ...', :style=> "width:40%; padding-right:4px"%>
                         <%= text_field_tag :cantidad,      nil, :class=> 'form-control', :style=> "width:10%", :placeholder => ' cantidad ...' %>
-                        <a  style ="font-size:14px; width:40px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar('uno_solo')" ></a>           
+                        <a  style ="font-size:14px; width:40px; border-radius:1px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar('uno_solo')" ></a>           
                         <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
                         <%= hidden_field_tag :agrega, nil, :id=>"agrega" %>
                         <div class= "datos" style="margin-left:40px" >
-                        <%#= button_tag 'addprod', 'sin_stock', true,  :value => 'sin_stock' %><%#= label_tag 'addprod_sin_stock', 'agregar productos sin stock'%>
-                        <%#= button_tag 'addprod', 'todos',     false, :value => 'todos'     %><%#= label_tag 'addprod_todos',     'todos'%>
-                        <button type="button" class="btn btn-default btn-xs"  onClick="agregar('sin_stock')" style="font-size:10px" title="Agregar productos sin stock del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>productos sin stock</button>
-                        <button type="button" class="btn btn-default btn-xs"  onClick="agregar('todos')" style="font-size:10px" title="Agregar todos los productos del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>todos los productos</button>
-                  </div>  
-              </div>             
+                          <button type="button" class="btn btn-default btn-xs"  onClick="agregar('sin_stock')" style="font-size:10px" title="Agregar productos sin stock del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>productos sin stock</button>
+                          <button type="button" class="btn btn-default btn-xs"  onClick="agregar('todos')" style="font-size:10px" title="Agregar todos los productos del proveedor seleccionado"><i class="glyphicon glyphicon-arrow-down"></i>todos los productos</button>
+                        </div>  
+              </div>      
               <div id="detalle">
                         <div id="error_detalle" class="alert alert-warning fade in" style="text-align:center">
                           <i class="glyphicon glyphicon-warning-sign" ></i>
@@ -68,7 +68,7 @@
                         </div>  
                         <table  class="tabla_cab_detalle">
                                 <tr style="text-align:left">
-                                  <th style="width:100px;padding:4px 0 4px 0">c&oacute;digo</th>
+                                  <th style="width:100px">c&oacute;digo</th>
                                   <th style="width:320px">nombre</th>
                                   <th style="width:80px">unidad</th>
                                   <th style="width:80px">stock</th>
@@ -85,7 +85,7 @@
                              </table>   
                         </div>          
                         <div style="text-align:center; margin-top:8px" ><%= submit_tag 'Guardar' ,:id=>'boton_guardar', :class=>"btn btn-danger btn-xs" %> </div>
-                      </div>
+              </div>
               <br />
               <br />
               <br />
@@ -109,6 +109,8 @@
 
    
     $(document).ready(function () {
+        $('#obs').hide();
+        $('#ocultar_obs').hide();
         $('#error_detalle').hide();
         $('#proveedor_id').change(limpiar_detalle);
         $('#numero').attr('readonly', true);
@@ -124,7 +126,6 @@
     });
     $('#proveedor_id').focus();
    
- 
 
 
 
@@ -148,9 +149,19 @@
            return item.codigo+"-"+item.nombre;
        }
       }).result(function(e, item) {
-        $("#producto_id").val(item.id);
-      });
-     //FIN AUTOCOMPLETAR.....
+        if(item){
+            if(item.cero){
+              $("#producto_id").val('');
+            }else{
+              $("#producto_id").val(item.id);
+            }
+        }else{
+          $("#producto").val('');
+          $("#producto_id").val('');
+        }
+       });
+    //FIN AUTOCOMPLETAR.....
+
 
 
   function agregar(cantidad){
@@ -212,7 +223,7 @@
   } 
 
   function eliminar_detalle(){
-          $('#list tr').remove();
+        $('#list tr').remove();
   }
 
 
@@ -258,33 +269,61 @@
 
 <style type="text/css">
 
-    #titulo{
-      padding: 16px 0px 8px 90px;
-    }
-
-    #herramientas{
-        width: 100%;
-        background-color:#53B9E9;
-        padding: 0 20px 8px 0;
-        text-align: right;
-    }
-
     #menu_izquierdo{
       float: left;
-      padding: 14px 0 0 18px;
+      padding: 12px 0 0 18px;
       /* background-color:green; */
     }
 
     #contenido{
       /*background-color:white; */
-      padding: 14px 0 0 20px;
+      padding: 12px 0 0 20px;
       float: left;
       display: inline;
     }
+     
+    #titulo{
+        height:80px;
+        width:100%;
+        background-color:#53B9E9;
+     }
 
+     #titulo h3{
+        padding: 8px 0 0 56px;
+        color: #ffffff
+     }
+
+
+     #cabezera {
+        padding: 8px 20px 0px 20px;
+        background-color: #EBEBEB;
+        border-radius: 1px;
+    } 
+    
+
+    #obs{
+          display: block;
+          width: 100%;
+    }
+
+
+    #detalle{
+      padding: 4px 20px 10px 20px;
+      background-color: #EBEBEB;
+      width: 100%;
+      border-radius: 1px;
+    }
+
+    #buscar_productos {
+      padding: 8px 20px 0px 20px;
+      margin-top: 1px;
+      background-color: #EBEBEB;
+      border-radius: 1px;
+      height: 46px
+    }
 
     .tabla_cab_detalle{
-        padding:6px 20px 6px 10px;
+        padding:4px 20px 4px 10px;
         background-color:#DBDBDB;
         color:#5A5A5A;
         font-size:12px;
@@ -295,65 +334,33 @@
     .tabla_detalle{
        padding:6px 20px 6px 10px;
        background-color:white;
-       font-size:12px;
+       font-size:11px;
        width:100%;
        display:block
     }
 
+    /*  DATOS */
+
+    .datos{
+        display: inline-block;
+        text-align: left;
+        height: 43px;
+        padding: 6px 0 6px 0;
+        /*background-color: #4478aa;  */
+    }
 
 
-  .form-control{
-      display: inline-block;
-  }
-
-  .datos{
-      display: inline-block;
-      text-align: left;
-      height: 44px;
-      padding: 6px 0 6px 0;
-      /*background-color: #4478aa;  */
-  }
-
-
-  	.datos label{
-  		padding: 0 6px;
-      font-size: 11px 
-  	}
+    .datos label{
+        padding: 0 6px;
+        font-size: 11px 
+    }
 
     .datos input{
-      display: inline;
-      font-size: 11px 
+        display: inline;
+        font-size: 11px 
     }
 
 
-
-
-    #cabezera {
-      padding: 8px 20px 0px 20px;
-      background-color: #EBEBEB;
-      border: 1px solid #E6E6E6;
-      border-radius: 1px;
-
-
-    } 
-    
-    #buscar_productos {
-      padding: 8px 20px 0px 20px;
-      margin-top: 1px;
-      background-color: #EBEBEB;
-      border: 1px solid #E6E6E6;
-      border-radius: 1px;
-    }
-
-    #detalle{
-      margin-top: 1px;
-      padding: 10px 20px 10px 20px;
-      background-color: #EBEBEB;
-      width: 100%;
-      border-radius: 1px;
-    }
- 
-    
 </style>
 
 
