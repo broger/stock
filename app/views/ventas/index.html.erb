@@ -1,7 +1,7 @@
-<%= form_tag(pedido_compras_path, :method => 'get',:id=>'buscar') %>
+<%= form_tag(ventas_path, :method => 'get',:id=>'buscar') %>
 
 <div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
-    <div class="container" ><h1>Facturas de Compras</h1></div>  
+    <div class="container" ><h1>Facturas de ventas</h1></div>  
   </div>
   <div id="herramientas" >
     <div class="container">
@@ -24,9 +24,9 @@
              <div id="collapseOne" class="panel-collapse collapse in">
                  <div class="panel-body">
                      <ul> 
-                        <li><%= link_to 'Nueva Factura A', new_compra_path %></li>
-                        <li><%= link_to 'Nueva Factura B', new_compra_path %></li>
-                        <li><%= link_to 'Nueva Factura C', new_compra_path %></li>
+                        <li><%= link_to 'Nueva Factura A', new_venta_path %></li>
+                        <li><%= link_to 'Nueva Factura B', new_venta_path %></li>
+                        <li><%= link_to 'Nueva Factura C', new_venta_path %></li>
                      </ul>
                  </div>
              </div>
@@ -58,30 +58,30 @@
 
      </div>
      <div  id="contenido"  class="col-sm-10"  >            
-                       <% unless @compras.blank? %>
+                       <% unless @ventas.blank? %>
                         <table class="table" style="font-size :13px" >
                                 <thead>
                                   <tr style="height:12px">
                                   <th>n&uacute;mero</th>
-                                  <th>proveedor</th>
+                                  <th>cliente</th>
                                   <th>total</th>
                                   <th>fecha alta</th>
-                                  <th>Nº pedido compra</th>
+                                  <th>Nº pedido venta</th>
                                   <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <% @compras.each do |compra| %>
+                                <% @ventas.each do |venta| %>
                                   <tr style="height:9px">
-                                      <td><%= compra.numero %></td>
-                                      <td><%= compra.proveedor.nombre %></td>
-                                      <td><%= "#{compra.total} #{Parametro.first.moneda.simbolo}" %></td>
-                                      <td><%= "#{compra.created_at.strftime("%Y-%m-%d %H:%M")} hs." if compra.created_at %></td>
-                                      <td><%= link_to compra.comprobante.numero, show_pedido_compra_path(:id=>compra.comprobante.id) unless compra.comprobante.nil? %></td>
+                                      <td><%= venta.numero %></td>
+                                      <td><%= venta.cliente.nombre %></td>
+                                      <td><%= "#{venta.total} #{Parametro.first.moneda.simbolo}" %></td>
+                                      <td><%= "#{venta.created_at.strftime("%Y-%m-%d %H:%M")} hs." if venta.created_at %></td>
+                                      <td><%= link_to venta.comprobante.numero, show_pedido_venta_path(:id=>venta.comprobante.id) unless venta.comprobante.nil? %></td>
                                       <td style="text-align:right">
-                                             <%= link_to image_tag('iconos/16x16/zoom.png'), show_compra_path(compra),          :title=>'Ver' %>
-                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_compra_path(compra),     :title=>'Editar' %>
-                                                <%= link_to image_tag('iconos/16x16/delete.png'), eliminar_compras_path(:id => compra.id), :title=>'Eliminar', :confirm => 'Esta Seguro?' %>
+                                             <%= link_to image_tag('iconos/16x16/zoom.png'), show_venta_path(venta),          :title=>'Ver' %>
+                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_venta_path(venta),     :title=>'Editar' %>
+                                                <%= link_to image_tag('iconos/16x16/delete.png'), eliminar_ventas_path(:id => venta.id), :title=>'Eliminar', :confirm => 'Esta Seguro?' %>
                                       </td>
                                     </tr>
                                 <% end %>
@@ -93,7 +93,7 @@
                          <%end%>
                       </table>
                        <div style="text-align:center" >
-                          <%= will_paginate @compras, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+                          <%= will_paginate @ventas, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
                         </div>
      </div>
  </div>

@@ -4,11 +4,14 @@ class Comprobante < ActiveRecord::Base
 	belongs_to :tipo_comprobante
 	belongs_to :proveedor
 	belongs_to :deposito
+	belongs_to :cliente
 	belongs_to :tipo_pago
-	belongs_to :comprobante , :foreign_key => :comp_relacionado_id
+	belongs_to :comprobante
 
-	named_scope :compra,        :conditions => { :tipo_comprobante_id =>1 } # COMPRAS
-	named_scope :pedido_compra, :conditions => { :tipo_comprobante_id =>2 } # PEDIDO COMPRAS
+	named_scope :pedido_compra, :conditions => { :tipo_comprobante_id =>1 } 
+	named_scope :compra,        :conditions => { :tipo_comprobante_id =>2 } 
+	named_scope :venta,         :conditions => { :tipo_comprobante_id =>3 } 
+	
 
 
 

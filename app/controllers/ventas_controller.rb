@@ -1,25 +1,20 @@
-class ComprasController < ApplicationController
-  
+class VentasController < ApplicationController
+	 
 
   def index
-    @compras = Comprobante.compra.find(:all, :order=>'created_at DESC')
-    @compras = @compras.paginate :per_page => 24, :page => params[:page]
+    @ventas = Comprobante.venta.find(:all, :order=>'created_at DESC')
+    @ventas = @ventas.paginate :per_page => 24, :page => params[:page]
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @compras }
+      format.xml  { render :xml => @ventas }
     end
   end
 
 
   def new
-    @comprobante = Comprobante.compra.new
-
-    if params[:pedido_compra_id]
-        @pedido_compra = Comprobante.pedido_compra.find(params[:pedido_compra_id])
-    else
-        @pedido_compra
-    end
+    @comprobante = Comprobante.venta.new
+    @ultima_venta = TipoComprobante.find(3).ultimo_nro .to_i + 1
       
     respond_to do |format|
       format.html # new.html.erb
@@ -29,27 +24,27 @@ class ComprasController < ApplicationController
 
 
   def show
-    @compra = Comprobante.compra.find(params[:id])
-    @detalle =  @compra.movimientos.paginate(:per_page => 14, :page => params[:page])
+    @venta = Comprobante.venta.find(params[:id])
+    @detalle =  @venta.movimientos.paginate(:per_page => 14, :page => params[:page])
 
       respond_to do |format|
         format.html # show.html.erb
-        format.xml  { render :xml => @pedido_compra }
+        format.xml  { render :xml => @pedido_venta }
       end
 
   end
 
   def eliminar
     
-    compra = Comprobante.find(params[:id])
-    compra.destroy
+    venta = Comprobante.find(params[:id])
+    venta.destroy
 
-    if compra.destroy
-        flash[:notice] = "La Factura de compra se elimin&oacute; satisfactoriamente."
+    if venta.destroy
+        flash[:notice] = "La Factura de venta se elimin&oacute; satisfactoriamente."
     else
         flash[:notice] = "Error al eliminar."
     end     
-      redirect_to(compras_url)
+      redirect_to(ventas_url)
         
   end 
 
@@ -69,21 +64,21 @@ class ComprasController < ApplicationController
 
 
         
-            compra = Comprobante.compra.new
-            compra.numero = params[:numero]
-            compra.proveedor_id =  params[:proveedor_id]
-            compra.observaciones=  params[:observaciones] if params[:observaciones]
-            compra.usuario_id  =   current_user
-            compra.deposito_id = params[:deposito_id]
-            compra.aprobado = true
-            compra.total =  params[:total_factura]
-            compra.comp_relacionado_id = params[:comp_relacioando_id]  if params[:comp_relacionado_id]
-            compra.save!
+            venta = Comprobante.venta.new
+            venta.numero = params[:numero]
+            venta.proveedor_id =  params[:proveedor_id]
+            venta.observaciones=  params[:observaciones] if params[:observaciones]
+            venta.usuario_id  =   current_user
+            venta.deposito_id = params[:deposito_id]
+            venta.aprobado = true
+            venta.total =  params[:total_factura]
+            venta.comp_relacionado_id = params[:comp_relacioando_id]  if params[:comp_relacionado_id]
+            venta.save!
 
-            # RELACIONO EL PEDIDO COMPRA CON LA FACTURA COMPRA
+            # RELACIONO EL PEDIDO venta CON LA FACTURA venta
             if params[:comp_relacionado_id]
-                 pd = Comprobante.pedido_compra.find(params[:comp_relacionado_id])
-                 pd.comp_relacionado_id = compra.id
+                 pd = Comprobante.pedido_venta.find(params[:comp_relacionado_id])
+                 pd.comp_relacionado_id = venta.id
                  pd.save!
             end  
 
@@ -98,7 +93,7 @@ class ComprasController < ApplicationController
                    mov.producto_id = k
                    mov.cantidad = o[:cant].to_f
                    mov.afecta_stock = true
-                   mov.comprobante_id  = compra.id
+                   mov.comprobante_id  = venta.id
                    mov.usuario_id = current_user
                    mov.deposito_id = params[:deposito_id]
                    mov.costo = o[:costo].to_f
@@ -113,11 +108,11 @@ class ComprasController < ApplicationController
                 end 
                    
                 
-                total_mov = Movimiento.sum(:precio_total, :conditions=>['comprobante_id = ?',compra.id])
+                total_mov = Movimiento.sum(:precio_total, :conditions=>['comprobante_id = ?',venta.id])
 
                 if total_mov.to_f == params[:total_factura].to_f
                      ok = true
-                     noticia =  "La Factura de Compras Nº: #{params[:numero]} ha sido creado correctamente, el stock de los productos incluidos a sido modificado."
+                     noticia =  "La Factura de ventas Nº: #{params[:numero]} ha sido creado correctamente, el stock de los productos incluidos a sido modificado."
                 else
                      raise  " Error: diferencia en la suma total de moviminetos con el parametro total_factura. Contactese con el Adminsitrador gracias!."
 
@@ -125,12 +120,13 @@ class ComprasController < ApplicationController
                
             else
                 ok = false
-                noticia = "No existen productos en el detalle de la factura de compras."
+                noticia = "No existen productos en el detalle de la factura de ventas."
             end
  
-           redirect_to(show_compra_path(:id=>compra.id),:notice =>noticia)
+           redirect_to(show_venta_path(:id=>venta.id),:notice =>noticia)
     end  
   end
 
 
 end # final
+

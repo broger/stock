@@ -12,7 +12,7 @@ class PedidoComprasController < ApplicationController
 
   def new
     @comprobante = Comprobante.pedido_compra.new
-    @ultimo_pd = TipoComprobante.find(2).ultimo_nro .to_i + 1
+    @ultimo_pd = TipoComprobante.find(1).ultimo_nro .to_i + 1
     
     respond_to do |format|
       format.html # new.html.erb
@@ -75,7 +75,7 @@ class PedidoComprasController < ApplicationController
             pedido_compra.save!
               
 
-            tipo_pd = TipoComprobante.find(2)
+            tipo_pd = TipoComprobante.find(1)
             tipo_pd.ultimo_nro = params[:numero]
             tipo_pd.save!
 
