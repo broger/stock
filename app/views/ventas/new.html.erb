@@ -44,21 +44,22 @@
           <div id="comprobante" class= "col-sm-14" >
               <div id="cabezera">
                   <div class= "datos" style="width:160px"><%= label_tag :numero, "Nº:" %><%= text_field_tag :numero, @ultima_venta, :style=>'width:70%', :class=> 'form-control'%></div>
-                  <div class= "datos" style="width:300px" ><%= label_tag :cliente_id %><%= select_tag :cliente_id, '<option></option>' + options_from_collection_for_select(Cliente.all, :id, :nombre) , :style=>'width:200px', :class=> 'form-control' %></div>
-                  <div class= "datos" style="width:200px" >
+                  <div class= "datos" style="width:270px" ><%= label_tag :cliente_id %><%= select_tag :cliente_id, '<option></option>' + options_from_collection_for_select(Cliente.all, :id, :nombre) , :style=>'width:200px', :class=> 'form-control' %></div>
+                  <div class= "datos" style="width:180px" >
                           <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-primary active">
-                              <input type="radio" name="options" id="option1">Efectivo</label>
-                            <label class="btn btn-primary">
-                              <input type="radio" name="options" id="option2">Tarjeta </label>
-                            <label class="btn btn-primary">
-                              <input type="radio" name="options" id="option3">Cta. Cte.</label>
+                            <label class="btn btn-primary active" style="padding:5px">
+                              <input type="radio" name="options" value="efectivo" id="option1">Efectivo</label>
+                            <label class="btn btn-primary" style="padding:5px">
+                              <input type="radio" name="options" value="tarjeta" id="option2">Tarjeta</label>
+                            <label class="btn btn-primary" style="padding:5px">
+                              <input type="radio" name="options" value="cc" id="option3" style="border-radius:1px">Cta. Cte.</label>
                           </div>
+                        <%= hidden_field_tag :forma_pago, 'Efectivo' %>  
                   </div>            
 
                   <% Deposito.count ==  1  ? seleccionado = 1 : seleccionado = 0 %>
-                  <div class= "datos" style="width:280px"><%= label_tag :deposito_id %><%= select_tag :deposito_id, '<option value=0></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre, seleccionado),  :style=>'width:50%', :class=> 'form-control' %></div>
-                  <div class= "datos" style="width:180px"><%= label_tag :ver_obs, "Observaciones",  :onclick=> "ver_obs()", :class=>'link_azul', :id=>"ver_obs" %><%= label_tag :a, "Ocultar observaciones",  :onclick=> "ocultar_obs()", :class=>'link_azul', :id=>"ocultar_obs" %></div>               
+                  <div class= "datos" style="width:240px"><%= label_tag :deposito_id %><%= select_tag :deposito_id, '<option value=0></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre, seleccionado),  :style=>'width:50%', :class=> 'form-control' %></div>
+                  <div class= "datos" style="width:140px"><%= label_tag :ver_obs, "Observaciones",  :onclick=> "ver_obs()", :class=>'link_azul', :id=>"ver_obs" %><%= label_tag :a, "Ocultar observaciones",  :onclick=> "ocultar_obs()", :class=>'link_azul', :id=>"ocultar_obs" %></div>               
                   <div id="obs" class= "datos" style="heigt:40px"><%= label_tag :observaciones %><%= text_field_tag :observaciones, nil, :class=>'form-control', :style=>'width:89%' %></div>   
 
               </div>   
@@ -153,6 +154,7 @@
     
 
     $(document).ready(function () {
+
         $('#obs').hide();
         $('#ocultar_obs').hide();
         $('#error_detalle').hide();
@@ -176,6 +178,14 @@
     });
 
     $('.nav-tabs').button()
+
+    $(".btn-group .btn").click(function() {
+    // whenever a button is clicked, set the hidden helper
+        $("#forma_pago").val($(this).text());
+    });
+
+
+
 
     //INICIO AUTOCOMPLETAR.....
 

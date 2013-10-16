@@ -60,6 +60,10 @@ class VentasController < ApplicationController
 
 
   def guardar
+
+
+
+
     Comprobante.transaction do
 
 
@@ -81,6 +85,26 @@ class VentasController < ApplicationController
                  pd.comp_relacionado_id = venta.id
                  pd.save!
             end  
+
+
+            # FORMA DE PAGO
+
+            case 
+                when params[:forma_pago].strip == 'Efectivo' then
+
+                          raise "dddd #{params[:forma_pago].strip}"
+
+                when params[:forma_pago].strip == 'Tarjeta' then 
+                
+                          raise "tarjeta #{params[:forma_pago].strip}"
+          
+                when params[:forma_pago].strip == 'Cta. Cte.' then 
+
+                         raise "ddddd3333333 #{params[:forma_pago].strip}"
+
+            end
+
+
 
             unless params["comprobante"].blank?   
 

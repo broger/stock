@@ -28,6 +28,10 @@
 
   
  /* ADAPTACIONES AL BOOSTRAP */
+
+ .btn{
+   border-radius: 1px;
+ }
  
  .form-control{
      display: inline-block;
