@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131003210910) do
+ActiveRecord::Schema.define(:version => 20131017181624) do
 
   create_table "categorias", :force => true do |t|
     t.string   "nombre",     :limit => 30
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20131003210910) do
   create_table "comprobantes", :force => true do |t|
     t.integer   "tipo_comprobante_id"
     t.integer   "numero",              :limit => 16,         :precision => 16, :scale => 0
-    t.integer   "total",               :limit => 10,         :precision => 10, :scale => 0
+    t.decimal   "total",                                     :precision => 10, :scale => 4
     t.datetime  "created_at"
     t.datetime  "updated_at"
     t.boolean   "aprobado"
@@ -51,6 +51,9 @@ ActiveRecord::Schema.define(:version => 20131003210910) do
     t.boolean   "enviado_proveedor"
     t.timestamp "fecha_envio",         :limit => 29
     t.integer   "deposito_id"
+    t.decimal   "costos",                                    :precision => 10, :scale => 4
+    t.integer   "comprobante_id"
+    t.integer   "cliente_id"
   end
 
   create_table "depositos", :force => true do |t|
@@ -128,16 +131,15 @@ ActiveRecord::Schema.define(:version => 20131003210910) do
 
   create_table "movimientos", :force => true do |t|
     t.integer  "producto_id"
-    t.decimal  "cantidad",       :precision => 8, :scale => 4
+    t.decimal  "cantidad",       :precision => 8, :scale => 2
     t.boolean  "afecta_stock"
     t.integer  "comprobante_id"
     t.integer  "usuario_id"
-    t.string   "comentarios"
-    t.decimal  "costo",          :precision => 8, :scale => 4
-    t.decimal  "ganancia",       :precision => 8, :scale => 4
-    t.decimal  "iva",            :precision => 8, :scale => 4
-    t.decimal  "descuento",      :precision => 8, :scale => 4
-    t.decimal  "precio_total",   :precision => 8, :scale => 4
+    t.decimal  "costo",          :precision => 8, :scale => 2
+    t.decimal  "ganancia",       :precision => 8, :scale => 2
+    t.decimal  "iva",            :precision => 8, :scale => 2
+    t.decimal  "descuento",      :precision => 8, :scale => 2
+    t.decimal  "precio_total",   :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "deposito_id"
@@ -156,7 +158,9 @@ ActiveRecord::Schema.define(:version => 20131003210910) do
     t.string   "celular2",       :limit => 50
     t.integer  "localidad_id"
     t.integer  "provincia_id"
-    t.integer  "cuil",           :limit => 12,  :precision => 12, :scale => 0
+    t.integer  "cuil",           :limit => 12,         :precision => 12, :scale => 0
+    t.string   "mail",           :limit => 2147483647
+    t.integer  "moneda_id"
   end
 
   create_table "producto_lista_precios", :force => true do |t|
@@ -182,18 +186,17 @@ ActiveRecord::Schema.define(:version => 20131003210910) do
     t.integer  "estado_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "costo",                           :precision => 8, :scale => 2
-    t.decimal  "ganancia",                        :precision => 8, :scale => 2
-    t.decimal  "descuento",                       :precision => 5, :scale => 2
-    t.decimal  "iva",                             :precision => 8, :scale => 2
     t.integer  "proveedor_id"
-    t.decimal  "stock_maximo",                    :precision => 8, :scale => 2
+    t.decimal  "stock_ideal",                     :precision => 8, :scale => 2
     t.string   "calificacion",      :limit => 1
     t.decimal  "punto_de_pedido",                 :precision => 8, :scale => 2
     t.string   "codigo",            :limit => 8
     t.string   "etiqueta_busqueda", :limit => 30
-    t.decimal  "stock",                           :precision => 8, :scale => 4
+    t.decimal  "stock",                           :precision => 8, :scale => 4, :default => 0.0, :null => false
   end
+
+  add_index "productos", ["codigo"], :name => "prod_codigo_idx"
+  add_index "productos", ["nombre"], :name => "prod_nombre"
 
   create_table "proveedores", :force => true do |t|
     t.string   "nombre",         :limit => 60
@@ -245,6 +248,19 @@ ActiveRecord::Schema.define(:version => 20131003210910) do
   create_table "secciones", :force => true do |t|
     t.string   "nombre",     :limit => 30
     t.integer  "rubro_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sucursales", :force => true do |t|
+    t.string   "nombre"
+    t.string   "telefono"
+    t.string   "mail"
+    t.integer  "provincia_id"
+    t.integer  "localidad_id"
+    t.string   "direccion"
+    t.integer  "lista_precio_id"
+    t.integer  "deposito_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

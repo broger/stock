@@ -29,11 +29,6 @@
   
  /* ADAPTACIONES AL BOOSTRAP */
 
-
- .alert {
-    margin-bottom:0px;
- }
-
  .btn{
    border-radius: 1px;
  }

@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   
   has_many :roles_users, :class_name => 'RolesUser'
   has_many :roles, :through => :roles_users
+  belongs_to :sucursal
 
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40

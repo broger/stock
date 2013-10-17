@@ -89,7 +89,9 @@
           <% end %>
           <% cache([current_user,"logindata"]) do %>
              <p class="navbar-text pull-right">
-               <a  style="text-decoration:none"><i class="glyphicon glyphicon-user"></i>&nbsp;<%=current_user.name if current_user %></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/logout" style="color:#999999;" class="glyphicon glyphicon-off" title="salir del sistema" ></a>
+                  <a style="text-decoration:none; margin-right:40px" href="<%= sucursal_path(current_user.sucursal) %>"><i class='glyphicon glyphicon-home' style="margin-right:5px"></i><%= current_user.sucursal.nombre %></a>
+                  <a style="text-decoration:none; margin-right:10px" href="<%= edit_user_path(current_user) %>"><i class='glyphicon glyphicon-user' style="margin-right:5px"></i><%= current_user.name %></a>
+                  <a href="/logout" style="color:#999999;" class="glyphicon glyphicon-off" title="salir del sistema" ></a>
              </p>
           <% end %>
          </div><!--/.nav-collapse -->
@@ -99,14 +101,14 @@
     <div style="height:750px; widht:100%">
             <div class="row"  >
                      <%if flash[:notice]%>
-                        <div  id="noticias" class="col-sm-12" style="margin:0"  >
-                              <div class="alert alert-warning fade in" style="width:100%; padding:10px 60px 10px 20px">
+                        <div  id="noticias" class="col-sm-12"   >
+                              <div class="alert alert-warning" style="width:100%; padding:10px 60px 10px 20px">
                               <button type="button" class="close" data-dismiss="alert">&times;</button><i class="glyphicon glyphicon-warning-sign" ></i>&nbsp;&nbsp;<%= flash[:notice] %></div>
                         </div>
                      <%end%>
                      <%if flash[:error]%>
                         <div  id="noticias" class="col-sm-12"  >
-                              <div class="alert alert-warning fade in" style="width:100%; padding:10px 60px 10px 20px; margin-top:16px">
+                              <div class="alert alert-warning" style="width:100%; padding:10px 60px 10px 20px; margin-top:16px">
                               <button type="button" class="close" data-dismiss="alert">&times;</button><%= flash[:notice] %></div>
                         </div>
                      <%end%>
@@ -218,7 +220,6 @@
 
     .alert{ 
         padding: 9px ;
-        margin: 18px 0 0 0;
     }
 
 

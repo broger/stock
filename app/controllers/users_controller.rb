@@ -105,5 +105,28 @@ class UsersController < ApplicationController
     end
 
 
+    def cambiar_clave
+      @user = User.find(params[:id])
+    end
+
+    
+    def guardar_clave
+       @user = User.find(params[:id])
+       @user.password = params[:user][:password]
+       @user.password_confirmation = params[:user][:password_confirmation]
+       @user.update_attributes(params[:user])
+       respond_to do |format|
+           if params[:user][:password] == params[:user][:password_confirmation]
+              @user.save
+              flash[:notice] = 'La contraseña se cambio con exito.'
+              format.html { redirect_to(user_url(@user)) }
+           else
+              flash[:notice] = 'Hubo un error al cambiar la password.'
+              format.html { redirect_to :action => "cambiarclave" }
+           end
+       end
+    end
+
+
 
 end
