@@ -8,7 +8,6 @@ class CreateSucursales < ActiveRecord::Migration
       t.integer :localidad_id
       t.string  :direccion
       t.integer :lista_precio_id
-      t.integer :deposito_id
       t.column  :abrev, "character(10)"
 
       t.timestamps

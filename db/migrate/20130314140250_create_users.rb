@@ -13,6 +13,9 @@ class CreateUsers < ActiveRecord::Migration
       t.string   :activation_code,           :limit => 40
       t.datetime :activated_at
       t.integer  :sucursal_id
+      t.column   :telefono, "character(40)"
+      t.column   :celular, "character(40)"
+      t.column   :direccion, "character(40)"
 
     end
     add_index :users, :login, :unique => true

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131017181624) do
+ActiveRecord::Schema.define(:version => 20131018211450) do
 
   create_table "categorias", :force => true do |t|
     t.string   "nombre",     :limit => 30
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20131017181624) do
     t.integer  "codigo_postal"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "estado_id"
   end
 
   create_table "marcas", :force => true do |t|
@@ -172,6 +173,13 @@ ActiveRecord::Schema.define(:version => 20131017181624) do
     t.decimal  "descuento",       :precision => 8, :scale => 2
   end
 
+  create_table "producto_stocks", :force => true do |t|
+    t.integer  "producto_id"
+    t.integer  "deposito_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "productos", :force => true do |t|
     t.string   "nombre",            :limit => 60
     t.string   "descripcion"
@@ -222,6 +230,7 @@ ActiveRecord::Schema.define(:version => 20131017181624) do
     t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "estado_id"
   end
 
   create_table "roles", :force => true do |t|
@@ -263,6 +272,7 @@ ActiveRecord::Schema.define(:version => 20131017181624) do
     t.integer  "deposito_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "abrev",           :limit => 10
   end
 
   create_table "tipo_comprobantes", :force => true do |t|
@@ -291,7 +301,7 @@ ActiveRecord::Schema.define(:version => 20131017181624) do
 
   create_table "users", :force => true do |t|
     t.string   "login",                     :limit => 40
-    t.string   "name",                      :limit => 100, :default => ""
+    t.string   "name",                      :limit => 100,        :default => ""
     t.string   "email",                     :limit => 100
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
@@ -301,6 +311,10 @@ ActiveRecord::Schema.define(:version => 20131017181624) do
     t.datetime "remember_token_expires_at"
     t.string   "activation_code",           :limit => 40
     t.datetime "activated_at"
+    t.integer  "sucursal_id"
+    t.string   "direccion",                 :limit => 2147483647
+    t.string   "telefono",                  :limit => 40
+    t.string   "celular",                   :limit => 40
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true

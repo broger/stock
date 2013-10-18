@@ -89,9 +89,9 @@
           <% end %>
           <% cache([current_user,"logindata"]) do %>
              <p class="navbar-text pull-right">
-                  <a style="text-decoration:none; margin-right:40px" href="<%= sucursal_path(current_user.sucursal) %>"><i class='glyphicon glyphicon-home' style="margin-right:5px"></i><%= current_user.sucursal.nombre %></a>
-                  <a style="text-decoration:none; margin-right:10px" href="<%= edit_user_path(current_user) %>"><i class='glyphicon glyphicon-user' style="margin-right:5px"></i><%= current_user.name %></a>
-                  <a href="/logout" style="color:#999999;" class="glyphicon glyphicon-off" title="salir del sistema" ></a>
+                  <a style="text-decoration:none; margin-right:40px" href="<%= sucursal_path(current_user.sucursal) %>"      title="ver sucursal"      ><i class='glyphicon glyphicon-home' style="margin-right:5px"></i><%= current_user.sucursal.nombre %></a>
+                  <a style="text-decoration:none; margin-right:10px" class="fancybarra" href="<%= editar_x_usuario_users_path(:id=> current_user.id) %>" title="configurar mis datos"    ><i class='glyphicon glyphicon-user' style="margin-right:5px"></i><%= current_user.name %></a>
+                  <a href="/logout" style="color:#999999;" class="glyphicon glyphicon-off"                                   title="salir del sistema" ></a>
              </p>
           <% end %>
          </div><!--/.nav-collapse -->
@@ -114,7 +114,7 @@
                      <%end%>
              </div>
              <div style="width:100%">
-                               <%= yield %>
+                    <%= yield %>
              </div>
         </div>
 </body>
@@ -125,11 +125,26 @@
 <script type="text/javascript">
 
   $(document).ready(function(){
-      
+ 
   });
 
-    
-   function definir_fancy(ancho,alto){
+  $(".fancybarra").fancybox({
+      'autoDimensions'    : false,
+      'width'             : 600,
+      'height'            : 500,
+      'transitionIn'      : 'none',
+      'transitionOut'     : 'none',
+      'scrolling'         : false,
+      'padding'           : 0,
+      'title'             : false,
+  });
+ 
+
+
+
+
+   
+  function definir_fancy(ancho,alto){
         $(".fancybox").fancybox({
         'autoDimensions'    : false,
         'width'             : ancho,

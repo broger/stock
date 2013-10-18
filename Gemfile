@@ -5,7 +5,7 @@ source 'http://rubygems.torquebox.org'
 source 'http://gems.github.com'
 
 
-gem 'rake', '0.9.2' 
+gem 'rake', '0.8.7' 
 
 gem 'rails', '2.3.8'
 
@@ -23,6 +23,5 @@ gem 'jruby-openssl'
 
 gem 'ruby-ole'
 
-gem 'mongrel'
 
 gem 'spreadsheet'

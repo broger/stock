@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :producto_stocks
+
+  map.resources :sucursales
+
   map.resources :tipo_pagos
 
   map.resources :ventas,         :collection => {:agregar_detalle=>:get,
@@ -86,7 +90,10 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login', :controller => 'sessions', :action => 'new' #igual ioscor
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
-  map.resources :users
+  
+  map.resources :users, :collection => { :editar_x_usuario =>:get,
+                                         :guardar_x_usuario =>:get }
+  
   map.resource :session
   ########### AGREGE DE PAGINA ##########################
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate'

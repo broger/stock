@@ -21,8 +21,6 @@ class UsersController < ApplicationController
   end
 
 
-
-
    def new
     @usuario = User.new
   end
@@ -105,23 +103,31 @@ class UsersController < ApplicationController
     end
 
 
-    def cambiar_clave
-      @user = User.find(params[:id])
+    def editar_x_usuario
+        @user = User.find(params[:id])
+
+        respond_to do |format|
+            format.html{render :layout=>false}
+        end
     end
 
     
-    def guardar_clave
+    def guardar_x_usuario
        @user = User.find(params[:id])
        @user.password = params[:user][:password]
        @user.password_confirmation = params[:user][:password_confirmation]
+       @user.email = params[:user][:email]
+       @user.direccion = params[:user][:direccion]
+       @user.celular = params[:user][:celular]
+       @user.telefono = params[:user][:telefono]
        @user.update_attributes(params[:user])
        respond_to do |format|
            if params[:user][:password] == params[:user][:password_confirmation]
-              @user.save
-              flash[:notice] = 'La contraseña se cambio con exito.'
-              format.html { redirect_to(user_url(@user)) }
+              @user.save!
+              flash[:notice] = 'Los datos se actualizaron satisfactoriamente.'
+              format.html { redirect_to(root_url()) }
            else
-              flash[:notice] = 'Hubo un error al cambiar la password.'
+              flash[:notice] = 'Hubo un error al cambiar los datos.'
               format.html { redirect_to :action => "cambiarclave" }
            end
        end

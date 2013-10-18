@@ -1,0 +1,77 @@
+
+
+
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+      <h3><%= "Usuario: #{@user.login}" %></h3>
+</div>
+ <% form_for :user, @user, :url => guardar_x_usuario_users_path do |f| %>
+      <%= f.error_messages :header_message => "No se pudo guardar la password",:message => "Hubo problemas en los siguientes datos:"%>
+
+<div class="well" style="background-color:white">
+     
+        <div class="datos"><%= f.label :name, 'nombre: ' %><%= @user.name %></div>
+        
+        <div class="datos"><%= f.label :telefono, 'telefono' %><%= f.text_field :telefono %></div>
+        
+        <div class="datos"><%= f.label :direccion, 'direcci&oacute;n' %><%= f.text_field :direccion %></div>
+
+        <div class="datos"><%= f.label :celular, 'celular' %><%= f.text_field :celular %></div>
+
+        <div class="datos"><%= f.label :email, 'email' %><%= f.text_field :email %></div>
+
+        <div class="datos"><%= f.label :password, 'Nueva Contrase&ntilde;a' %><%= f.password_field :password %></div>
+
+        <div class="datos"><%= f.label :password_confirmation, 'Confirme la nueva Contrase&ntilde;a' %><%= f.password_field :password_confirmation %></div>
+
+         
+        <%= hidden_field_tag :id,  @user.id %>         
+
+</div>
+<div id="pie" style="height:30px; padding:16px">
+ <div style="text-align: right"><%= f.submit  "actualizar" , :class=>"btn btn-danger" %><%= button_to_function 'Volver', "cerrarFancy()", :class=>"btn btn-danger" %></div>
+</div>
+
+<% end %>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $('form').validate(
+          {
+            rules:{'usuario[password]': {required:true,minlength: 6},
+                   'usuario[password_confirmation]': {required:true,minlength: 6}
+          }
+        });
+    });
+
+</script>
+
+
+<style type="text/css">
+
+    .datos{
+      margin-top: 10px
+    }
+
+    #fancybox-outer{
+      background-color: #f5f5f5;
+    }
+
+    label{
+      margin-right: 6px
+
+    }
+
+   
+    #fancybox-wrap {
+      padding:0;
+    }
+
+    #fancybox-inner {
+      position:relative;
+    }
+
+
+</style>
+

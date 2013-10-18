@@ -19,10 +19,8 @@ ActiveSupport::Inflector.inflections do |inflect|
     inflect.irregular 'cliente','clientes'
     inflect.irregular 'producto_lista_precio','producto_lista_precios'
     inflect.irregular 'tipo_pago','tipo_pagos'
-    
-    
-    
-    
-
+    inflect.irregular 'sucursal','sucursales'
+    inflect.irregular 'producto_stock','producto_stocks'
+        
 
 end
