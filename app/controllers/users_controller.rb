@@ -90,8 +90,10 @@ class UsersController < ApplicationController
    end
 
     def update
+
     @usuario = User.find(params[:id])
                   if @usuario.update_attributes(params[:user])
+                     @usuario.activated_at = params[:user][:activated_at]
                      @usuario.roles.clear
                      @usuario.rol_ids = params[:usuario][:rol_ids]
                      @usuario.update_attributes(params[:usuario])

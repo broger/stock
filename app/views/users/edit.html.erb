@@ -1,7 +1,7 @@
 <h3>Editar Usuario</h3>
 <hr />
 
-<% form_for(@usuario) do |f| %>
+<% form_for(@usuario, :id=> "edit_user") do |f| %>
 <%= f.error_messages :header_message => "No se pudo guardar el usuario", :message => "Hubo problemas en los siguientes datos:" %>
 
 
@@ -20,6 +20,18 @@
     <%= f.text_field :email %>
   </p>
 
+  <p>
+    <%= f.label :a, "validez hasta" %>
+    <%= f.text_field :activated_at, :value=>@usuario.activated_at.strftime("%d/%m/%Y") %>
+  </p>
+
+  <p>
+    <%= f.label :a, "Pertenece a la sucursal" %>
+   <%= f.select :sucursal_id, Sucursal.find(:all).collect{|t|[t.nombre, t.id]}, {:class=>'form-control'} %>
+  </p>
+
+
+
   <table>
    <% unless @roles.blank? %>
                           <% @roles.each do |p|%>
@@ -34,25 +46,32 @@
   <br />
   <p>
 
-<%= f.submit 'Actualizar', :class=>"btn btn-primary" %> &nbsp; <%= link_to 'ver', @usuario %> |
-<%= link_to 'volver', users_path %>
-  </p>
+<%= f.submit 'Actualizar', :class=>"btn btn-primary" %> <%= link_to 'volver', users_path %>
+
 <% end %>
 
-
-
-                    
-
-               
+     
               
       
 <script type="text/javascript">
-$(document).ready(function(){
-    
-   
-		
+      $('#user_activated_at').mask('00/00/0000');
 
-});
+    $.validator.addMethod("validar_fecha", function(value, element, params) {
+         return fecha_valida(value);
+    },'Fecha Invalida.');
+
+     $(document).ready(function () {
+
+           $(".edit_user").validate({
+              rules: {
+               "user[login]": { required: true},
+               "user[name]": { required: true},
+               "user[activated_at]": { required: true, validar_fecha:true}
+               }
+            
+           });
+    });
+    
 
 
 </script>
