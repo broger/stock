@@ -56,7 +56,6 @@
             </div>
       </div>
 
-
      </div>
      <div  id="contenido"  class="col-sm-10"  >
             
@@ -68,6 +67,7 @@
                                   <th>telefono</th>
                                   <th>celular</th>
                                   <th>direccion</th>
+                                  <th>estado</th>
                                   <th>email</th>
                                   <th></th>
                                 </tr>
@@ -75,14 +75,15 @@
                                 <tbody>
                                 <% @clientes.each do |cliente| %>
                                   <tr style="height:9px">
-                                      <td><%=h cliente.nombre %></td>
+                                      <td onclick="ver_registro()" style="cursor: pointer"><%=h cliente.nombre %></td>
                                       <td><%=h cliente.telefono %></td>
                                       <td><%=h cliente.celular %></td>
                                       <td><%=h cliente.direccion %></td>
+                                      <td><%=h cliente.estado.nombre %></td>
                                       <td><%=h cliente.email %></td>
                                       <td style="text-align:right">
                                              <%= link_to image_tag('iconos/16x16/zoom.png'), cliente, :title=>'Ver', :class=>'fancybox' %>
-                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_cliente_path(cliente), :title=>'Editar' %>
+                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_cliente_path(cliente), :class=>'fancybox', :title=>'Editar' %>
                                                 <%= link_to image_tag('iconos/16x16/delete.png'), cliente, :title=>'Eliminar',
                                                   :confirm => 'Esta Seguro?', :method => :delete %>
                                       </td>

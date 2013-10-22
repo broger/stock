@@ -11,7 +11,7 @@ class SeccionesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @localidades }
+      format.xml  { render :xml => @secciones }
     end
   end
 
@@ -21,7 +21,8 @@ class SeccionesController < ApplicationController
     @seccion = Seccion.find(params[:id])
 
     respond_to do |format|
-       format.html{render :layout=>false}
+      format.html # index.html.erb
+      format.xml  { render :xml => @secciones }
     end
   end
 
@@ -31,14 +32,19 @@ class SeccionesController < ApplicationController
     @seccion = Seccion.new
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @seccion }
+      format.html # index.html.erb
+      format.xml  { render :xml => @secciones }
     end
   end
 
   # GET /secciones/1/edit
   def edit
     @seccion = Seccion.find(params[:id])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @secciones }
+    end
   end
 
   # POST /secciones
@@ -48,7 +54,7 @@ class SeccionesController < ApplicationController
 
     respond_to do |format|
       if @seccion.save
-        format.html { redirect_to(secciones_path, :notice => 'La Secci&oacute;n   ha sido creado satisfactoriamente.') }
+        format.html { redirect_to(secciones_path, :notice => "La Secci&oacute;n #{@seccion} ha sido creado satisfactoriamente.") }
         format.xml  { render :xml => @seccion, :status => :created, :location => @seccion }
       else
         format.html { render :action => "new" }
@@ -64,7 +70,7 @@ class SeccionesController < ApplicationController
 
     respond_to do |format|
       if @seccion.update_attributes(params[:seccion])
-        format.html { redirect_to(secciones_path, :notice => 'La Secci&oacute;n  ha sido creado satisfactoriamente.') }
+        format.html { redirect_to(secciones_path, :notice => "La Secci&oacute;n #{@seccion} ha sido creado satisfactoriamente.") }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

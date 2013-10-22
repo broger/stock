@@ -1,9 +1,10 @@
 class RolesController < ApplicationController
-  # GET /roles
-  # GET /roles.xml
-  def index
-    @roles = Rol.all
 
+  before_filter :login_required
+
+  def index
+    @roles = Rol.paginate(:page => params[:page],:per_page => 6,:order => "nombre")
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @roles }
@@ -16,7 +17,7 @@ class RolesController < ApplicationController
     @rol = Rol.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # index.html.erb
       format.xml  { render :xml => @rol }
     end
   end
@@ -35,6 +36,11 @@ class RolesController < ApplicationController
   # GET /roles/1/edit
   def edit
     @rol = Rol.find(params[:id])
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @rol }
+    end
   end
 
   # POST /roles
@@ -44,7 +50,7 @@ class RolesController < ApplicationController
 
     respond_to do |format|
       if @rol.save
-        format.html { redirect_to(@rol, :notice => 'Rol was successfully created.') }
+        format.html { redirect_to(@roles_url, :notice => 'EL rol #{@rol} ha sido creado satisfactoriomante.') }
         format.xml  { render :xml => @rol, :status => :created, :location => @rol }
       else
         format.html { render :action => "new" }
@@ -60,7 +66,7 @@ class RolesController < ApplicationController
 
     respond_to do |format|
       if @rol.update_attributes(params[:rol])
-        format.html { redirect_to(@rol, :notice => 'Rol was successfully updated.') }
+        format.html { redirect_to(@roles_url, :notice => 'EL rol #{@rol} ha sido actualizado satisfactoriomante.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

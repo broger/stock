@@ -1,92 +1,150 @@
-<h3 style="margin-top:0px; margin-bottom: 15px">Categorias</h3>
-
-
-    <%= form_tag(categorias_path, :method => 'get',:id=>'buscar') %>
-
-  <table>
-     <tr>
-       <td><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>40,:placeholder => 'buscar ...', :class=>"textbox1"%></td>
-       <td>&nbsp;<%= submit_tag "Buscar", :class=>"btn btn-mini"%></td>
-       <td><div id="cargando"   style="display: none;">&nbsp;<%= image_tag('iconos/cargando.gif')%></div></td>
-     </tr>
-
-  </table>
-<div id="tips" style="color:gray; height:10px; margin: 0 0 25px 2px; font-size: 10px">&nbsp;<strong>Tip:</strong> Puede ingresar alguna porci&oacute;n del nombre de la categoria.</div>
-
-  
- <% unless @categorias.blank? %>
-  <table class="table" style="font-size :13px" >
-          <thead>
-            <tr style="height:12px">
-            <th>Nombre</th>
-            <th>Secci&oacute;n</th>
-            <th>Rubro</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @categorias.each do |categoria| %>
-            <tr style="height:9px">
-                <td><%=h categoria.nombre %></td>
-                <td><%=h categoria.seccion.nombre %></td>
-                <td><%=h categoria.rubro.nombre %></td>
-                <td style="text-align:right">
-                       <%= link_to image_tag('iconos/zoom2.png'), categoria, :title=>'Ver', :class=>'fancybox' %>
-                          <%= link_to image_tag('iconos/16x16/pencil.png'), edit_categoria_path(categoria), :title=>'Editar',:class=>'qtip' %>
-                          <%= link_to image_tag('iconos/16x16/remove.png'), categoria, :title=>'Eliminar',:class=>'qtip', :confirm => 'Esta Seguro?', :method => :delete %>
-                </td>
-              </tr>
-          <% end %>
-          </tbody>
-  <%else%>
-            <tr>
-              <td><div><h3><font color="red">No se encontraron resultados</font></h3></div></td>
-            </tr>
-   <%end%>
-</table>
- <div style="text-align:center; font-size:13px">
-    <%= will_paginate @categorias, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+<div  id="botonera" >   
+     <span class="glyphicon glyphicon-search" style="color:#000000; border:1px; padding:6px 0px 6px 6px; font-size:18px" title="buscar producto"></span>
+     <span class="glyphicon glyphicon-arrow-left" style="color:#000000; padding:6px 0px 6px 6px; font-size:18px" title="atras"></span>
+</div>
+ <%= form_tag(categorias_path, :method => 'get',:id=>'buscar') %>  
+  <div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
+    <div class="container" ><h1>Categorias</h1></div>  
+  </div>
+  <div id="herramientas" >
+    <div class="container">
+      <div id="cargando"   style="display: none; float:left">&nbsp;<%= image_tag('iconos/loader.gif')%></div>
+      <%= text_field_tag :txtbuscar, params[:txtbuscar] ,:placeholder => 'buscar ...', :style=> "border:0px; padding:2px 4px 2px 4px; display:inline"%>
+      <i class="glyphicon glyphicon-align-justify" onClick="mostrarTodos()" style="color:#ffffff; font-size:16px;padding-left:4px" title="mostrar todos"></i>
+    </div>
   </div>
 
-<br />
-<br />
+  <div class="container">
+  <div class="row" >
+     <div id="menu_izquierdo"  class="col-sm-2" >
+       <!-- ACORDENON -->
+       <div class="panel-group" id="accordion" style="background-color:#2B2B2B">
+           <div class="panel panel-default">
+             <div class="panel-heading">
+                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                  <i class="glyphicon glyphicon-align-justify" style="color:#ffffff; padding-left:4px" title="filtros"></i>
+                  &nbsp;&nbsp;Registros</a></h5>
+             </div>
+             <div id="collapseOne" class="panel-collapse collapse in">
+                 <div class="panel-body">
+                 <%= link_to 'Nueva categoria', new_categoria_path, :class=>'fancybox' %></div>
+             </div>
+        </div>
+           <div class="panel panel-default">
+             <div class="panel-heading" style="background-color:#2197C9">
+              <h5 class="panel-title" style="background-color:#2197C9" >
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    <i class="glyphicon glyphicon-file" style="color:#ffffff; padding-left:4px" title="filtros"></i>
+                    &nbsp;&nbsp;&nbsp;Reportes</a></h5>
+             </div>
+             <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body"> - Todos   </div>
+             </div>
+           </div>
+           <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    <i class="glyphicon glyphicon-th-list" style="color:#ffffff; padding-left:4px" title="filtros"></i>
+                    &nbsp;&nbsp;&nbsp;Tablas Relacionadas
+                    
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                 - Rubro
+                 - Secciones
+                 - Productos
+                 
+                </div>
+              </div>
+            </div>
+      </div>
 
- <%= link_to 'Nueva categoria', new_categoria_path ,:class=>'btn btn-primary' %>
 
-
+     </div>
+     <div  id="contenido"  class="col-sm-10"  >
+            
+                       <% unless @categorias.blank? %>
+                        <table class="table" style="font-size :13px" >
+                                <thead>
+                                  <tr style="height:12px">
+                                  <th>Nombre</th>
+                                  <th>Rubro</th>
+                                  <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% @categorias.each do |categoria| %>
+                                  <tr style="height:9px">
+                                      <td><%=h categoria.nombre %></td>
+                                      <td><%=h categoria.rubro.nombre %></td>
+                                      <td style="text-align:right">
+                                             <%= link_to image_tag('iconos/16x16/zoom.png'), categoria, :title=>'Ver', :class=>'fancybox' %>
+                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_categoria_path(categoria), :title=>'Editar', :class=>'fancybox' %>
+                                                <%= link_to image_tag('iconos/16x16/delete.png'), categoria, :title=>'Eliminar',
+                                                  :confirm => 'Esta Seguro?', :method => :delete %>
+                                      </td>
+                                    </tr>
+                                <% end %>
+                                </tbody>
+                            </table>
+                        <%else%>
+                              <div style="text-align:center; margin-top:10px">
+                                   <i><%= button_to_function "Lo sentimos #{current_user.login}, no encontramos resultados para: #{@busqueda}, modifiquelo y vuelva a intentar suerte!", "mostrarTodos()", :class=>"btn btn-default", :style=>"text-decoratio" %></div></i>
+                              </div>  
+                         <%end%>
+                      
+                       <div style="text-align:center" >
+                          <%= will_paginate @categorias, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+                        
+                       </div>
+     </div>
+ </div>
+</div>
+  
+ 
 <script type="text/javascript">
 
     $(document).ready(function () {
+         definir_fancy(400,360);
+
          $('#txtbuscar').focus();
          console.log();
-         $('#buscar').submit(controlar_bene);
-
-         // Set custom style, close if clicked, change title type and overlay color
-
+         $('#buscar').submit(icon_loading);
 
     });
 
-    function controlar_bene(){
+    $("table").tablecloth({
+      theme: "default",
+      bordered: true,
+      condensed: true,
+      striped: false, // linea par gris impar blanca
+      sortable: true,  // algo de jquery
+      clean: false,
+      cleanElements: "th td",
+      customClass: "my-table"
+    });
+
+
+
+    function icon_loading(){
           if ( $('#txtbuscar') != '' && $('#buscar').valid()){
                 $('#cargando').show();
           }
-}
+    }
 
+    function mostrarTodos(){
+          $('#txtbuscar').text('');
+          $('#txtbuscar').val('');
+          $('#buscar').submit();
+                   
+    }
 
 </script>
 
-
 <style type="text/css">
 
-  .fancybox-custom .fancybox-skin {
-	box-shadow: 0 0 50px #222;
-  }
 
-
-
- input[type="text"] {
-   height: 22px;
-   font-size: 13px;
-   line-height: 15px;
-   margin-bottom: 0px;
-}
 </style>

@@ -2,7 +2,8 @@ class DepositosController < ApplicationController
   # GET /depositos
   # GET /depositos.xml
   def index
-    @depositos = Deposito.all
+    @depositos = Deposito.paginate(:page => params[:page],:per_page => 6,:order => "nombre")
+  
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,8 +17,7 @@ class DepositosController < ApplicationController
     @deposito = Deposito.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @deposito }
+      format.html{render :layout=>false}
     end
   end
 
@@ -27,8 +27,7 @@ class DepositosController < ApplicationController
     @deposito = Deposito.new
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @deposito }
+      format.html{render :layout=>false}
     end
   end
 
@@ -44,7 +43,7 @@ class DepositosController < ApplicationController
 
     respond_to do |format|
       if @deposito.save
-        format.html { redirect_to(@deposito, :notice => 'Deposito was successfully created.') }
+        format.html { redirect_to(depositos_url, :notice => 'El Deposito ha sido creado satisfactoriamente.') }
         format.xml  { render :xml => @deposito, :status => :created, :location => @deposito }
       else
         format.html { render :action => "new" }
@@ -60,7 +59,7 @@ class DepositosController < ApplicationController
 
     respond_to do |format|
       if @deposito.update_attributes(params[:deposito])
-        format.html { redirect_to(@deposito, :notice => 'Deposito was successfully updated.') }
+        format.html { redirect_to(depositos_url, :notice => "El Deposito #{@deposito.nombre} ha sido actualizado satisfactoriamente.") }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -80,4 +79,14 @@ class DepositosController < ApplicationController
       format.xml  { head :ok }
     end
   end
-end
+
+
+
+end # final
+
+
+ 
+
+  
+
+  

@@ -1,21 +1,66 @@
-<h3>Editar Localidad</h3>
-<hr />
-
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+    <h3>Localidad</h3>
+</div>
 <% form_for(@localidad) do |f| %>
   <%= f.error_messages %>
+<div class="well" style="background-color:white; height:200px">
 
-<p>
-    <%= f.label :nombre %>
-    <%= f.text_field :nombre %>
-  </p>
-  <p>
-    <%= f.label :Provincia %>
-    <%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %>
-  </p>
-  <br />
-  <p>
-<%= f.submit 'Actualizar', :class=>"btn btn-primary" %> &nbsp; <%= link_to 'ver', @localidad %> |
-<%= link_to 'volver', localidades_path %>
-  </p>
-<% end %>
+        <table>
+            <tr>
+                <th><%= f.label :nombre %></th><td><%= f.text_field :nombre, :class=>"form-control" %></td>
+            </tr>
+            <tr>
+                <th><%= f.label :Provincia %></th><td><%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, :class=>"form-control" %></td>
+            </tr>
+            <tr>
+                <th><%= f.label :estado %></th><td><%= f.select :estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, :class=>'form-control' %></td>
+            </tr>
+        </table>       
+</div>
+<div id="pie" style="height:30px; padding:16px">
+ <div style="text-align: right">
+ <%= f.submit 'Actualizar', :class=>"btn btn-primary" %> &nbsp;
+ <%= button_to_function 'Volver', "cerrarFancy()", :class=>"btn btn-default" %></div>
+</div>
+<%end %>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+            $("#new_localidad").validate({
+             rules: {
+                 // "producto[nombre]": {required: true, rangelength: [3,60]},
+                 // "producto[codigo_proveedor]": {digits: true}
+
+                  }
+            });
+
+    });
+
+ </script>
+
+
+
+<style type="text/css">
+
+
+  #fancybox-outer{
+    background-color: #f5f5f5;
+  }
+
+
+  
+  #fancybox-wrap {
+    padding:0;
+  }
+
+  #fancybox-inner {
+  position:relative;
+  }
+
+
+</style>
+
+
+
 

@@ -22,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
                                                          :result_x_prod => :post}
   map.resources :lista_precios
 
-  map.resources :clientes
+  map.resources :clientes, :collection => {:baja=>:get}
 
   map.resources :parametros
 

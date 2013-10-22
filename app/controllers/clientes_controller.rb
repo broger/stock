@@ -38,6 +38,9 @@ class ClientesController < ApplicationController
   # GET /clientes/1/edit
   def edit
     @cliente = Cliente.find(params[:id])
+    respond_to do |format|
+      format.html{render :layout=>false}
+    end
   end
 
   # POST /clientes
@@ -76,11 +79,30 @@ class ClientesController < ApplicationController
   # DELETE /clientes/1.xml
   def destroy
     @cliente = Cliente.find(params[:id])
-    @cliente.destroy
+    control = Comprobante.find(:all, :conditions=>{:cliente_id => params[:id]})
 
     respond_to do |format|
-      format.html { redirect_to(clientes_url) }
-      format.xml  { head :ok }
+         if control.blank?
+            @cliente.destroy
+            format.html { redirect_to(clientes_path, :notice => "El cliente #{@cliente.nombre} ha sido eliminado satisfactoriamente.") }
+            format.xml  { render :xml => @cliente, :status => :created, :location => @cliente }
+          else
+            format.html { redirect_to(clientes_path, :notice => "El cliente no se ha podido eliminar porque existen datos relacionados a este registro, puedo asignarle estado igual a baja desde editar registro.") }
+          end
     end
   end
-end
+
+
+
+  def baja(id)
+
+       a = Cliente.find(id)
+       a.estado_id = 2
+       a.save!
+
+      redirect_to(clientes_path,:notice => "El cliente #{a.nombre} ahora se encuentra con estado igual a Baja.")    
+  end
+
+
+
+end #final

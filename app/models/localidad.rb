@@ -1,5 +1,6 @@
 class Localidad < ActiveRecord::Base
 	belongs_to :provincia
+	belongs_to :esado
 	has_many   :clientes
   
   

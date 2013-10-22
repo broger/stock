@@ -1,15 +1,69 @@
-<h1>New deposito</h1>
-
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+    <h3 >Nuevo Deposito</h3>
+</div>
 <% form_for(@deposito) do |f| %>
   <%= f.error_messages %>
+<div class="well" style="background-color:white; padding:24px 16px 20px 16px">
+			  <div class="datos">
+			        <%= f.label :a, "nombre", :style=>'font-size:12px; height:36px; width:50px'  %>
+      				<%= f.text_field :nombre, :class=>'form-control', :style=>'font-size:12px; height:36px; display:inline' %>
+			  </div>
+			  <div class="datos">
+    				<%= f.label  :direccion, "direcci&oacute;n", :style=>'font-size:12px; height:36px; width:50px' %>
+  					<%= f.text_field :direccion , :class=>'form-control', :style=>'font-size:12px; height:36px; display:inline'%>
+  			  </div>
+  			  <div class="datos">
+    				<%= f.label  :direccion, "telefono", :style=>'font-size:12px; height:36px; width:50px' %>
+  					<%= f.text_field :telefono , :class=>'form-control', :style=>'font-size:12px; height:36px; display:inline'%>
+  			  </div>
+  			  <div class="datos">
+    				<%= f.label  :direccion, "sucursal", :style=>'font-size:12px; height:36px; width:50px' %>
+  					<%= f.text_field :telefono , :class=>'form-control', :style=>'font-size:12px; height:36px; display:inline'%>
+  			  </div>
 
-  <p>
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
+</div>
+<div id="pie" style="height:26px; padding:16px">
+ <div style="text-align: right"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %></p></div>
+</div>
 <% end %>
 
-<%= link_to 'Back', depositos_path %>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+            $("#new_deposito").validate({
+             rules: {
+                  "deposito[nombre]": {required: true, rangelength: [3,60]}
+                  }
+            });
+
+    });
+
+ </script>
+
+
+
+<style type="text/css">
+
+
+
+  #fancybox-outer{
+    background-color: #f5f5f5;
+  }
+
+  label{
+    margin-right: 6px
+
+  }
+
+	
+	#fancybox-wrap {
+	  padding:0;
+	}
+
+	#fancybox-inner {
+	position:relative;
+	}
+
+
+</style>

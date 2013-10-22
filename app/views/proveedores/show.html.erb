@@ -1,13 +1,150 @@
-<p>
-  <b>Nombre:</b>
-  <%=h @proveedor.nombre %>
-</p>
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+    <h3> Proveedor</h3>
+</div>
+<div class="well" style="background-color:white">
+  <div class="brogertab" >
+              <ul id="myTab" class="nav nav-tabs">
+                <li class="active"><a href="#general"          data-toggle="tab">Generales</a></li>
+                <li                ><a href="#direccion"        data-toggle="tab">Direcci&oacute;n</a></li>
+                <li               ><a href="#cuenta_corriente" data-toggle="tab"> </a></li>
 
-<p>
-  <b>Direccion:</b>
-  <%=h @proveedor.direccion %>
-</p>
+              </ul>
+
+         <div id="myTabContent" class="tab-content" style="padding:20px">
+                <div  class="tab-pane active"  id="general" >
+                    <table style="float:left; margin:0 180px 0 20px">
+                              <tr>
+                                <td><%= label_tag :a, "nombre:" %><p><%= @proveedor.nombre %></p></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "razon_social:" %><p><%= @proveedor.razon_social %></p></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "telefono-1:" %><p><%= @proveedor.telefono1 %></p></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "celular-1:" %><p><%= @proveedor.celular1 %></p></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "email:" %><p><%= @proveedor.email %></p></td>
+                              </tr>
+                              
+                        </table>
+
+                        <table tyle="float:left; margin:0 180px 0 20px; display:inline">
+                              <tr>
+                                <td><%= label_tag :a, "estado:" %><p><%= @proveedor.estado.nombre %></p></td>
+                              </tr> 
+                              <tr>
+                                <td><%= label_tag :a, "cuil:" %><p><%=  @proveedor.cuil %></p></td>
+                              </tr> 
+                              <tr>
+                                <td><%= label_tag :a, "telefono-2:" %><p><%= @proveedor.telefono2%></p></td>
+                              </tr> 
+                              <tr>
+                                <td><%= label_tag :a, "celular-2:" %><p><%= @proveedor.celular2%></p></td>
+                              </tr> 
+                              <tr>
+                                <td><%= label_tag :a, "direcci&oacute;n web:" %><p><%= @proveedor.web %></p></td>
+                              </tr>
+                        </table>
+                </div>
+                <div class="tab-pane fade" id="direccion">
+                		<table style="float:left; margin:0 180px 0 20px">
+                              <tr>
+                                <td><%= label_tag :a, "provincia:" %><p><%= @proveedor.provincia.nombre %></p></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "localidad:" %><p><%= @proveedor.localidad.nombre %></p></td>
+                              </tr>
+                              <tr>
+                                <td><%= label_tag :a, "direcci&oacute;n:" %><p><%= @proveedor.direccion %></p></td>
+                              </tr>
+                        </table>
+                        <table tyle="float:left; margin:0 180px 0 20px; display:inline">
+                              <tr>
+                                <td><%= label_tag :a, "codigo postal:" %><p><%= @proveedor.localidad.codigo_postal %></p></td>
+                              </tr>                         
+                        </table>
+                </div>
+                <div class="tab-pane fade" id="cuenta_corriente">                            
+                       <!-- disponible para la version completa  -->
+                </div>
+        </div>
+  </div>
+</div>  
+<div id="pie" style="height:30px; padding:16px">
+ <div style="text-align: right"><%= button_to_function 'Volver', "cerrarFancy()", :class=>"btn btn-danger" %></div>
+</div>
 
 
-<%= link_to 'Edit', edit_proveedor_path(@proveedor) %> |
-<%= link_to 'Back', proveedores_path %>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+    });
+
+     $('#myTab a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show');
+        });
+
+
+</script>
+
+
+
+<style type="text/css">
+
+  select{
+    padding: 2px;
+  }
+  
+
+  input{
+    padding-left: 4px
+  }
+
+  #fancybox-outer{
+    background-color: #f5f5f5;
+  }
+
+ 
+
+  
+  #fancybox-wrap {
+    padding:0;
+  }
+
+  #fancybox-inner {
+  position:relative;
+  }
+
+.brogertab{
+          min-height: 260px;
+          height: auto;
+    }
+
+    .tab-content{
+        background-color: white
+    }
+
+    label{
+    font-size: 13px;
+    margin: 0 8px 0 0;
+  }
+
+
+  table tr{
+    height: 34px;
+  }
+
+  table p{
+   display: inline-block;
+   font-size: 16px; 
+  }
+  
+  
+
+</style>
+

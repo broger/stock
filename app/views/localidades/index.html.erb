@@ -1,15 +1,7 @@
-<div  id="botonera" >
-    <!--      <div id="bontones" style="width:100%; background-color:#53B9E9">
-          <a  id ="calculadora" class ="boton fancybox" href="<%= calculadora_menus_path %>" ><i class="glyphicon glyphicon-list-alt" ></i></a>
-           <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
-           <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-usd"></button>
-           <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-stats"></button>
-           <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
-           <button type="button" href="" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
-          </div>
-     -->     
-     <span class="glyphicon glyphicon-search" style="color:#000000; border:1px; padding:6px 0px 6px 6px; font-size:18px" title="buscar producto"></span>
+<div  id="botonera" >   
+    <!-- <span class="glyphicon glyphicon-search" style="color:#000000; border:1px; padding:6px 0px 6px 6px; font-size:18px" title="buscar producto"></span>
      <span class="glyphicon glyphicon-arrow-left" style="color:#000000; padding:6px 0px 6px 6px; font-size:18px" title="atras"></span>
+    -->
 </div>
  <%= form_tag(localidades_path, :method => 'get',:id=>'buscar') %>  
   <div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
@@ -29,44 +21,56 @@
        <!-- ACORDENON -->
        <div class="panel-group" id="accordion" style="background-color:#2B2B2B">
            <div class="panel panel-default">
-             <div class="panel-heading">
-                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                  <i class="glyphicon glyphicon-align-justify" style="color:#ffffff; padding-left:4px" title="filtros"></i>
-                  &nbsp;&nbsp;Registros</a></h5>
-             </div>
-             <div id="collapseOne" class="panel-collapse collapse in">
-                 <div class="panel-body">
-                 <%= link_to 'Nueva Localidad', new_localidad_path, :class=>'fancybox' %></div>
-             </div>
-        </div>
-           <div class="panel panel-default">
-             <div class="panel-heading" style="background-color:#2197C9">
-              <h5 class="panel-title" style="background-color:#2197C9" >
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                    <i class="glyphicon glyphicon-file" style="color:#ffffff; padding-left:4px" title="filtros"></i>
-                    &nbsp;&nbsp;&nbsp;Reportes</a></h5>
-             </div>
-             <div id="collapseTwo" class="panel-collapse collapse">
-              <div class="panel-body"> - Todos   </div>
-             </div>
+                   <div class="panel-heading">
+                        <h4 class="panel-title" >
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                              <i class="glyphicon glyphicon-align-justify" style="padding-right:6px" ></i>
+                              Registros
+                          </a>
+                        </h4>
+                   </div>
+                   <div id="collapseOne" class="panel-collapse collapse in">
+                       <div class="panel-body">
+                          <ul>
+                            <li><%= link_to 'Nueva Localidad', new_localidad_path, :class=>'fancybox', :style=>'color:black; font-size:11px' %></li>
+                          </ul>
+                        </div>
+                    </div>
            </div>
            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                    <i class="glyphicon glyphicon-th-list" style="color:#ffffff; padding-left:4px" title="filtros"></i>
-                    &nbsp;&nbsp;&nbsp;Tablas Relacionadas
-                    
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseThree" class="panel-collapse collapse">
-                <div class="panel-body">
-                 - Provincias
-                 
-                </div>
-              </div>
-            </div>
+                   <div class="panel-heading" style="background-color:#2197C9">
+                        <h4 class="panel-title"   style="background-color:#2197C9" >
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                <i class="glyphicon glyphicon-file" style="padding-right:6px"></i>
+                                Reportes
+                          </a>
+                        </h4>
+                   </div>
+                   <div id="collapseTwo" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <ul>
+                           <li>Todos</li>
+                        </ul>  
+                      </div>
+                   </div>
+           </div>
+           <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                           <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                              <i class="glyphicon glyphicon-th-list" style="padding-right:6px"></i>
+                              Tablas Relacionadas
+                           </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <ul>
+                           <li>Provincias</li>
+                        </ul>  
+                      </div>
+                    </div>
+           </div>
       </div>
 
 
@@ -89,7 +93,7 @@
                                       <td><%=h localidad.provincia.nombre %></td>
                                       <td style="text-align:right">
                                              <%= link_to image_tag('iconos/16x16/zoom.png'), localidad, :title=>'Ver', :class=>'fancybox' %>
-                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_localidad_path(localidad), :title=>'Editar' %>
+                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_localidad_path(localidad), :title=>'Editar', :class=>'fancybox' %>
                                                 <%= link_to image_tag('iconos/16x16/delete.png'), localidad, :title=>'Eliminar',
                                                   :confirm => 'Esta Seguro?', :method => :delete %>
                                       </td>
@@ -153,55 +157,6 @@
 
 <style type="text/css">
 
-     
-    input[type="text"] {
-       height: 24px;
-       font-size: 13px;
-       line-height: 15px;
-       border-radius: 1px;
-       width: 250px;
-    }
-
-    #botonera{
-       width:100%;
-       height:30px;
-       background-color:#53B9E9;
-       text-align:right;
-       padding-right:230px
-    }    
-
-    #titulo{
-      padding: 0px 0px 0px 90px;
-    }
-
-    #herramientas{
-        width: 100%;
-        background-color:#53B9E9;
-        padding: 0 20px 8px 0;
-        text-align: right;
-    }
-
-    #menu_izquierdo{
-      float: left;
-      padding:20px 0 0 18px;
-      /* background-color:green; */
-    }
-
-    #contenido{
-      padding:20px 30px 0 50px;
-      /*background-color:white; */
-      float: left;
-      display: inline;
-    }
-
-    .textbox_buscar{
-      float:right;
-      height: 20px
-    }
-
-    .table td tr{
-      padding: 6px;
-    }
 
 </style>
 

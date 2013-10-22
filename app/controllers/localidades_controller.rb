@@ -25,16 +25,15 @@ class LocalidadesController < ApplicationController
     @localidad = Localidad.find(params[:id])
     
     respond_to do |format|
-      format.html{render :layout=>false}
+      format.html # index.html.erb
+      format.xml  { render :xml => @localidades }
     end
   end
 
-  # GET /localidads/new
-  # GET /localidads/new.xml
   def new
     @localidad = Localidad.new
 
-     respond_to do |format|
+    respond_to do |format|
       format.html{render :layout=>false}
     end
   end
@@ -42,7 +41,8 @@ class LocalidadesController < ApplicationController
   # GET /localidads/1/edit
   def edit
     @localidad = Localidad.find(params[:id])
-     respond_to do |format|
+    
+    respond_to do |format|
       format.html{render :layout=>false}
     end
   end

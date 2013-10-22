@@ -13,7 +13,7 @@
 
          <div id="myTabContent" class="tab-content" style="padding:20px">
                 <div  class="tab-pane active"  id="general" >
-                    <table style="float:left; margin:0 180px 0 20px">
+                    <table style="float:left; margin:0 100px 0 20px">
                               <tr>
                                 <td><%= f.label :nombre %></td><td><%= f.text_field :nombre, :class=>'form-control' %></td>
                               </tr>
@@ -36,17 +36,14 @@
                                 <td><%= f.label :estado_id %></td><td><%= f.select :estado_id , Estado.find(:all, :order =>'id').collect{|t|[t.nombre, t.id]}, :class=>'form-control' %></td>
                               </tr> 
                               <tr>
-                                <td><%= f.label :provincia_id %></td><td><%= f.select :provincia_id , Provincia.find(:all, :order =>'nombre').collect{|t|[t.nombre, t.id]}, :class=>'form-control' %></td>
+                                <td><%= f.label :provincia_id %></td><td><%= f.select :provincia_id , Provincia.find(:all, :conditions=>['estado_id = 1'], :order =>'nombre').collect{|t|[t.nombre, t.id]}, :class=>'form-control' %></td>
                               </tr> 
                               <tr>
-                                <td><%= f.label :localidad_id %></td><td><%= f.select :localidad_id , Localidad.find(:all, :order =>'nombre').collect{|t|[t.nombre, t.id]}, :class=>'form-control' %></td>
+                                <td><%= f.label :localidad_id %></td><td><%= f.select :localidad_id , Localidad.find(:all,  :conditions=>['estado_id = 1'], :order =>'nombre').collect{|t|[t.nombre, t.id]}, :class=>'form-control' %></td>
                               </tr>  
                               <tr>
-                                <td></td><td></td>
-                              </tr> 
-                              <tr>
-                                <td></td><td></td>
-                              </tr> 
+                                <td><%= f.label :direccion, 'direcci&oacute;n' %></td><td><%= f.text_field :direccion, :class=>'form-control', :style=>'width:180px' %></td>
+                              </tr>  
                         </table>
                 </div>
                 <!-- <div class="tab-pane fade" id="direccion"> </div> -->
@@ -77,7 +74,9 @@
             $("#new_cliente").validate({
              rules: {
                   "cliente[nombre]": {required: true, rangelength: [3,60]},
-                   }
+                  "cliente[provincia_id]": {required: true},
+                  "cliente[localidad_id]": {required: true}
+                      }
             });
             localidadSelec();
     });
@@ -105,11 +104,6 @@
 
 
 <style type="text/css">
-
-  select{
-    padding: 2px;
-  }
-  
 
   input{
     padding-left: 4px
@@ -151,7 +145,7 @@
 
 
   table tr{
-    height: 30px;
+    height: 36px;
   }
   
 
