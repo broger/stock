@@ -44,8 +44,8 @@
           <div id="comprobante" class= "col-sm-14" >
               <div id="cabezera">
                   <div class= "datos" style="width:160px"><%= label_tag :numero, "Nº:" %><%= text_field_tag :numero, @ultima_venta, :style=>'width:70%', :class=> 'form-control'%></div>
-                  <div class= "datos" style="width:270px" ><%= label_tag :cliente_id %><%= select_tag :cliente_id, '<option></option>' + options_from_collection_for_select(Cliente.all, :id, :nombre) , :style=>'width:200px', :class=> 'form-control' %></div>
-                  <div class= "datos" style="width:180px" >
+                  <div class= "datos" style="width:270px" ><%= label_tag :cliente_id %><%= select_tag :cliente_id, '<option></option>' + options_from_collection_for_select(Cliente.all, :id, :nombre, 1) , :style=>'width:200px', :class=> 'form-control' %></div>
+                  <div class= "datos" style="width:160px" >
                           <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-primary active" style="padding:5px">
                               <input type="radio" name="options" value="efectivo" id="option1">Efectivo</label>
@@ -57,9 +57,8 @@
                         <%= hidden_field_tag :forma_pago, 'Efectivo' %>  
                   </div>            
 
-                  <% Deposito.count ==  1  ? seleccionado = 1 : seleccionado = 0 %>
-                  <div class= "datos" style="width:240px"><%= label_tag :deposito_id %><%= select_tag :deposito_id, '<option value=0></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre, seleccionado),  :style=>'width:50%', :class=> 'form-control' %></div>
-                  <div class= "datos" style="width:140px"><%= label_tag :ver_obs, "Observaciones",  :onclick=> "ver_obs()", :class=>'link_azul', :id=>"ver_obs" %><%= label_tag :a, "Ocultar observaciones",  :onclick=> "ocultar_obs()", :class=>'link_azul', :id=>"ocultar_obs" %></div>               
+                  <div class= "datos" style="width:280px"><%= label_tag :a, "Deposito:" %><%= current_user.sucursal.deposito.nombre %><%= label_tag :a, "Lista de Precio:", :style=>'margin-left:8px'%><%= current_user.sucursal.lista_precio.nombre %></div>
+                  <div class= "datos" style="width:100px"><%= label_tag :ver_obs, "Observaciones",  :onclick=> "ver_obs()", :class=>'link_azul', :id=>"ver_obs" %><%= label_tag :a, "Ocultar observaciones",  :onclick=> "ocultar_obs()", :class=>'link_azul', :id=>"ocultar_obs" %></div>               
                   <div id="obs" class= "datos" style="heigt:40px"><%= label_tag :observaciones %><%= text_field_tag :observaciones, nil, :class=>'form-control', :style=>'width:89%' %></div>   
 
               </div>   
@@ -69,6 +68,7 @@
                         <a  style ="font-size:14px; width:40px; border-radius:1px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar('uno_solo')" ></a>           
                         <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
                         <%= hidden_field_tag :total_factura, nil %>
+                        <%= hidden_field_tag :lista_precio_id, nil %>
               </div> 
 
               <div id="detalle">
@@ -92,29 +92,7 @@
                             <table id="list" class="tabla_detalle">
 
 
-
-                              <% if @pedido_compra %>
-
-                                      <% @pedido_compra.movimientos.each do |pc| %>
-                                             <% ide = pc.producto.id %>
-                                             <tr id='detalle<%= ide %>' >
-                                                <td style='width:90px' ><%= pc.producto.codigo %></td>
-                                                <td style='width:450px'><%= pc.producto.nombre %></td> 
-                                                <td style='width:60px' ><%= pc.producto.unidad.nombre %></td> 
-                                                <td style='width:90px' ><%= text_field_tag "comprobante[#{ide}][cant]",  pc.cantidad, :class=>"form-control input-sm", :id=>"input_cant#{ide}",  :style=>"width:80px; height:25px"  %></td>
-                                                <td style='width:90px' ><%= text_field_tag "comprobante[#{ide}][costo]", '0' , :class=>"form-control input-sm", :id=>"input_costo#{ide}", :style=>"width:80px; height:25px"  %></td>
-                                                <td style='width:250px; text-align:right; padding:0px' ><label id='label_total<%= ide %>' name= 'comprobante[<%= ide %>][total]'  class='total_fila' >0.00</label></td>
-                                                 <td style='width:10px; text-align:right'><a class='glyphicon glyphicon-remove detalle_cruz' onClick='eliminar_fila(<%= ide %>)' title='quitar de la lista'</a></td>
-                                            </tr> 
-                       
-                                      <% end %>
-
-                               <% end %>
-
-
-
-
-                              <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
+                            <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX -->
                               <!-- X ACA SE AGREGA DINAMICAMENTE EL DETALLE X -->
                               <!-- X ACA SE AGREGA DINAMICAMENTE EL DETALLE X -->
                               <!-- XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX --> 

@@ -69,20 +69,20 @@ class VentasController < ApplicationController
 
         
             venta = Comprobante.venta.new
-            venta.numero = params[:numero]
-            venta.proveedor_id =  params[:proveedor_id]
-            venta.observaciones=  params[:observaciones] if params[:observaciones]
-            venta.usuario_id  =   current_user
-            venta.deposito_id = params[:deposito_id]
-            venta.aprobado = true
-            venta.total =  params[:total_factura]
-            venta.comp_relacionado_id = params[:comp_relacioando_id]  if params[:comp_relacionado_id]
+            venta.numero         = params[:numero]
+            venta.proveedor_id   = params[:proveedor_id]
+            venta.observaciones  = params[:observaciones] if params[:observaciones]
+            venta.usuario_id     = current_user
+            venta.sucursal_id    = current_user.sucursal.id
+            venta.total          = params[:total_factura]
+            venta.comprobante_id = params[:comprobante_id]  if params[:comprobante_id]
+            
             venta.save!
 
             # RELACIONO EL PEDIDO venta CON LA FACTURA venta
-            if params[:comp_relacionado_id]
-                 pd = Comprobante.pedido_venta.find(params[:comp_relacionado_id])
-                 pd.comp_relacionado_id = venta.id
+            if params[:comprobante_id]
+                 pd = Comprobante.pedido_venta.find(params[:comprobante_id])
+                 pd.comprobante_id = venta.id
                  pd.save!
             end  
 
@@ -92,15 +92,15 @@ class VentasController < ApplicationController
             case 
                 when params[:forma_pago].strip == 'Efectivo' then
 
-                          raise "dddd #{params[:forma_pago].strip}"
+                         # raise "dddd #{params[:forma_pago].strip}"
 
                 when params[:forma_pago].strip == 'Tarjeta' then 
                 
-                          raise "tarjeta #{params[:forma_pago].strip}"
+                          # raise "tarjeta #{params[:forma_pago].strip}"
           
                 when params[:forma_pago].strip == 'Cta. Cte.' then 
 
-                         raise "ddddd3333333 #{params[:forma_pago].strip}"
+                         # raise "ddddd3333333 #{params[:forma_pago].strip}"
 
             end
 
@@ -124,10 +124,17 @@ class VentasController < ApplicationController
                    mov.precio_total = o[:cant].to_f * o[:costo].to_f
                    mov.save!  
             
-                   # actualiza stock del producto
+                   # actualiza STOCK GENERAL del producto
                    producto = Producto.find(k)
                    producto.stock =  producto.stock.to_f + o[:cant].to_f
                    producto.save!
+
+                   # actualiza STOCK DE LA SUCURSAL
+                   ps = ProductoStock.find(:first, :conditions['producto_id = ? AND deposito_id = ?',k,current_user.sucursal.deposito.id])
+                   ps.stock =  ps.stock.to_f + o[:cant].to_f
+                   ps.save!
+
+
 
                 end 
                    

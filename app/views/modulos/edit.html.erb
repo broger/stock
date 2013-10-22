@@ -1,0 +1,16 @@
+<h1>Editing modulo</h1>
+
+<% form_for(@modulo) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @modulo %> |
+<%= link_to 'Back', modulos_path %>

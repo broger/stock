@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131018211450) do
+ActiveRecord::Schema.define(:version => 20131022125243) do
 
   create_table "categorias", :force => true do |t|
     t.string   "nombre",     :limit => 30
@@ -50,10 +50,17 @@ ActiveRecord::Schema.define(:version => 20131018211450) do
     t.string    "observaciones",       :limit => 2147483647
     t.boolean   "enviado_proveedor"
     t.timestamp "fecha_envio",         :limit => 29
-    t.integer   "deposito_id"
+    t.integer   "sucursal_id"
     t.decimal   "costos",                                    :precision => 10, :scale => 4
     t.integer   "comprobante_id"
     t.integer   "cliente_id"
+  end
+
+  create_table "concepto_operaciones", :force => true do |t|
+    t.string   "nombre"
+    t.integer  "modulo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "depositos", :force => true do |t|
@@ -64,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20131018211450) do
     t.integer  "provincia_id"
     t.string   "direccion",    :limit => 60
     t.string   "telefono",     :limit => 30
+    t.integer  "sucursal_id"
   end
 
   create_table "estados", :force => true do |t|
@@ -123,6 +131,12 @@ ActiveRecord::Schema.define(:version => 20131018211450) do
     t.datetime "updated_at"
   end
 
+  create_table "modulos", :force => true do |t|
+    t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "monedas", :force => true do |t|
     t.string   "nombre",     :limit => 25
     t.string   "simbolo",    :limit => 10
@@ -178,6 +192,7 @@ ActiveRecord::Schema.define(:version => 20131018211450) do
     t.integer  "deposito_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "stock",       :limit => 17
   end
 
   create_table "productos", :force => true do |t|
@@ -239,6 +254,8 @@ ActiveRecord::Schema.define(:version => 20131018211450) do
     t.boolean  "administrador"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "adm_contaduria"
+    t.boolean  "adm_sueldos"
   end
 
   create_table "roles_users", :force => true do |t|
@@ -269,7 +286,6 @@ ActiveRecord::Schema.define(:version => 20131018211450) do
     t.integer  "localidad_id"
     t.string   "direccion"
     t.integer  "lista_precio_id"
-    t.integer  "deposito_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "abrev",           :limit => 10
@@ -301,7 +317,7 @@ ActiveRecord::Schema.define(:version => 20131018211450) do
 
   create_table "users", :force => true do |t|
     t.string   "login",                     :limit => 40
-    t.string   "name",                      :limit => 100,        :default => ""
+    t.string   "name",                      :limit => 100,                                       :default => ""
     t.string   "email",                     :limit => 100
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
@@ -315,6 +331,7 @@ ActiveRecord::Schema.define(:version => 20131018211450) do
     t.string   "direccion",                 :limit => 2147483647
     t.string   "telefono",                  :limit => 40
     t.string   "celular",                   :limit => 40
+    t.integer  "documento",                 :limit => 10,         :precision => 10, :scale => 0
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
