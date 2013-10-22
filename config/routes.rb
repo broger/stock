@@ -1,4 +1,17 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :modulos
+
+  map.resources :concepto_operaciones
+
+
+
+  map.resources :inventarios, :collection =>{:ajuste_positivo=>:get,
+                                             :ajuste_negativo=>:get,
+                                             :toma_inventario=>:get,
+                                             :transferencia_sucursales=>:get
+                                            }
+
+
   map.resources :producto_stocks
 
   map.resources :sucursales
