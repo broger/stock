@@ -12,7 +12,7 @@ class PedidoComprasController < ApplicationController
 
   def new
     @comprobante = Comprobante.pedido_compra.new
-    @ultimo_pd = TipoComprobante.find(2).ultimo_nro .to_i + 1
+    @ultimo_pd = TipoComprobante.find(1).ultimo_nro .to_i + 1
     
     respond_to do |format|
       format.html # new.html.erb
@@ -71,10 +71,11 @@ class PedidoComprasController < ApplicationController
             pedido_compra.usuario_id  =   current_user
             pedido_compra.vendedor_id  =  current_user
             pedido_compra.aprobado = true
+            pedido_compra.deposito_id =  params[:deposito_id]
             pedido_compra.save!
               
 
-            tipo_pd = TipoComprobante.find(2)
+            tipo_pd = TipoComprobante.find(1)
             tipo_pd.ultimo_nro = params[:numero]
             tipo_pd.save!
 
@@ -86,7 +87,7 @@ class PedidoComprasController < ApplicationController
                    # pedido = o        
                    mov = Movimiento.new
                    mov.producto_id = k
-                   mov.cantidad = o[:pedido]
+                   mov.cantidad = o[:pedido].to_f
                    mov.afecta_stock = false 
                    mov.comprobante_id  = pedido_compra.id
                    mov.usuario_id = current_user

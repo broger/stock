@@ -40,6 +40,9 @@ class ListaPreciosController < ApplicationController
   # GET /lista_precios/1/edit
   def edit
     @lista_precio = ListaPrecio.find(params[:id])
+    respond_to do |format|
+      format.html{render :layout=>false}
+    end
   end
 
   # POST /lista_precios
@@ -78,12 +81,28 @@ class ListaPreciosController < ApplicationController
   # DELETE /lista_precios/1
   # DELETE /lista_precios/1.xml
   def destroy
-    @lista_precio = ListaPrecio.find(params[:id])
-    @lista_precio.destroy
+        @lista_precio = ListaPrecio.find(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to(lista_precios_url) }
-      format.xml  { head :ok }
-    end
+        #existen_reg = Comprobante.find(:all, :conditions=>{:lista_precio_id=>params[:id]}))
+
+        
+        respond_to do |format|
+
+           # unless  existen_reg
+           #       @lista_precio.destroy
+           #       noti = "La lista de precios #{@lista_precio.nombre} ha sido eliminada satisfactoriamente."
+           #       format.xml  { head :ok }
+           # else
+                  ruta = "lista_precios/#{@lista_precio.id.to_s}/edit"
+                  noti = "Existen registro relacionados a esta lista de precio, solamente puede cambiar su estado a baja desde #{ActionController::Base.helpers.link_to 'aqu&iacute;', ruta, :class=> 'fancybox'}."       
+           # end
+            
+            format.html { redirect_to( lista_precios_url, :notice=> noti)}
+                  
+        end        
+
   end
-end
+
+
+   
+end #final

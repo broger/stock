@@ -1,5 +1,4 @@
  <%= form_tag(lista_precios_path, :method => 'get',:id=>'buscar') %>
-
   <div class="row" >
      <div id="titulo" class="col-sm-12" >
          <h2 style="margin:0">Listas de Precios</h2>
@@ -73,7 +72,7 @@
                                       <td style="text-align:right">
                                              <%= link_to "<i class='glyphicon glyphicon-usd'    style='font-size: 16px; color:black' ></i>", editar_x_producto_producto_lista_precios_path(:lista_precio_id=>lista.id), :title=>'Editar Precios' %>
                                              <%= link_to "<i class='glyphicon glyphicon-search' style='font-size: 16px; color:black' ></i>", lista, :title=>'Ver' %>
-                                             <%= link_to "<i class='glyphicon glyphicon-pencil' style='font-size: 16px; color:black' ></i>", edit_lista_precio_path(lista), :title=>'Editar' %>
+                                             <%= link_to "<i class='glyphicon glyphicon-pencil' style='font-size: 16px; color:black' ></i>", edit_lista_precio_path(lista), :title=>'Editar', :class=> 'fancybox' %>
                                              <%= link_to "<i class='glyphicon glyphicon-trash'  style='font-size: 16px; color:black' ></i>", lista, :title=>'Eliminar',
                                                   :confirm => 'Esta Seguro?', :method => :delete %>
                                       </td>
@@ -100,6 +99,7 @@
          $('#txtbuscar').focus();
          console.log();
          $('#buscar').submit(controlar_bene);
+         $('.fancybox').fancybox();
 
     });
 

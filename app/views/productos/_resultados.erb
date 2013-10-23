@@ -7,6 +7,7 @@
                 <tr style="height:12px; font-size:12px">
                   <th>codigo</th>
                   <th>nombre</th>
+                  <th>stock local</th>
                   <th>stock</th>
                   <th>unidad</th>
                   <th>marca</th>
@@ -18,6 +19,7 @@
                 <tr >
                     <td onclick="ver_registro()" style="cursor: pointer"><%=h producto.codigo %></td>
                     <td><%=h producto.nombre %></td>
+                    <td><%=h ProductoStock.find(:first, :conditions=>['deposito_id = ? and producto_id = ?',current_user.sucursal.deposito.id, producto.id]).stock %></td>
                     <td><%=h producto.stock %></td>
                     <td><%=h producto.unidad.nombre %></td>
                     <td><%=h producto.marca.nombre %></td>

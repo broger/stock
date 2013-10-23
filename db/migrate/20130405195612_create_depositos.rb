@@ -6,6 +6,7 @@ class CreateDepositos < ActiveRecord::Migration
       t.integer :provincia_id
       t.column  :direccion, "character(60)"
       t.column  :telefono, "character(30)"
+      t.integer :sucursal_id
      
       t.timestamps
     end

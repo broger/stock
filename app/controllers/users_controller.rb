@@ -9,7 +9,7 @@ class UsersController < ApplicationController
    def index
     @usuario = User.new
     if params[:txtbuscar].blank?
-       @usuarios = User.paginate(:page => params[:page],,:per_page => 6,:order => 'name')
+       @usuarios = User.paginate(:page => params[:page],:per_page => 6,:order => 'name')
     else
        @usuarios = User.paginate(:page => params[:page],:per_page => 6,:conditions=> ['lower(name) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "name")
     end
@@ -19,8 +19,6 @@ class UsersController < ApplicationController
       format.xml  { render :xml => @usuarios }
     end
   end
-
-
 
 
    def new
@@ -92,8 +90,10 @@ class UsersController < ApplicationController
    end
 
     def update
+
     @usuario = User.find(params[:id])
                   if @usuario.update_attributes(params[:user])
+                     @usuario.activated_at = params[:user][:activated_at]
                      @usuario.roles.clear
                      @usuario.rol_ids = params[:usuario][:rol_ids]
                      @usuario.update_attributes(params[:usuario])
@@ -102,6 +102,37 @@ class UsersController < ApplicationController
                   redirect_to(users_url)
                   flash[:notice] = "El Usuario fue actualizado exitosamente."
 
+    end
+
+
+    def editar_x_usuario
+        @user = User.find(params[:id])
+
+        respond_to do |format|
+            format.html{render :layout=>false}
+        end
+    end
+
+    
+    def guardar_x_usuario
+       @user = User.find(params[:id])
+       @user.password = params[:user][:password]
+       @user.password_confirmation = params[:user][:password_confirmation]
+       @user.email = params[:user][:email]
+       @user.direccion = params[:user][:direccion]
+       @user.celular = params[:user][:celular]
+       @user.telefono = params[:user][:telefono]
+       @user.update_attributes(params[:user])
+       respond_to do |format|
+           if params[:user][:password] == params[:user][:password_confirmation]
+              @user.save!
+              flash[:notice] = 'Los datos se actualizaron satisfactoriamente.'
+              format.html { redirect_to(root_url()) }
+           else
+              flash[:notice] = 'Hubo un error al cambiar los datos.'
+              format.html { redirect_to :action => "cambiarclave" }
+           end
+       end
     end
 
 

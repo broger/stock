@@ -1,0 +1,13 @@
+<p>
+  <b>Nombre:</b>
+  <%=h @concepto_operacion.nombre %>
+</p>
+
+<p>
+  <b>Modulo:</b>
+  <%=h @concepto_operacion.modulo_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_concepto_operacion_path(@concepto_operacion) %> |
+<%= link_to 'Back', concepto_operaciones_path %>

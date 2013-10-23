@@ -7,6 +7,8 @@ class Producto < ActiveRecord::Base
 	belongs_to :unidad
     belongs_to :estado
     has_many :producto_lista_precios
+	has_many :producto_stocks
+
 
 	validates_presence_of :nombre, :message => 'es obligatorio.'
 	validates_uniqueness_of :codigo,:message => "ya existe"

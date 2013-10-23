@@ -1,0 +1,211 @@
+<div  id="botonera" >
+    <!--      <div id="bontones" style="width:100%; background-color:#53B9E9">
+          <a  id ="calculadora" class ="boton fancybox" href="<%= calculadora_menus_path %>" ><i class="glyphicon glyphicon-list-alt" ></i></a>
+           <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
+           <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-usd"></button>
+           <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-stats"></button>
+           <button type="button" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
+           <button type="button" href="" style="height:32px; width:40px;" class="btn btn-xs btn-default glyphicon glyphicon-search"></button>
+          </div>
+     -->     
+     <a href="<%= productos_url %>"  class="glyphicon glyphicon-search"      style="color:#ffffff; border:1px; padding:6px 0px 6px 6px; font-size:24px; text-decoration:none" title="buscar producto"></a>
+     <a href="<%= new_venta_url %>" class="glyphicon glyphicon-usd"          style="color:#ffffff; border:1px; padding:6px 0px 6px 6px; font-size:24px; text-decoration:none" title="vender"></a>
+     <a href="<%= productos_url %>"  class="glyphicon glyphicon-arrow-left"  style="color:#ffffff; border:1px; padding:6px 0px 6px 6px; font-size:24px; text-decoration:none" title="atras"></a>
+     
+     
+</div>
+ <%= form_tag(concepto_operaciones_path, :method => 'get',:id=>'buscar') %>  
+  <div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
+    <div class="container" ><h1>Conceptos de Operaciones</h1></div>  
+  </div>
+  <div id="herramientas" >
+    <div class="container">
+      <div id="cargando"   style="display: none; float:left">&nbsp;<%= image_tag('iconos/loader.gif')%></div>
+      <%= text_field_tag :txtbuscar, params[:txtbuscar] ,:placeholder => 'buscar ...', :style=> "border:0px; padding:2px 4px 2px 4px; display:inline"%>
+      <i class="glyphicon glyphicon-align-justify" onClick="mostrarTodos()" style="color:#ffffff; font-size:16px;padding-left:4px" title="mostrar todos"></i>
+    </div>
+  </div>
+
+  <div class="container">
+  <div class="row" >
+     <div id="menu_izquierdo"  class="col-sm-2" >
+       <!-- ACORDENON -->
+       <div class="panel-group" id="accordion" style="background-color:#2B2B2B">
+           <div class="panel panel-default">
+             <div class="panel-heading">
+                  <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                  <i class="glyphicon glyphicon-align-justify" style="color:#ffffff; padding-left:4px" title="filtros"></i>
+                  &nbsp;&nbsp;Registros</a></h5>
+             </div>
+             <div id="collapseOne" class="panel-collapse collapse in">
+                 <div class="panel-body">
+                 <%#= link_to 'Nueva Localidad', new_concepto_operacione_path, :class=>'fancybox' %></div>
+             </div>
+        </div>
+           <div class="panel panel-default">
+             <div class="panel-heading" style="background-color:#2197C9">
+              <h5 class="panel-title" style="background-color:#2197C9" >
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    <i class="glyphicon glyphicon-file" style="color:#ffffff; padding-left:4px" title="filtros"></i>
+                    &nbsp;&nbsp;&nbsp;Reportes</a></h5>
+             </div>
+             <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body"> - Todos   </div>
+             </div>
+           </div>
+           <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    <i class="glyphicon glyphicon-th-list" style="color:#ffffff; padding-left:4px" title="filtros"></i>
+                    &nbsp;&nbsp;&nbsp;Tablas Relacionadas
+                    
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                 - Tipo Comprobantes
+                 
+                </div>
+              </div>
+            </div>
+      </div>
+
+
+     </div>
+     <div  id="contenido"  class="col-sm-10"  >
+            
+                       <% unless @concepto_operaciones.blank? %>
+                        <table class="table" style="font-size :13px" >
+                                <thead>
+                                  <tr style="height:12px">
+                                  <th>Nombre</th>
+                                  <th>Modulo</th>
+                                  <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <% @concepto_operaciones.each do |co| %>
+                                  <tr style="height:9px">
+                                      <td><%=h co.nombre %></td>
+                                      <td><%=h co.modulo.nombre %></td>
+                                      <td style="text-align:right">
+                                            <%= link_to image_tag('iconos/16x16/zoom.png'), co, :title=>'Ver', :class=>'fancybox' %>
+                                            <%= link_to image_tag('iconos/16x16/editar.png'), edit_concepto_operacion_path(co), :title=>'Editar' %>
+                                            <%= link_to image_tag('iconos/16x16/delete.png'), co, :title=>'Eliminar', :confirm => 'Esta Seguro?', :method => :delete %>
+                                      </td>
+                                    </tr>
+                                <% end %>
+                                </tbody>
+                            </table>
+                        <%else%>
+                              <div style="text-align:center; margin-top:10px">
+                                   <i><%= button_to_function "Lo sentimos #{current_user.login}, no encontramos resultados para: #{@busqueda}, modifiquelo y vuelva a intentar suerte!", "mostrarTodos()", :class=>"btn btn-default", :style=>"text-decoratio" %></div></i>
+                              </div>  
+                         <%end%>
+                      
+                       <div style="text-align:center" >
+                          <%= will_paginate @concepto_operaciones, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%>
+                        
+                       </div>
+     </div>
+ </div>
+</div>
+  
+ 
+<script type="text/javascript">
+
+    $(document).ready(function () {
+         definir_fancy(400,360);
+
+         $('#txtbuscar').focus();
+         console.log();
+         $('#buscar').submit(icon_loading);
+
+    });
+
+    $("table").tablecloth({
+      theme: "default",
+      bordered: true,
+      condensed: true,
+      striped: false, // linea par gris impar blanca
+      sortable: true,  // algo de jquery
+      clean: false,
+      cleanElements: "th td",
+      customClass: "my-table"
+    });
+
+
+
+    function icon_loading(){
+          if ( $('#txtbuscar') != '' && $('#buscar').valid()){
+                $('#cargando').show();
+          }
+    }
+
+    function mostrarTodos(){
+          $('#txtbuscar').text('');
+          $('#txtbuscar').val('');
+          $('#buscar').submit();
+                   
+    }
+
+</script>
+
+<style type="text/css">
+
+     
+    input[type="text"] {
+       height: 24px;
+       font-size: 13px;
+       line-height: 15px;
+       border-radius: 1px;
+       width: 250px;
+    }
+
+    #botonera{
+       width:100%;
+       height:30px;
+       background-color:#53B9E9;
+       text-align:right;
+       padding-right:80px
+    }    
+
+    #titulo{
+      padding: 0px 0px 0px 90px;
+    }
+
+    #herramientas{
+        width: 100%;
+        background-color:#53B9E9;
+        padding: 0 20px 8px 0;
+        text-align: right;
+    }
+
+    #menu_izquierdo{
+      float: left;
+      padding:20px 0 0 18px;
+      /* background-color:green; */
+    }
+
+    #contenido{
+      padding:20px 30px 0 50px;
+      /*background-color:white; */
+      float: left;
+      display: inline;
+    }
+
+    .textbox_buscar{
+      float:right;
+      height: 20px
+    }
+
+    .table td tr{
+      padding: 6px;
+    }
+
+</style>
+
+
+  

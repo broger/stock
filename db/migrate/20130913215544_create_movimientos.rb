@@ -7,7 +7,6 @@ class CreateMovimientos < ActiveRecord::Migration
       t.integer  :deposito_id  
       t.integer  :comprobante_id 
       t.integer  :usuario_id
-      t.string   :comentarios
       t.column   :costo,        "numeric(8,4)"
   	  t.column   :ganancia,     "numeric(8,4)"
   	  t.column   :iva,          "numeric(8,4)"

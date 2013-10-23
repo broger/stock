@@ -141,6 +141,31 @@ class ProductoListaPreciosController < ApplicationController
  end
 
 
+ def  todos_producto_lista
+       
+            # select * from productos p 
+            # inner join producto_lista_precios plp ON plp.id = p.id
+            # inner join producto_stocks         ps  ON ps.producto_id = p.id
+            # where (ps.stock >= 0 and ps.deposito_id = #{current_user.sucursal.deposito_id}) 
+            # and  p.codigo = '#{params[:q]}' 
+
+
+
+
+            @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo = ? and proveedor_id = ?', params[:q], params[:proveedor_id]])
+           
+            # 2do si no existe buscar entonces x NOMBRE 
+            if @productos.blank?
+              @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ? and proveedor_id = ?',"%#{params[:q]}%", params[:proveedor_id]], :order => :nombre,:limit=>30)
+            end
+
+        respond_to do |format|
+          format.json{render :json => @productos.to_json}
+        end
+
+   end
+
+
 
 
 

@@ -14,11 +14,11 @@
   </p>
   <p>
     <%= f.label :desde, "validez desde" %><br />
-    <%= f.text_field :desde, :size=>12,:placeholder => '__/__/____', :class=>"form-control", :id=>"desde" %>
+    <%= f.text_field :desde, :value=>@lista_precio.activated_at.strftime("%d/%m/%Y"), :size=>12, :class=>"form-control", :id=>"desde" %>
   </p>
   <p>
     <%= f.label :hasta, "validez hasta" %><br />
-    <%= f.text_field :hasta, :size=>12,:placeholder => '__/__/____', :class=>"form-control", :id=>"hasta" %>
+    <%= f.text_field :hasta, :value=>@lista_precio.activated_at.strftime("%d/%m/%Y"), :size=>12, :class=>"form-control", :id=>"hasta" %>
   </p>
 </div>
 <div id="pie" style="height:30px; padding:16px">

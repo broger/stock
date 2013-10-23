@@ -52,8 +52,8 @@ module ApplicationHelper
 
 def hacer_menu_form(rol, nodo)
 
-    #salida =  "<li><a href='#{nodo.url}'>#{nodo.descripcion}</a>"
-    salida =  "<li style='list-style-type:none;'>#{check_box_tag('rol[menu_ids][]',nodo.id,rol.menus.include?(nodo))} #{nodo.descripcion}"
+    #salida =  "<li><a href='#{nodo.url}'>#{nodo.nombre}</a>"
+    salida =  "<li style='list-style-type:none;'>#{check_box_tag('rol[menu_ids][]',nodo.id,rol.menus.include?(nodo))} #{nodo.nombre}"
     if nodo.children.count != 0
       salida << "<ul>"
       nodo.children.each do |child|
@@ -70,7 +70,7 @@ end
   def hacer_menu_rol(rol, nodo)
     tiene_permiso = rol.menus.include?(nodo)
     if tiene_permiso
-    salida =  "<li><a href='#'>#{nodo.descripcion}</a>"
+    salida =  "<li><a href='#'>#{nodo.nombre}</a>"
 
     if nodo.children.count != 0
       salida << "<ul>"
@@ -87,24 +87,17 @@ end
     salida
   end
 
-  def image_tag_sexo(sexo_id)
-    archivo = 'no_avatar.gif'
-    if sexo_id == 1
-      archivo = 'user.png'
-    elsif sexo_id == 2
-      archivo = 'she_user.png'
-    end
-    image_tag archivo
-  end
+  
+
   def select_meses(parametro,valor)
      meses={1=> 'Enero',2=>'Febrero',3=>'Marzo',4=>'Abril',5=>'Mayo',6=>'Junio',7=>'Julio',8=>'Agosto',9=>'Septiembre',10=>'Octubre',11=>'Noviembre',12=>'Diciembre'}
      select parametro.to_sym, :mes, meses.collect{|a,b| [b,a]}.insert(0,''),:selected => valor
   end
+
   def select_formatos(parametro,valor)
      formatos={1=> 'pdf',2=>'xls'}
      select parametro.to_sym, :formato, formatos.collect{|a,b| [b,a]},:selected => valor
   end
-
 
   def nombredemeses(paramsito)
      meses={1=> 'Enero',2=>'Febrero',3=>'Marzo',4=>'Abril',5=>'Mayo',6=>'Junio',7=>'Julio',8=>'Agosto',9=>'Septiembre',10=>'Octubre',11=>'Noviembre',12=>'Diciembre'}
@@ -131,22 +124,6 @@ end
     fecha_hora.utc.strftime("%d/%m/%Y--%I:%M%p") unless fecha_hora.blank?
   end
 
-  def anionuevenueve(fecha)
-#    dosultimos = fecha.slice(6,2)
-#    if dosultimos.to_i.between?(0,11)
-#      fecha = "#{fecha.slice(0,2)}-#{fecha.slice(3,2)}-20#{dosultimos}"
-#    else
-#      fecha = "#{fecha.slice(0,2)}-#{fecha.slice(3,2)}-19#{dosultimos}"
-#    end
-    return fecha
-  end
-
-  def errores_lista(lista,separador=".")
-   salida="<div style='text-align:left;'>"
-   lista_aux=lista.split(separador)
-   lista_aux.each { |e| salida << "<div> #{image_tag("16x16/cross.png")}  #{e.to_s} </div>" }
-   salida << "</div>"
- end
 
 
 end

@@ -1,0 +1,31 @@
+<h1>New sucursal</h1>
+
+<% form_for(@sucursal) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </p>
+  <p>
+    <%= f.label :direccion %><br />
+    <%= f.text_field :direccion %>
+  </p>
+  <p>
+    <%= f.label :telefono %><br />
+    <%= f.text_field :telefono %>
+  </p>
+  <p>
+    <%= f.label :localidad_id %><br />
+    <%= f.text_field :localidad_id %>
+  </p>
+  <p>
+    <%= f.label :provincia_id %><br />
+    <%= f.text_field :provincia_id %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', sucursales_path %>

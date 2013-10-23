@@ -134,7 +134,9 @@ class ProductosController < ApplicationController
 
   def todos
 
-    unless params[:proveedor_id].blank?
+    unless params[:proveedor_id].blank? || params[:proveedor_id].nil?
+        
+
         # 1ro buscar x CODIGO
         @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo = ? and proveedor_id = ?', params[:q], params[:proveedor_id]])
        
@@ -145,12 +147,13 @@ class ProductosController < ApplicationController
 
     else
     
+
         # 1ro buscar x CODIGO
         @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo = ?', params[:q] ])
        
         # 2do si no existe buscar x NOMBRE 
         if @productos.blank?
-          @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ? ','%#{params[:q]}%' ], :order => :nombre,:limit=>30)
+          @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ?',"%#{params[:q]}%"], :order => :nombre,:limit=>30)
         end
     
     end    
@@ -161,4 +164,4 @@ class ProductosController < ApplicationController
   end
 
 
-end
+end # final

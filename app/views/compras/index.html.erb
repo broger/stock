@@ -64,23 +64,24 @@
                                   <tr style="height:12px">
                                   <th>n&uacute;mero</th>
                                   <th>proveedor</th>
+                                  <th>total</th>
                                   <th>fecha alta</th>
-                                  <th>pedido compra</th>
+                                  <th>Nº pedido compra</th>
                                   <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <% @compras.each do |compra| %>
                                   <tr style="height:9px">
-                                      <td><%=h compra.numero %></td>
-                                      <td><%=h compra.proveedor.nombre %></td>
-                                      <td><%=h "#{compra.created_at.strftime("%Y-%m-%d %H:%M")} hs." if compra.created_at %></td>
-                                      <td>0000022</td>
+                                      <td><%= compra.numero %></td>
+                                      <td><%= compra.proveedor.nombre %></td>
+                                      <td><%= "#{compra.total} #{Parametro.first.moneda.simbolo}" %></td>
+                                      <td><%= "#{compra.created_at.strftime("%Y-%m-%d %H:%M")} hs." if compra.created_at %></td>
+                                      <td><%= link_to compra.comprobante.numero, show_pedido_compra_path(:id=>compra.comprobante.id) unless compra.comprobante.nil? %></td>
                                       <td style="text-align:right">
-                                             <%= link_to image_tag('iconos/16x16/zoom.png'), show_compra_path(compra), :title=>'Ver' %>
-                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_compra_path(compra), :title=>'Editar' %>
-                                                <%= link_to image_tag('iconos/16x16/delete.png'), compra, :title=>'Eliminar',
-                                                  :confirm => 'Esta Seguro?', :method => :delete %>
+                                             <%= link_to image_tag('iconos/16x16/zoom.png'), show_compra_path(compra),          :title=>'Ver' %>
+                                                <%= link_to image_tag('iconos/16x16/editar.png'), edit_compra_path(compra),     :title=>'Editar' %>
+                                                <%= link_to image_tag('iconos/16x16/delete.png'), eliminar_compras_path(:id => compra.id), :title=>'Eliminar', :confirm => 'Esta Seguro?' %>
                                       </td>
                                     </tr>
                                 <% end %>

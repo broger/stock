@@ -1,0 +1,28 @@
+<p>
+  <b>Nombre:</b>
+  <%=h @sucursal.nombre %>
+</p>
+
+<p>
+  <b>Direccion:</b>
+  <%=h @sucursal.direccion %>
+</p>
+
+<p>
+  <b>Telefono:</b>
+  <%=h @sucursal.telefono %>
+</p>
+
+<p>
+  <b>Localidad:</b>
+  <%=h @sucursal.localidad_id %>
+</p>
+
+<p>
+  <b>Provincia:</b>
+  <%=h @sucursal.provincia_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_sucursal_path(@sucursal) %> |
+<%= link_to 'Back', sucursales_path %>
