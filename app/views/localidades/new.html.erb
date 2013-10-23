@@ -4,15 +4,12 @@
 <% form_for(@localidad) do |f| %>
   <%= f.error_messages %>
 <div class="well" style="background-color:white">
-			  <div class="datos">
-			        <%= f.label :nombre %>
-      				<%= f.text_field :nombre, :class=>'form-control', :style=>'font-size:13px; height:36px' %>
-      				<br />
-			  </div>
-			  <div class="datos">
+			  <div class="datos_fancy">
+			        <%= f.label :nombre %><%= f.text_field :nombre, :class=>'form-control', :style=>'font-size:13px; height:36px' %>
+     	  </div>
+			  <div class="datos_fancy">
     				<%= f.label  :provincia_id %>
   					<%= f.select :provincia_id, Provincia.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true},  :class=>'form-control', :style=>'font-size:13px; height:36px' %>
-  					<br />
   			  </div>	
 </div>
 <div id="pie" style="height:30px; padding:16px">
