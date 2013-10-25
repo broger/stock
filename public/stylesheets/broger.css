@@ -55,14 +55,6 @@
  }
 
 
- input[type="text"] {
-         height: 24px;
-         font-size: 13px;
-         line-height: 15px;
-         border-radius: 1px;
- }
-
-
  .input-sm {
 	height: 20px;
 	padding: 5px 10px;
@@ -71,7 +63,6 @@
 	border-radius: 1px;
 }
 
-<<<<<<< HEAD
 .detalle_cruz{
        color:#d2322d;
        border-color:#d43f3a;
@@ -120,7 +111,7 @@
     }
 
     #menu_izquierdo h4 a {
-	text-decoration:none; 
+	      text-decoration:none; 
         color:#ffffff;	
     }
 
@@ -137,9 +128,7 @@
        font-size: 13px;
        line-height: 15px;
        border-radius: 1px;
-       width: 250px;
     }
-
 
 
 
@@ -165,12 +154,3 @@
 
 
 /* ######################################################################################## */
-
-
-
-
-
-
-=======
->>>>>>> d039c825f5489e355cf18b3439a28b6d0c7a0602
-
