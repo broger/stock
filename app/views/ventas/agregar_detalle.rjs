@@ -1,6 +1,8 @@
 
 unless @productos.blank?
 
+	
+
     page << " var filas = new Array()"
     for fila in @productos
         page << "  filas.push(new Array('#{fila.id}','#{fila.codigo.strip}','#{fila.nombre.strip}','#{fila.unidad.nombre.strip}'))"

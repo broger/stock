@@ -51,19 +51,34 @@ class VentasController < ApplicationController
 
  def agregar_detalle
      
-     @productos = Producto.find(:all, :conditions=>{:id=>params[:producto_id]})
+     @productos = ActiveRecord::Base.connection.execute("select * from productos p 
+                                                        inner join producto_lista_precios plp ON plp.id = p.id
+                                                        inner join producto_stocks         ps  ON ps.producto_id = p.id
+                                                        where ps.deposito_id = #{current_user.sucursal.deposito_id}
+                                                        and p.id = #{params[:producto_id]}
+                                                        ")
+
+     
+
+
+
+
+
+
+
+
      
      respond_to do |format|
           format.js
         end
-  end
 
-
-  def guardar
-
+ end
 
 
 
+
+
+ def guardar
     Comprobante.transaction do
 
 
