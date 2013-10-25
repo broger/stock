@@ -55,19 +55,17 @@ class VentasController < ApplicationController
                                                                 p.id       as id,
                                                                 p.codigo   as codigo,
                                                                 p.nombre   as nombre,
+                                                                u.nombre   as unidad,
                                                                 plp.precio as precio,
                                                                 plp.descuento as descuento,
-                                                                p.codigo as codigo,
-                                                                p.codigo as codigo,
-                                                                p.codigo as codigo,
                                                                 p.codigo as codigo,
                                                                 p.codigo as codigo
 
                                                         from productos p 
+                                                        inner join unidades                 u ON p.unidad_id = u.id
                                                         inner join producto_lista_precios plp ON plp.id = p.id
-                                                        inner join producto_stocks         ps  ON ps.producto_id = p.id
+                                                        inner join producto_stocks         ps ON ps.producto_id = p.id
                                                         where
-                                                        plp.lista_precio_id = #{params[:lista_precio_id]}
                                                         ps.deposito_id = #{current_user.sucursal.deposito.id}
                                                         and p.id = #{params[:producto_id]}
                                                         ")
@@ -87,8 +85,6 @@ class VentasController < ApplicationController
 
  def guardar
     Comprobante.transaction do
-
-
         
             venta = Comprobante.venta.new
             venta.numero         = params[:numero]

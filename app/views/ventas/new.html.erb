@@ -66,9 +66,15 @@
                         <%= text_field_tag :producto,      nil, :class=> 'form-control', :placeholder => ' Ingrese el c&oacute;digo o nombre del producto ...', :style=> "width:40%; padding-right:4px"%>
                         <%= text_field_tag :cantidad,      nil, :class=> 'form-control', :style=> "width:10%", :placeholder => ' cantidad ...' %>
                         <a  style ="font-size:14px; width:40px; border-radius:1px" class="btn btn-primary glyphicon glyphicon-plus-sign" onClick="agregar('uno_solo')" ></a>           
+                        <p> agregar campo stock </p>
+                        <p> validar cantidad <= stock </p>
+                        <p> validaciones en el controller </p>
+                        <p> Administrados puede vender con varias listas de precios </p>
+                        <p> </p>
+                        
                         <%= hidden_field_tag :producto_id, nil, :id=>"producto_id" %>
                         <%= hidden_field_tag :total_factura, nil %>
-                        <%= hidden_field_tag :lista_precio_id, nil %>
+                        <%= hidden_field_tag :lista_precio_id, current_user.sucursal.lista_precio.id %>
               </div> 
 
               <div id="detalle">
@@ -79,14 +85,15 @@
                         </div>  
                         <table  class="tabla_cab_detalle">
                                 <tr style="text-align:left">
-                                  <th style="width:100px">c&oacute;digo</th>
-                                  <th style="width:450px">nombre</th>
+                                  <th style="width:68px">c&oacute;digo</th>
+                                  <th style="width:355px">nombre</th>
                                   <th style="width:60px">unidad</th>
-                                  <th style="width:80px">precio</th>
-                                  <th style="width:80px"></th>
                                   <th style="width:80px">precio unit.</th>
+                                  <th style="width:100px">cantidad</th>
+                                  <th style="width:100px">desc %</th>
+                                  <th style="width:40px"></th>
                                   
-                                  <th style="width:235px; text-align:right">total</th>
+                                  <th style="width:60px; text-align:right">total</th>
                                   <th style="width:55px;"></th>
                                 </tr> 
                         </table>
@@ -129,16 +136,12 @@
        }, "Debe existir al menos un producto en el detalle del pedido."); */
 
 
-
-
-    
-
     $(document).ready(function () {
 
         $('#obs').hide();
         $('#ocultar_obs').hide();
         $('#error_detalle').hide();
-        $('#proveedor_id').change(limpiar_detalle);
+       
         $('#numero').attr('readonly', true);
         $('#cliente_id').focus;
         $("#comprobante").validate({
@@ -214,7 +217,7 @@
     jQuery.ajax({
            type:'get',
            //url:'<%= agregar_detalle_pedido_compras_path %>?nomenclador_id='+ $('#nomenclador_id').val() +'&codigo_practica='+$('#codigo_practica_id').val()+'&beneficiario_id='+$('#beneficiario_id').val()+'&diagnostico_id='+$('#diagnostico_id').val()+'&fecha_prescripcion='+$('#fecha_prescripcion').val()+'&b_p_id='+$('input[name=plan_especial]:checked').val()
-           url:'<%= agregar_detalle_ventas_path %>?agrega='+ $('#agrega').val() + '&producto_id='+ $('#producto_id').val() 
+           url:'<%= agregar_detalle_ventas_path %>?agrega='+ $('#agrega').val() + '&producto_id='+ $('#producto_id').val()+ '&lista_precio_id='+ $('#lista_precio_id').val() 
            });
 
     };
@@ -233,27 +236,39 @@
                       $('#error_detalle').hide();
                       $('#list').prepend(
                           "<tr id='detalle"+fila[0]+"'>" +
-                              "<td style='width:90px'>"+ fila[1] +"</td>"+
-                              "<td style='width:450px'>"+ fila[2] +"</td>"+  
-                              "<td style='width:60px'>"+ fila[3] +"</td>"+
-                              "<td style='width:60px'>"+ fila[4] +"</td>"+
-                              "<td style='width:90px'><input id='input_cant"+fila[0]+"'   name= 'comprobante["+ fila[0]+"][cant]'   class='form-control input-sm'  style='width:80px; height:25px' ></input></td>"+
-                              "<td style='width:90px'><input id='input_costo"+fila[0]+"'  name= 'comprobante["+ fila[0]+"][costo]'  class='form-control input-sm'  style='width:80px; height:25px' ></input></td>"+
-                              "<td style='width:250px; text-align:right; padding:0px' ><label id='label_total"+fila[0]+"' name= 'comprobante["+ fila[0]+"][total]'  class='total_fila' >0.00</label></td>"+
+                              "<td style='width:70px'>"+ fila[1] +"</td>"+
+                              "<td style='width:352px'>"+ fila[2] +"</td>"+  
+                              "<td style='width:64px'>"+ fila[3] +"</td>"+
+                              "<td style='width:74px'><label id='precio_"+fila[0]+"'     name= 'comprobante["+ fila[0]+"][precio]' style='margin:0' >"+ fila[4] +"</label></td>"+
+                              "<td style='width:100px'><input id='input_cant"+fila[0]+"' name= 'comprobante["+ fila[0]+"][cant]'   class='form-control input-sm'  style='width:80px; height:25px' ></input></td>"+
+                              "<td style='width:100px'><input id='input_desc"+fila[0]+"' name= 'comprobante["+ fila[0]+"][desc]'   class='form-control input-sm'  style='width:80px; height:25px' ></input></td>"+
+                              "<td style='width:140px; text-align:right; padding:0px' ><label id='label_total"+fila[0]+"' name= 'comprobante["+ fila[0]+"][total]'  class='total_fila' >0.00</label></td>"+
                               "<td style='width:10px; text-align:right'><a class='glyphicon glyphicon-remove detalle_cruz' onClick='eliminar_fila("+ fila[0] +")' title='quitar de la lista'</a></td>"+   
                           "</tr>" 
                       );  
 
+                      //precio
+                      $('#precio_'+fila[0]).val(fila[4]);
                       //cantidad
-                      $('#input_cant'+fila[0]).val($('#cantidad').val())
+                      $('#input_cant'+fila[0]).val($('#cantidad').val());
                       $('#input_cant'+fila[0]).addClass('required');
                       $('#input_cant'+fila[0]).addClass('number');
+                      $('#input_cant'+fila[0]).on('keypress',function(){total_fila(fila[0])})
                       $('#input_cant'+fila[0]).on('change',function(){total_fila(fila[0])})
-                      //costos
-                      $('#input_costo'+fila[0]).val('0')
-                      $('#input_costo'+fila[0]).addClass('required');
-                      $('#input_costo'+fila[0]).addClass('number');                      
-                      $('#input_costo'+fila[0]).on('change',function(){total_fila(fila[0])});
+                      $('#input_cant'+fila[0]).on('keydown',function(){total_fila(fila[0])})
+                      $('#input_cant'+fila[0]).on('keyup',function(){total_fila(fila[0])})
+     
+                      //descuentos
+                      $('#input_desc'+fila[0]).val(fila[5])
+                      $('#input_desc'+fila[0]).addClass('number');                      
+                      $('#input_desc'+fila[0]).on('keypress',function(){total_fila(fila[0])});
+                      $('#input_desc'+fila[0]).on('keydown',function(){total_fila(fila[0])});
+                      $('#input_desc'+fila[0]).on('keyup',function(){total_fila(fila[0])});
+                      $('#input_desc'+fila[0]).on('change',function(){total_fila(fila[0])});
+                      
+                      total_fila(fila[0]);
+
+
             }else{
                       $('#msj_error').text('Ya existe en lista el producto '+ fila[2] + '.');
                       $('#error_detalle').show();
@@ -331,7 +346,8 @@ $("#detalle").on("change", "input", function() {
 
 
   function total_fila(id){
-    total = parseFloat($('#input_cant'+id).val()) * parseFloat($('#input_costo'+id).val());  
+    total = parseFloat($('#input_cant'+id).val()) * parseFloat($('#precio_'+id).val());  
+    total = parseFloat(total).toFixed(2);
     $('#label_total'+id).text(total); 
     //alert('ddfadfSFADFS ' + $('#label_total'+id).text());
     actualiza_totales();
@@ -347,24 +363,7 @@ $("#detalle").on("change", "input", function() {
       $('#total_gral').text(total) ;
       $('#total_factura').val(total) ;
 
-
    }   
-
-  /*  PEDIDO COMPRAS */
-
-  <% unless @pedido_compra.nil? %>
-        <% @pedido_compra.movimientos.each do |pd| %>
-                <% ide = pd.producto.id %> 
-                $('#input_cant<%=ide%>').addClass('required');
-                $('#input_cant<%=ide%>').addClass('number');
-                $('#input_cant<%=ide%>').on('change',function(){total_fila('<%=ide%>')});
-                //costos
-                $('#input_costo<%=ide%>').addClass('required');
-                $('#input_costo<%=ide%>').addClass('number');                      
-                $('#input_costo<%=ide%>').on('change',function(){total_fila('<%=ide%>')});
-
-        <% end %>
-  <%end%>
 
 </script>
 
