@@ -51,26 +51,33 @@ class VentasController < ApplicationController
 
  def agregar_detalle
      
-     @productos = ActiveRecord::Base.connection.execute("select * from productos p 
+     @productos = ActiveRecord::Base.connection.execute("select 
+                                                                p.id       as id,
+                                                                p.codigo   as codigo,
+                                                                p.nombre   as nombre,
+                                                                plp.precio as precio,
+                                                                plp.descuento as descuento,
+                                                                p.codigo as codigo,
+                                                                p.codigo as codigo,
+                                                                p.codigo as codigo,
+                                                                p.codigo as codigo,
+                                                                p.codigo as codigo
+
+                                                        from productos p 
                                                         inner join producto_lista_precios plp ON plp.id = p.id
                                                         inner join producto_stocks         ps  ON ps.producto_id = p.id
-                                                        where ps.deposito_id = #{current_user.sucursal.deposito_id}
+                                                        where
+                                                        plp.lista_precio_id = #{params[:lista_precio_id]}
+                                                        ps.deposito_id = #{current_user.sucursal.deposito.id}
                                                         and p.id = #{params[:producto_id]}
                                                         ")
 
      
+     #raise "xxxx #{@productos}"
 
-
-
-
-
-
-
-
-     
      respond_to do |format|
           format.js
-        end
+     end
 
  end
 

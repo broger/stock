@@ -82,8 +82,10 @@
                                   <th style="width:100px">c&oacute;digo</th>
                                   <th style="width:450px">nombre</th>
                                   <th style="width:60px">unidad</th>
-                                  <th style="width:80px">cantidad</th>
+                                  <th style="width:80px">precio</th>
+                                  <th style="width:80px"></th>
                                   <th style="width:80px">precio unit.</th>
+                                  
                                   <th style="width:235px; text-align:right">total</th>
                                   <th style="width:55px;"></th>
                                 </tr> 
@@ -233,7 +235,8 @@
                           "<tr id='detalle"+fila[0]+"'>" +
                               "<td style='width:90px'>"+ fila[1] +"</td>"+
                               "<td style='width:450px'>"+ fila[2] +"</td>"+  
-                              "<td style='width:60px'>"+ fila[3] +"</td>"+    
+                              "<td style='width:60px'>"+ fila[3] +"</td>"+
+                              "<td style='width:60px'>"+ fila[4] +"</td>"+
                               "<td style='width:90px'><input id='input_cant"+fila[0]+"'   name= 'comprobante["+ fila[0]+"][cant]'   class='form-control input-sm'  style='width:80px; height:25px' ></input></td>"+
                               "<td style='width:90px'><input id='input_costo"+fila[0]+"'  name= 'comprobante["+ fila[0]+"][costo]'  class='form-control input-sm'  style='width:80px; height:25px' ></input></td>"+
                               "<td style='width:250px; text-align:right; padding:0px' ><label id='label_total"+fila[0]+"' name= 'comprobante["+ fila[0]+"][total]'  class='total_fila' >0.00</label></td>"+
