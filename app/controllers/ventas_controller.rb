@@ -58,16 +58,18 @@ class VentasController < ApplicationController
                                                                 u.nombre   as unidad,
                                                                 plp.precio as precio,
                                                                 plp.descuento as descuento,
-                                                                p.codigo as codigo,
+                                                                ps.stock   as stock,
                                                                 p.codigo as codigo
 
                                                         from productos p 
                                                         inner join unidades                 u ON p.unidad_id = u.id
-                                                        inner join producto_lista_precios plp ON plp.id = p.id
+                                                        inner join producto_lista_precios plp ON plp.producto_id = p.id
+                                                        inner join lista_precios           lp ON lp.id = plp.lista_precio_id
                                                         inner join producto_stocks         ps ON ps.producto_id = p.id
                                                         where
-                                                        ps.deposito_id = #{current_user.sucursal.deposito.id}
-                                                        and p.id = #{params[:producto_id]}
+                                                            lp.id = #{current_user.sucursal.lista_precio_id}
+                                                            AND ps.deposito_id = #{current_user.sucursal.deposito.id}
+                                                            AND p.id = #{params[:producto_id]}
                                                         ")
 
      

@@ -11,9 +11,10 @@ unless @productos.blank?
         unidad    = fila['unidad'].strip
         precio    = fila['precio']
         descuento = fila['descuento']
+        stock     = fila['stock']
       
         #page << "  filas.push(new Array('#{fila.id}','#{fila.codigo.strip}','#{fila.nombre.strip}','#{fila.unidad.nombre.strip}'))"
-        page << "  filas.push(new Array('#{id}','#{codigo}','#{nombre}','#{unidad}','#{precio}','#{descuento}'))"
+        page << "  filas.push(new Array('#{id}','#{codigo}','#{nombre}','#{unidad}','#{precio}','#{descuento}','#{stock}'))"
   
     end 
     page.call "agregar_detalle"
