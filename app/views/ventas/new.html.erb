@@ -143,7 +143,8 @@
         $('#obs').hide();
         $('#ocultar_obs').hide();
         $('#error_detalle').hide();
-       
+        $('#lista_precio_id').change(limpiar_detalle);
+        $('#deposito_id').change(limpiar_detalle);
         $('#numero').attr('readonly', true);
         $('#cliente_id').focus;
         $("#comprobante").validate({
@@ -308,7 +309,13 @@ $("#detalle").on("change", "input", function() {
     
 
   function eliminar_detalle(){
-          $('#list tr').remove();
+        $('#list tr').remove();
+        $('#subtotal').val();
+        $('#subtotal').text('0.00');
+        $('#iva_disc').val();
+        $('#iva_disc').text('0.00');
+        $('#total_gral').val();
+        $('#total_gral').text('0.00');
   }
 
 
