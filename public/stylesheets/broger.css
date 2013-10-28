@@ -12,10 +12,8 @@
      text-decoration: none
  }
 
- .cuadro-scroll {
-     padding-top:6px;
+ .scroll {
      width:100%;
-     height:260px;
      background-color:white;
      overflow:auto;
  }

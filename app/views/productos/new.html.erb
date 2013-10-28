@@ -19,15 +19,12 @@
                             <div class= "datos" ><%= f.label :codigo, "c&oacute;digo"%><%= f.text_field :codigo,  :value=> ultimo, :style=>'width:120px', :class=>'form-control'  %></div>
                             <div class= "datos" style="margin-left:20px"><%= f.label :nombre    %><%= f.text_field :nombre , :style=>'width:300px', :class=>'form-control' %></div>
                             <div class= "datos" style="margin-left:20px"><%= f.label :estado_id %><%= f.select(:estado_id, Estado.find(:all).collect{|t|[t.nombre, t.id]}, {:selected=>1}, {:class => "form-control", :style => 'width:120px' } ) %></div>               
-                            <div class= "datos" ><%= f.label :unidad_id, "unidad medida" %><%= select_tag :unidad_id, options_from_collection_for_select(Unidad.all, :id, :nombre) , :style=>'width:100px', :class=> 'form-control' %></div>
+                            <div class= "datos" ><%= f.label :unidad_id, "unidad medida" %><%= f.select(:unidad_id, Unidad.find(:all).collect{|t|[t.nombre, t.id]}, {:selected=>1}, {:class => "form-control", :style => 'width:120px' } )%></div>
                             <div class= "datos" style="margin-left:20px">
                               <%= f.label :stock_minimo, "stock m&iacute;nimo"%><%= f.text_field :stock_minimo, :placeholder => '0.00', :style=>'width:80px', :class=>'form-control' %>
                               <%= f.label :stock_ideal, "stock ideal"%><%= f.text_field :stock_ideal, :placeholder => '0.00', :style=>'width:80px', :class=>'form-control' %> 
                               <%= f.label :stock_minimo, "avisa en"%><%= f.text_field :punto_de_pedido, :placeholder => '0.00', :style=>'width:80px', :class=>'form-control' %> 
                             </div> 
-                            
-
-                      
 
                        <!--     
                            
@@ -36,82 +33,81 @@
                             <div class= "datos" style="width:200px"><%= f.text_field :punto_de_pedido,:size=>16,:placeholder => ' 0.00' , :size=> 10 %> </div>        
                         -->
                 </div>
-                 <div class="tab-pane fade" id="categoria">
-                        <table style="width:360px; display:inline; float: left">
-                                                <tr>
-                                                     <th><%= f.label :rubro_id, "Rubro" %></th>
-                                                     <td><% unless Rubro.count == 0 %>
-                                                            <%=  Rubro.count > 1 ? "#{f.select :rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}}" : "#{Rubro.first.nombre}" %>
-                                                        <% end %>
-                                                     </td>
-                                                </tr>
-                                                <tr>
-                                                     <th><%= f.label :seccion_id, "Secci&oacute;n" %></th>
-                                                     <td><%=  f.select :seccion_id, Seccion.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}%></td>
-                                                </tr>
-                                                 <tr>
-                                                     <th><%= f.label :categoria_id, "Categoria" %></th>
-                                                     <td><%=  f.select :categoria_id, Categoria.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}%></td>
-                                                </tr>
-                                            </table>
-                                            <table style="width:350px; display:inline; float: left">
-                                                <tr>
-                                                       <th><%= f.label :codigo_proveedor, "C&oacute;digo Proveedor" %></th>
-                                                       <td><%= f.text_field :codigo_proveedor %></td>
-                                                  </tr>
-                                                  <tr>
-                                                       <th><%= f.label :proveedor_id, "Proveedor" %></th>
-                                                       <td><%= f.select :proveedor_id, Proveedor.find(:all).collect{|t|[t.razon_social, t.id]}, {:include_blank => true} %></td>
-                                                  </tr>
-                                                    <tr>
-                                                       <th><%= f.label :marca_id, "Marca" %></th>
-                                                       <td><%= f.select :marca_id, Marca.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true} %></td>
-                                                  </tr>
-                                                  
-                                             </table>
-                                             <table>
-                                                    <tr>
-                                                        <td>
-                                                              
-                                                            <%= f.label 'calificacion_a','A'%>                               
-                                                            <%= f.radio_button :calificacion, 'A', :checked => true %> 
-                                                        </td>
-                                                  </tr>
-                                                  <tr>
-                                                        <td>
-                                                            <%= f.label 'calificacion_b','B'%>
-                                                            <%= f.radio_button :calificacion, 'B', :checked => false %>
-                                                            
-                                                        </td>
+                <div class="tab-pane fade" id="stock">
 
-                                                  </tr>
-                                                  <tr>
-                                                        <td>
-                                                            <%= f.label 'calificacion_c','C'%>
-                                                            <%= f.radio_button :calificacion, 'C', :checked => false %>
-                                                            
-                                                        </td>
-                                                        
-                                                  </tr>
-
-                                                </table>
-
-                      </div>
-                      <div class="tab-pane fade" id="precios">
+                </div>
+                <div class="tab-pane fade" id="categoria">
+                        <table style="width:100%; display:inline; float: left">
+                             <tr>
+                                 <th><%= f.label :rubro_id, "Rubro" %></th>
+                                 <td>
+                                  <% unless Rubro.count == 0 %>
+                                  <%=  Rubro.count > 1 ? "#{f.select(:rubro_id, Rubro.find(:all).collect{|t|[t.nombre, t.id]}, {:selected=>1}, {:class => "form-control", :style => 'width:120px' } )}" : "#{Rubro.first.nombre}" %>
+                                  <% end %>
+                                 </td>
+                                 <!-- COLUMNA 2 -->
+                                 <th><%= f.label :proveedor_id, "Proveedor" %></th>
+                                 <td><%=  f.select(:proveedor_id, Proveedor.find(:all).collect{|t|[t.nombre, t.id]}, {:selected=>1}, {:class => "form-control", :style => 'width:120px' } ) %></td>
+                                 <!-- COLUMNA 3 -->
+                                 <th><%= f.label :calificacion_id, "Calificaci&oacute;n" %></th>
+                                 <td>
+                                      <div class= "datos" style="width:160px" >
+                                          <div class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-primary active" style="padding:5px; margin-right:0px">
+                                              <input type="radio" name="options" value="A" id="option1">A</label>
+                                            <label class="btn btn-primary" style="padding:5px; margin-right:0px">
+                                              <input type="radio" name="options" value="B" id="option2">B</label>
+                                            <label class="btn btn-primary" style="padding:5px; margin-right:0px">
+                                              <input type="radio" name="options" value="C" id="option3" style="border-radius:1px">C</label>
+                                          </div>
+                                        <%= hidden_field_tag :calificacion, 'A' %>  
+                                      </div>
+                                  </td> 
+                             </tr>
+                             <tr>  
+                                 <th><%= f.label :seccion_id, "Secci&oacute;n" %></th>
+                                 <td><%=  f.select(:seccion_id, Seccion.find(:all).collect{|t|[t.nombre, t.id]}, {:selected=>1}, {:class => "form-control", :style => 'width:120px' } ) %></td>
+                                 <!-- COLUMNA 2 -->
+                                 <th></th>
+                                 <td></td>  
+                             </tr>
+                             <tr>
+                                 <th><%= f.label :categoria_id, "Categoria" %></th>
+                                 <td><%= f.select(:categoria_id, Categoria.find(:all).collect{|t|[t.nombre, t.id]}, {:selected=>1}, {:class => "form-control", :style => 'width:120px' } )%></td>
+                                 <!-- COLUMNA 2 -->
+                                 <th></th>
+                                 <td></td> 
+                             </tr>
+                             <tr>
+                                 <th><%= f.label :marca_id, "Marca" %></th>
+                                 <td><%= f.select(:marca_id, Marca.find(:all).collect{|t|[t.nombre, t.id]}, {:selected=>1}, {:class => "form-control", :style => 'width:120px' } )%></td>
+                                 <!-- COLUMNA 2 -->
+                                 <th></th>
+                                 <td></td> 
+                             </tr>
+                        </table>
+                </div>
+                <div class="tab-pane fade" id="precios">
+                                    <div class="scroll" style="margin:10px 10px">
                                            <table>
-                                                <tr>
-                                                    <th>Lista</th>
-                                                    <th>Precio</th>
-                                                    <th>Descuento</th>
+                                                <thead>
+                                                <tr style="background-color:#c6c6c6; color:#5A5A5A; font-size:12px; text-align:left; height:28px">
+                                                    <th style= "width:50%; text-align:left; padding-left:6px">Lista</th>
+                                                    <th style= "width:25%; text-align:left">Precio</th>
+                                                    <th style= "width:25%; text-align:left">Descuento</th>
                                                 </tr>
+                                                </thead>
+                                                <tbody style="background-color:#e5e5e5; padding-top:4px">
                                                 <% ListaPrecio.all.each  do |lista| %>
-                                                      <tr>
-                                                        <td><%= lista.nombre %></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                      <tr >
+                                                        <td style= "width:50%; text-align:left; padding-left:6px"><%= lista.nombre %></td>
+                                                        <td width="25%"><input id='precio_<%= lista.id %>' name= 'lista_precio[<%=lista.id %>][precio]' class='form-control input-sm'  style='width:80px; height:25px' ></input></td>
+                                                        <td width="25%"><input id='desc_<%= lista.id %>'   name= 'lista_precio[<%=lista.id %>][desc]'   class='form-control input-sm'  style='width:80px; height:25px' ></input></td>
                                                       </tr>
-                                                <% end %>      
+                                                <% end %>
+                                                </tbody>
                                             </table>
+                                     </div>       
                       </div>
                       <div class="tab-pane fade" id="web">
                                              <table>
@@ -131,9 +127,6 @@
                         </table>
                                             
                       </div>	
-
-
-
 
 	            </div>
 
@@ -170,9 +163,19 @@
 
             seccionSelec();
             categoriaSelec();
-            marcasSelec();
+            marcasSelec();        
+
             
     });
+
+    <% ListaPrecio.all.each  do |lista| %>
+        $('#precio_<%= lista.id %>').val('0.00');
+        $('#precio_<%= lista.id %>').addClass('required');
+        $('#precio_<%= lista.id %>').addClass('number');
+        $('#desc_<%= lista.id %>').val('0.00');
+        $('#desc_<%= lista.id %>').addClass('required');
+        $('#desc_<%= lista.id %>').addClass('number');
+    <% end %>  
 
     $.validator.addMethod('Decimal', function(value, element) {
     return this.optional(element) || /^[0-9,]+(\.\d{0,3})?$/.test(value);
@@ -299,6 +302,26 @@
 
 <style type="text/css">
 
+
+
+  table td{
+      height: 40px;
+    }
+
+  table th{
+    text-align: right;
+    width: 80px;
+  }
+
+  table td{
+    text-align: left ;
+    width: 180px;
+  }
+
+  table label{
+      font-size: 11px;
+    }
+
   select{
     padding: 2px;
   }
@@ -326,7 +349,7 @@
 	position:relative;
 	}
 
-.brogertab{
+  .brogertab{
           min-height: 260px;
           height: auto;
     }
@@ -362,6 +385,14 @@
         textarea{
           font-size: 14px
         }
+
+    
+    .tabla_detalle{
+       background-color:white;
+       font-size:11px;
+       width:100%;
+       display:block
+    }
 
 </style>
 

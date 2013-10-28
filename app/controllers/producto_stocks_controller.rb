@@ -40,8 +40,9 @@ class ProductoStocksController < ApplicationController
   # POST /producto_stocks
   # POST /producto_stocks.xml
   def create
+  
     @producto_stock = ProductoStock.new(params[:producto_stock])
-
+    raise "ddd"
     respond_to do |format|
       if @producto_stock.save
         format.html { redirect_to(@producto_stock, :notice => 'ProductoStock was successfully created.') }

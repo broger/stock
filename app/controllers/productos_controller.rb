@@ -82,13 +82,42 @@ class ProductosController < ApplicationController
   # POST /productos.xml
   def create
 
-    @producto = Producto.new(params[:producto])
-
     Producto.transaction do
 
-        @producto.save
+        # PRODUCTO
+        @producto = Producto.new(params[:producto])    
+        @producto.save!
 
-        # guardar produto_lista
+
+        # PRODUCTO LISTA PRECIOS
+        unless params["lista_precio"].blank?   
+              params["lista_precio"].each do |k,o|
+                # lista_precio_id = k 
+                # valores_input = o        
+                existe_ya = ProductoListaPrecio.find(:first, :conditions=>{:producto_id=>@producto.id, :lista_precio_id=> k})
+                unless existe_ya 
+                   plp = ProductoListaPrecio.new
+                   plp.producto_id = @producto.id
+                   plp.lista_precio_id = k
+                   plp.precio = o[:precio]
+                   plp.descuento= o[:desc]
+                   plp.save!
+                end           
+              end 
+        end
+
+        # PRODUCTO STOCK
+        Deposito.all.each do |deposito|
+
+            existe_ya = ProductoStock.find(:all, :conditions=>{:producto_id=>@producto.id, :deposito_id=>deposito.id})
+            unless existe_ya
+                ps = ProductoStock.new
+                ps.producto_id = @producto.id
+                ps.deposito_id = deposito.id
+                ps.stock = 0
+            end
+        end
+
         respond_to do |format|
             if @producto.save
                 format.html { redirect_to(productos_url, :notice => "El Producto #{@producto.nombre} ha sido creado satisfactoriamente.") }
