@@ -25,20 +25,55 @@ class ProductosController < ApplicationController
 
 
       if params[:txtbuscar].blank? && filtros == " "
-         @productos = Producto.paginate(:page => params[:page],:per_page => 24,:order => "nombre")
+         @productos = Producto.paginate(:page => params[:page],:per_page => 16,:order => "nombre")
       else
       
           if params[:txtbuscar].blank?
                 @productos = Producto.find_by_sql("SELECT * FROM productos p where id > 0 #{filtros}")
 
           else
-                if /^\d{1,10}$/.match(params[:txtbuscar].strip)
-                    @productos = Producto.find_by_sql("SELECT * FROM productos p where p.codigo ilike '%#{params[:txtbuscar].strip}%' #{filtros}")
-                else
-                    @productos = Producto.find_by_sql("#{sql_descripcion('productos','nombre',params[:txtbuscar],30,false,filtros)}")
-                end
+          
+                 # 1ro buscar x CODIGO
+                 @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo = ?', params[:txtbuscar] ])
+                       
+                 # 2do si no existe buscar  que el parametro sea IGUAL al NOMBRE 
+                 if @productos.blank?
+                      @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre = ?',"#{params[:txtbuscar]}"], :order => :nombre)
+                 end
+
+                 # 3do si no existe buscar que el parametro sea PARECIDO al NOMBRE 
+                 if @productos.blank?
+                       @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ?',"%#{params[:txtbuscar]}%"], :order => :nombre)
+                 end
+
           end 
-           @productos = @productos.paginate :per_page => 24, :page => params[:page],:include=>[:talbas,:estado_beneficiario]
+
+#SELECT 
+#        p.codigo as codigo,
+#  p.nombre as nombre,
+#  m.nombre as marca,
+#  u.nombre as unidad,
+#  p.stock  as stoct_total,
+#  p.nombre as nombre,
+#  plp.precio as precio,
+#  plp.descuento as descuento,
+#  ps.stock      as stock_suc
+  
+# FROM productos p 
+ 
+#inner join unidades                u   ON u.id = p.unidad_id
+##inner join marcas                  m   ON m.id = p.marca_id
+#inner join producto_lista_precios  plp ON plp.producto_id = p.id
+##inner join lista_precios           lp  ON lp.id = plp.lista_precio_id
+#inner join producto_stocks         ps  ON ps.producto_id = p.id
+##inner join depositos               d   ON d.id = ps.deposito_id
+#inner join sucursales              s   ON d.id = s.deposito_id
+#where s.lista_precio_id = lp.id  and s.id =  2
+#order by p.nombre
+
+
+
+           @productos = @productos.paginate :per_page => 16, :page => params[:page],:include=>[:talbas,:estado_beneficiario]
       end     
 
 
@@ -110,11 +145,13 @@ class ProductosController < ApplicationController
         Deposito.all.each do |deposito|
 
             existe_ya = ProductoStock.find(:all, :conditions=>{:producto_id=>@producto.id, :deposito_id=>deposito.id})
-            unless existe_ya
+            
+            if existe_ya.nil? || existe_ya.blank?
                 ps = ProductoStock.new
                 ps.producto_id = @producto.id
                 ps.deposito_id = deposito.id
-                ps.stock = 0
+                ps.stock = 0 
+                ps.save!
             end
         end
 
@@ -167,11 +204,16 @@ class ProductosController < ApplicationController
         
 
         # 1ro buscar x CODIGO
-        @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo = ? and proveedor_id = ?', params[:q], params[:proveedor_id]])
+        @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo = ?', params[:q] ])
        
-        # 2do si no existe buscar x NOMBRE 
+        # 2do si no existe buscar  que el parametro sea IGUAL al NOMBRE 
         if @productos.blank?
-          @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ? and proveedor_id = ?',"%#{params[:q]}%", params[:proveedor_id]], :order => :nombre,:limit=>30)
+          @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre = ?',"#{params[:q]}"], :order => :nombre)
+        end
+
+        # 3do si no existe buscar que el parametro sea PARECIDO al NOMBRE 
+        if @productos.blank?
+          @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ?',"%#{params[:q]}%"], :order => :nombre)
         end
 
     else
@@ -180,9 +222,14 @@ class ProductosController < ApplicationController
         # 1ro buscar x CODIGO
         @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo = ?', params[:q] ])
        
-        # 2do si no existe buscar x NOMBRE 
+        # 2do si no existe buscar  que el parametro sea IGUAL al NOMBRE 
         if @productos.blank?
-          @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ?',"%#{params[:q]}%"], :order => :nombre,:limit=>30)
+          @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ?',"#{params[:q]}"], :order => :nombre)
+        end
+
+        # 3do si no existe buscar que el parametro sea PARECIDO al NOMBRE 
+        if @productos.blank?
+          @productos=Producto.find(:all, :conditions=>['estado_id = 1 and nombre ilike ?',"%#{params[:q]}%"], :order => :nombre)
         end
     
     end    

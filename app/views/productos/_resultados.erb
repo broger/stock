@@ -1,15 +1,15 @@
 
 <% unless @productos.blank? %>
 
-      <div  class= "cuadro-scroll" >
-          <table >
+        <table >
               <thead>
                 <tr style="height:12px; font-size:12px">
                   <th>codigo</th>
                   <th>nombre</th>
+                  <th>unidad</th>
                   <th>stock local</th>
                   <th>stock</th>
-                  <th>unidad</th>
+                  <th>precio</th>
                   <th>marca</th>
                   <th></th>
                 </tr>
@@ -17,12 +17,12 @@
               <tbody>
               <% @productos.each do |producto| %>
                 <tr >
-                    <td onclick="ver_registro()" style="cursor: pointer"><%=h producto.codigo %></td>
-                    <td><%=h producto.nombre %></td>
-                    <td><%=h ProductoStock.find(:first, :conditions=>['deposito_id = ? and producto_id = ?',current_user.sucursal.deposito.id, producto.id]).stock %></td>
-                    <td><%=h producto.stock %></td>
-                    <td><%=h producto.unidad.nombre %></td>
-                    <td><%=h producto.marca.nombre %></td>
+                    <td  onclick="ver_registro()" style="cursor: pointer"><%=h producto.codigo %></td>
+                    <td  ><%=h producto.nombre %></td>
+                    <td ><%=h producto.unidad.nombre %></td>
+                    <td ><%#=h ProductoStock.find(:first, :conditions=>['deposito_id = ? and producto_id = ?',current_user.sucursal.deposito.id, producto.id]).stock %></td>
+                    <td ><%=h producto.stock %></td>
+                    <td ><%=h producto.marca.nombre %></td>
                     <td style="text-align:right">
                           <%= link_to "<i class='glyphicon glyphicon-search' style='font-size: 13px; color:black' ></i>", producto, :title=>'Ver', :class=>"fancybox", :id=>'ver' %>
                          <%= link_to "<i class='glyphicon glyphicon-pencil' style='font-size: 13px; color:black' ></i>", edit_producto_path(producto), :title=>'Editar' %>
@@ -32,7 +32,6 @@
               <% end %>
               </tbody> 
           </table>
-      </div>
       <div style="text-align:center">
             <%= will_paginate @productos, :previous_label => '<< Anterior &nbsp;', :next_label => '&nbsp; Siguiente >>'%>
       </div>
@@ -59,22 +58,18 @@
 
 <style type="text/css">
 
-
-    .cuadro-scroll {
-     height:320px;
-     /* background-color:#F2F2F2; */
-     overflow:auto;
-     width: 100%;
-     float: left;
-     font-size: 11px;
+    table{
+      font-size: 11px;
     }
-
-    .tabla_prod {
-
+    
+    table td{
+      padding: 0px
     }
-
     .tabla_prod > table > tr > td{
         font-size: 11px;
+    }
+    table-condensed tbody > tr > td, .table-condensed tfoot > tr > td {
+      padding: 2px;
     }
 
 </style>
