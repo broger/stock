@@ -1,3 +1,4 @@
+
 class ProductosController < ApplicationController
   # GET /productos
   # GET /productos.xml
@@ -187,21 +188,34 @@ class ProductosController < ApplicationController
   # DELETE /productos/1
   # DELETE /productos/1.xml
   def destroy
-    @producto = Producto.find(params[:id])
-    @producto.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(productos_url) }
-      format.xml  { head :ok }
-    end
+     Producto.transaction do
+         @producto = Producto.find(params[:id])
+         control = Movimiento.find(:all, :conditions=>{:producto_id=> @producto.id})
+     
+          if control.blank?
+              ActiveRecord::Base.connection.execute("Delete from producto_stocks where producto_id = #{@producto.id}")
+              ActiveRecord::Base.connection.execute("Delete from producto_lista_precios where producto_id = #{@producto.id}")
+              @producto.destroy
+              ok = true
+           else
+              ok = false
+          end  
+         respond_to do |format|
+              if ok == true
+                  format.html { redirect_to(productos_path, :notice => "El Producto #{@producto.nombre} ha sido eliminado satisfactoriamente.") }
+                  format.xml  { head :ok }
+              else
+                  format.html { redirect_to(productos_path, :notice => "No es posible eliminar #{@producto.nombre} debido a que existen movimientos relacionados a &eacute;l. Puede editar el registro asignandole un estado igual a baja.") }
+                  format.xml  { render :xml => @producto.errors, :status => :unprocessable_entity }
+              end
+         end
+     end   
   end
 
-
-
+  
   def todos
 
     unless params[:proveedor_id].blank? || params[:proveedor_id].nil?
-        
 
         # 1ro buscar x CODIGO
         @productos=Producto.find(:all, :conditions=>['estado_id = 1 and codigo = ?', params[:q] ])
