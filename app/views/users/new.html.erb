@@ -1,64 +1,147 @@
+<div id="titulo" style="padding: 10px 0 6px 20px ">
+    <h3>Nuevo Usuario</h3>
+</div>
+<% form_for(@user) do |f| %>
+ <%= f.error_messages %>
+<div class="well" style="background-color:white">
+  <div class="brogertab" >
+              <ul id="myTab" class="nav nav-tabs">
+                <li class="active"><a href="#general"          data-toggle="tab">Generales</a></li>
+          <!-- <li                ><a href="#direccion"        data-toggle="tab">Direcci&oacute;n</a></li>-->
+                <li               ><a href="#roles" data-toggle="tab">Roles</a></li>
+              </ul>
 
-<h1>Nuevo Usuario</h1>
-<% @user.password = @user.password_confirmation = nil %>
+         <div id="myTabContent" class="tab-content" style="padding:20px">
+                <div  class="tab-pane active"  id="general" >
+                    <table style="float:left; margin:0 100px 0 20px">
+                              <tr>
+                                <td><%= f.label :login %></td><td><%= f.text_field :login, :class=>'form-control' %></td>
+                              </tr>
+                              <tr>
+                                <td><%= f.label :email %></td><td><%= f.text_field :email, :class=>'form-control' %></td>
+                              </tr>
+                              <tr>
+                                <td><%= f.label :password %></td><td><%= f.text_field :password, :class=>'form-control' %></td>
+                              </tr>
+                              <tr>
+                                <td><%= f.label :password_confirmation, "Confirmar Password" %></td><td><%= f.text_field :password_confirmation, :class=>'form-control' %></td>
+                              </tr>
+                              </tr>
+                        </table>
 
- <%= error_messages_for :user,
-        :header_message => "No se pudo guardar el usuario",
-        :message => "Hubo problemas en los siguientes datos:" %>
+                        <table tyle="float:left; margin:0 180px 0 20px; display:inline">
+                              <table tyle="float:left; margin:0 180px 0 20px; display:inline">
+                              <% unless @roles.blank? %>
+                                    <% @roles.each do |p|%>
+                                       <tr style=" text-align: right">
+                                         <th style=" text-align: right"><%= p.descripcion %></th>
+                                         <td style=" text-align: left"><%=check_box_tag "usuario[rol_ids][]",p.id,@usuario.roles.include?(p) %></td>
+                                       </tr>
+                                    <%end%>
+                              <% end %>
+                       </table>          
+                        </table>
+                </div>
+                <!-- <div class="tab-pane fade" id="direccion"> </div> -->
 
-<% form_for :user, :url => users_path do |f| -%>
-
-  <p><%= f.label :login %><br/>
-  <%= f.text_field :login %></p>
-
-  <p><%= f.label :email %><br/>
-  <%= f.text_field :email %></p>
-
-  <p><%= f.label :password %><br/>
-  <%= f.password_field :password %></p>
-
-  <p><%= f.label :password_confirmation, 'Confirm Password' %><br/>
-  <%= f.password_field :password_confirmation %></p>
-
-
-
-  <fieldset>
-  <legend><b><h4>Roles</h4></b></legend>
-                 <table>
-                      <% unless @roles.blank? %>
-                          <% @roles.each do |p|%>
-                             <tr style=" text-align: right">
-                               <th style=" text-align: right"><%= p.descripcion %></th>
-                               <td style=" text-align: left"><%=check_box_tag "usuario[rol_ids][]",p.id,@usuario.roles.include?(p) %></td>
-                             </tr>
-                          <%end%>
-                     <% end %>
-
-                   </table>
-    </fieldset>
-               
-<p><%= submit_tag 'Sign up' %></p>
-
-<% end -%>
+                <div class="tab-pane fade" id="roles">
+                                          
+                </div>
+        </div>
+  </div>
+</div>  
+<div id="pie" style="height:30px; padding:16px">
+    <div style="text-align: right"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %></p></div>
+</div>
+<% end %>
 
 
 <script type="text/javascript">
 
-$(document).ready(function(){
-    $('form').validate(
-      {
-        rules:{
-          'usuario[login]': {required:true,minlength: 3 , maxlength: 40},
-          'usuario[nro_documento]': {required:true,minlength: 6 , maxlength: 8},
-          'usuario[name]': {required:true,minlength: 0, maxlength: 100 },
-          'usuario[email]': { email:true},
-          'usuario[password]': {required:true,minlength: 6},
-          'usuario[password_confirmation]': {required:true,minlength: 6}
-        }
-      });
-});
+    var localidades = new Array();
+    <% localidades = Localidad.find(:all) %>
+    <% for localidad in localidades -%>
+          localidades.push(new Array(<%= localidad.provincia_id %>, "<%=h localidad.nombre %>", <%= localidad.id %>));
+    <% end %>
+    $('#provincia_id').change(localidadSelec);
+    
+
+    $(document).ready(function(){
+            $("#new_user").validate({
+             rules: {
+                      'user[login]': {required:true,minlength: 3 , maxlength: 40},
+                      'user[email]': { email:true},
+                      'user[password]': {required:true,minlength: 6},
+                      'user[password_confirmation]': {required:true,minlength: 6}
+                    }
+             });
+            localidadSelec();
+    });
+
+
+     $('#myTab a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show');
+        });
+
+   
+     function localidadSelec() {
+        provincia_id = $('#cliente_provincia_id').val();
+        $('#cliente_localidad_id').empty();
+        $('#cliente_localidad_id').append(selec='<option></option>');
+        localidades.forEach(function(localidad){
+            if (localidad[0]==provincia_id){
+                $('#cliente_localidad_id').append(selec='<option value="'+ localidad[2] +'">'+ localidad[1]+'</option>');
+            }
+        });
+    } 
+
 </script>
 
-                       
+
+
+<style type="text/css">
+
+  input{
+    padding-left: 4px
+  }
+
+  #fancybox-outer{
+    background-color: #f5f5f5;
+  }
+
+ label{
+    margin: 0  16px 6px;
+    font-size: 12px
+
+  }
+
+  
+  #fancybox-wrap {
+    padding:0;
+  }
+
+  #fancybox-inner {
+  position:relative;
+  }
+
+
+    .tab-content{
+        background-color: white
+    }
+
+
+        textarea{
+          font-size: 14px
+        }
+
+
+
+  table tr{
+    height: 36px;
+  }
+  
+</style>
+                      
 
 

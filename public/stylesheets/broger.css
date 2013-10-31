@@ -12,11 +12,7 @@
      text-decoration: none
  }
 
- .scroll {
-     width:100%;
-     background-color:white;
-     overflow:auto;
- }
+
 
  .detalle_cruz{
        color:#d2322d;
