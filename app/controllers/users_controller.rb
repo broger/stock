@@ -22,16 +22,19 @@ class UsersController < ApplicationController
 
 
    def new
-    @usuario = User.new
+       @usuario = User.new
+
+       respond_to do |format|
+        format.html{render :layout=>false}
+      end
   end
 
   def create
-    #logout_keeping_session!
-    params[:usuario][:password]='123'
-    params[:usuario][:password_confirmation]='123'
-    @usuario = User.new(params[:usuario])
-    success = @usuario && @usuario.save
-    if success && @usuario.errors.empty?
+    params[:user][:password]='123'
+    params[:user][:password_confirmation]='123'
+    @user = User.new(params[:user])
+    success = @user && @user.save
+    if success && @user.errors.empty?
       # Protects against session fixation attacks, causes request forgery
       # protection if visitor resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
@@ -39,7 +42,7 @@ class UsersController < ApplicationController
       #self.current_usuario = @usuario # !! now logged in
       #redirect_back_or_default('/')
       flash[:notice] = "Usuario agregado con exito."
-      redirect_to(usuarios_url)
+      redirect_to(users_url)
     else
       flash[:error]  = "No se pudo guardar el usuario."
       render :action => 'new'
@@ -52,18 +55,6 @@ class UsersController < ApplicationController
     @user = User.new
   end
  
-  def create
-    logout_keeping_session!
-    @user = User.new(params[:user])
-    success = @user && @user.save
-    if success && @user.errors.empty?
-      redirect_back_or_default('/')
-      flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
-    else
-      flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      render :action => 'new'
-    end
-  end
 
   def activate
     logout_keeping_session!
