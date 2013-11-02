@@ -2,7 +2,8 @@
     <h3>Nuevo Usuario </h3>
 </div>
  
- <% form_for :user, :url => users_path do |f| -%>
+ <% form_for (:user, :url => users_path) do |f| -%>
+ 
   <%= error_messages_for :user,:header_message => "No se pudo guardar el user",:message => "Hubo problemas en los siguientes datos:" %>
 
 <div class="well" style="background-color:white">
@@ -10,7 +11,7 @@
               <ul id="myTab" class="nav nav-tabs">
                 <li class="active"><a href="#general"          data-toggle="tab">Generales</a></li>
            <!-- <li                ><a href="#direccion"        data-toggle="tab">Direcci&oacute;n</a></li>-->
-                <li               ><a href="#cuenta_corriente" data-toggle="tab">Roles</a></li>
+                <li               ><a href="#roles" data-toggle="tab">Roles</a></li>
               </ul>
 
          <div id="myTabContent" class="tab-content" style="padding:20px">
@@ -25,12 +26,28 @@
                               <tr>
                                 <td><%= f.label :email, 'email' %></td><td><%= f.text_field :email, :value=>nil, :class=>'form-control' %></td>
                               </tr>
+                              <tr>
+                                <td><%= f.label :a, 'activo hasta' %></td><td><%= f.text_field :activated_at, :value=>nil,:placeholder => '__/__/____', :class=>'form-control' %></td>
+                              </tr>
+                              <tr>
+                                <td><%= f.label :a, 'sucursal' %></td><td><%= f.select :sucursal_id, Sucursal.find(:all).collect{|t|[t.nombre, t.id]}, {:include_blank => true}, {:class=>'form-control'} %></td>
+                              </tr>
+
                         </table> 
                 </div>
                 <!-- <div class="tab-pane fade" id="direccion"> </div> -->
 
-                <div class="tab-pane fade" id="cuenta_corriente">
-                                          
+                <div class="tab-pane fade" id="roles">
+                   <% unless @roles.blank? %>
+                      <table>
+                          <% @roles.each do |p|%>
+                              <tr style=" text-align: right">
+                                    <th style=" text-align: right"><%= p.nombre %></th>
+                                    <td style=" text-align: left"><%=check_box_tag "user[rol_ids][]",p.id,false%></td>
+                              </tr>
+                          <%end%>
+                      </table>                          
+                  <% end %>
                 </div>
         </div>
   </div>
@@ -39,6 +56,33 @@
     <div style="text-align: right"><p> <%= f.submit 'Guardar', :class=>"btn btn-danger" %> | <%= link_to 'Cancelar', users_path %> </p></div>
 </div>
 <% end %>
+
+<script type="text/javascript">
+  $('#user_activated_at').mask('00/00/0000');
+  
+  $.validator.addMethod("validar_fecha", function(value, element, params) {
+     return fecha_valida(value);
+  },'Fecha Invalida.');
+
+  $(document).ready(function(){
+      $('#new_user').validate(
+          {
+          rules:{
+            'user[login]': {required:true,minlength: 3 , maxlength: 40},
+            'user[nro_documento]': {required:true,minlength: 6 , maxlength: 8},
+            'user[name]': {required:true,minlength: 0, maxlength: 100 },
+            'user[email]': { email:true},
+            'user[password]': {required:true,minlength: 6},
+            'user[password_confirmation]': {required:true,minlength: 6},
+            'user[activated_at]': {required:true, validar_fecha:true},
+            'user[sucursal_id]': {required:true}
+          }
+      });
+  });
+</script>
+
+
+
 
 
 
@@ -91,48 +135,3 @@
 </style>
 
 
-
-<script type="text/javascript">
-
-$(document).ready(function(){
-    $('form').validate(
-      {
-        rules:{
-          'user[login]': {required:true,minlength: 3 , maxlength: 40},
-          'user[nro_documento]': {required:true,minlength: 6 , maxlength: 8},
-          'user[name]': {required:true,minlength: 0, maxlength: 100 },
-          'user[email]': { email:true},
-          'user[password]': {required:true,minlength: 6},
-          'user[password_confirmation]': {required:true,minlength: 6}
-        }
-      });
-});
-</script>
-
-
-
-<style type="text/css">
-
-
-
-
-  #fancybox-outer{
-    background-color: #f5f5f5;
-  }
-
-  label{
-    margin-right: 6px
-
-  }
-
-  
-  #fancybox-wrap {
-    padding:0;
-  }
-
-  #fancybox-inner {
-  position:relative;
-  }
-
-
-</style>

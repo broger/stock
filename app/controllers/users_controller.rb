@@ -23,6 +23,7 @@ class UsersController < ApplicationController
 
    def new
        @usuario = User.new
+       @roles = Rol.find(:all)
 
        respond_to do |format|
         format.html{render :layout=>false}
@@ -30,11 +31,20 @@ class UsersController < ApplicationController
   end
 
   def create
-   
-    params[:user][:password] = params[:user][:password_confirmation] = Parametro.first.password
+    params[:user][:password] = Parametro.first.password
+    params[:user][:password_confirmation] = Parametro.first.password
     @user = User.new(params[:user])
-    
+    @user.activated_at = Date.strptime(params[:user][:activated_at], "%d/%m/%Y")
+    @user.sucursal_id = params[:user][:sucursal_id]
+        
+
     success = @user && @user.save
+    if @user.update_attributes(params[:user])
+                     @user.rol_ids = params[:user][:rol_ids]
+                     @user.update_attributes(params[:user])
+                     @user.save!
+                  end
+
     if success && @user.errors.empty?
       # Protects against session fixation attacks, causes request forgery
       # protection if visitor resubmits an earlier form using back
@@ -50,12 +60,6 @@ class UsersController < ApplicationController
     end
   end
 
-
-  # render new.rhtml
-  def new
-    @user = User.new
-  end
- 
 
   def activate
     logout_keeping_session!
@@ -78,7 +82,6 @@ class UsersController < ApplicationController
    def edit
     @usuario = User.find(params[:id])
     @roles = Rol.find(:all)
-    @areas=[]
    end
 
     def update
@@ -127,6 +130,18 @@ class UsersController < ApplicationController
        end
     end
 
+    def destroy
+    @user = User.find(params[:id])
+     
+    respond_to do |format|
+         if @user.puedo_eliminarlo?
+            @user.destroy
+            format.html { redirect_to(users_path, :notice => "El usuario ha sido eliminado satisfactoriamente.") }
+          else
+            format.html { redirect_to(users_path, :notice => "El usuario no se ha podido eliminar porque existen datos relacionados a &eacute;l, puedo asignarle estado igual a baja desde editar registro.") }
+          end
+    end
+  end
 
 
 end

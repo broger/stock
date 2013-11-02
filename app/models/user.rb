@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   
   has_many :roles_users, :class_name => 'RolesUser'
   has_many :roles, :through => :roles_users
+  has_many :comprobantes
   belongs_to :sucursal
 
   validates_presence_of     :login
@@ -28,6 +29,11 @@ class User < ActiveRecord::Base
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
  
+
+  def puedo_eliminarlo?
+     self.comprobantes.blank? ? true : false
+  end
+
 
   # Activates the user in the database.
   def activate!

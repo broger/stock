@@ -33,7 +33,7 @@
                    <div id="collapseOne" class="panel-collapse collapse in">
                    <div class="panel-body">
                           <ul>
-                            <li><%= link_to 'Nueva Usuario', new_user_path, :style=>'color:black; font-size:11px' %></li>
+                            <li><%= link_to 'Nueva Usuario', new_user_path,:class=>'fancybox', :style=>'color:black; font-size:11px' %></li>
                           </ul>
                         </div>
                    </div>
@@ -123,7 +123,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-         definir_fancy(200,200);
+         definir_fancy(900,600);
 
          $('#txtbuscar').focus();
          console.log();
