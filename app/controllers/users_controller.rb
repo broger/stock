@@ -30,9 +30,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    params[:user][:password]='123'
-    params[:user][:password_confirmation]='123'
+   
+    params[:user][:password] = params[:user][:password_confirmation] = Parametro.first.password
     @user = User.new(params[:user])
+    
     success = @user && @user.save
     if success && @user.errors.empty?
       # Protects against session fixation attacks, causes request forgery
