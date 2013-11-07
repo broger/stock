@@ -20,7 +20,6 @@ class Comprobante < ActiveRecord::Base
 		
 
 	def existe_nro?(tipo,nro)
-
 		a = Comprobante.find(:all, :conditions=>{:tipo_comprobante_id=> tipo, :numero=>nro})
 		a.nil? || a.blank? ?  false : true
 	end

@@ -53,6 +53,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :movimientos
 
   map.resources :producto_lista_precios, :collection => {:editar_x_producto => :get,
+                                                         :actualizar_x_producto => :get,
                                                          :result_x_prod => :post}
   map.resources :lista_precios
 
