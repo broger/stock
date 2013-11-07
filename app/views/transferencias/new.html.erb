@@ -1,9 +1,9 @@
 <div id="titulo" >
-  <div class="container" ><h3>Ajuste Positivo del <%= link_to 'Inventario', inventarios_path, :style=>'color:white; text-decoration:none' %></h3></div>  
+  <div class="container" ><h3><%= link_to 'Transferencia entre Depositos', transferencias_path, :style=>'color:white; text-decoration:none' %></h3></div>  
 </div>
 <div class ="container">
   <div class="row" >
-   <%= form_tag({:action=>'guardar_ajuste', :controller=>'inventarios'}, {:id=>'comprobante'}) %>
+   <%= form_tag({:action=>'guardar', :controller=>'transferencias'}, {:id=>'comprobante'}) %>
      <div id="menu_izquierdo"  class="col-sm-2" >
        <!-- ACORDENON -->
        <div class="panel-group" id="accordion">
@@ -42,17 +42,22 @@
      <div id="contenido" class= "col-sm-10" >
           <div id="comprobante" class= "col-sm-14" >
               <div id="cabezera">
-                  <div class= "datos" style="width:140px"><%= label_tag :numero, "Nº:" %><%= text_field_tag :numero, @ajuste_pos, :style=>'width:70%', :class=> 'form-control'%></div>
-                  <div class= "datos" style="width:220px" ><%= label_tag :concepto_operacion_id %><%= select_tag :concepto_operacion_id, '<option></option>' + options_from_collection_for_select(ConceptoOperacion.find(:all, :conditions=>['modulo_id = 4']), :id, :nombre,5), :style=>'width:100px', :class=> 'form-control' %></div>
-				  <% if current_user.roles.detect {|r| (r.administrador || r.gerente)} %>
-                        <div class= "datos" style="width:190px" ><%= label_tag :deposito_id %><%= select_tag :deposito_id, '<option></option>' + options_from_collection_for_select(Deposito.all, :id, :nombre, 1) , :style=>'width:100px', :class=> 'form-control' %></div>
-				  <% else %>
-                        <div class= "datos" style="width:360px"><%= label_tag :a, "Deposito:" %><%= current_user.sucursal.deposito.nombre %><%= label_tag :a, "Lista Precios:", :style=>'margin-left:8px'%><%= current_user.sucursal.lista_precio.nombre %></div>
+                  <div class= "datos" style="width:150px"><%= label_tag :numero, "Nº:" %><%= text_field_tag :numero, @ult_transf, :style=>'width:70%', :class=> 'form-control'%></div>
+                  <% if current_user.roles.detect {|r| (r.administrador || r.gerente)} %>
+                   
+                       <!-- TODOS LOS DEPOSITO COMO DEPOSITO DE ORIGEN -->
+                       <div class= "datos" style="width:260px" ><%= label_tag :a, 'Deposito Origen' %><%= select_tag :deposito_id, options_from_collection_for_select(Deposito.find(:all,:conditions=>['estado_id=1']), :id, :nombre, 1) , :style=>'width:100px', :class=> 'form-control' %></div>
+				          
+                  <% else %>
+                       <div class= "datos" style="width:240px"><%= label_tag :a, "Deposito Origen" %><%= current_user.sucursal.deposito.nombre %></div>
+                        <%= hidden_field_tag :deposito_id, current_user.sucursal.deposito.id , :id=>"deposito_id" %>
                   <% end %>
+                  <div class= "datos" style="width:280px" ><%= label_tag :a, 'Deposito Destino' %><%= select_tag :deposito_destino_id, nil, :style=>'width:100px', :class=> 'form-control' %></div>
                   <div class= "datos" style="width:80px"><%= label_tag :ver_obs, "Observaciones",  :onclick=> "ver_obs()", :class=>'link_azul', :id=>"ver_obs" %><%= label_tag :a, "Ocultar observaciones",  :onclick=> "ocultar_obs()", :class=>'link_azul', :id=>"ocultar_obs" %></div>               
                   <div id="obs" class= "datos" style="heigt:40px"><%= label_tag :observaciones %><%= text_field_tag :observaciones, nil, :class=>'form-control', :style=>'width:89%' %></div>   
 
-              </div>   
+              </div>
+
               <div id="buscar_productos">
                         <%= text_field_tag :producto,      nil, :class=> 'form-control', :placeholder => ' Ingrese el c&oacute;digo o nombre del producto ...', :style=> "width:40%; padding-right:4px"%>
                         <%= text_field_tag :cantidad,      nil, :class=> 'form-control', :style=> "width:10%", :placeholder => ' cantidad ...' %>
@@ -105,12 +110,19 @@
 <script type="text/javascript">
 
 
-/*   $.validator.addMethod("contarDetalle", function (value, element, param) {   
-        if ($('#list >tbody >tr').length == 0){
-          alert ( "Debe existir al menos un producto en el detalle del pedido. " );
-          return false;
-       }
-       else return true;
+    var destinos = new Array();
+    <% destinos = Deposito.find(:all, :conditions=>['estado_id=1']) %>
+    <% for destino in destinos -%>
+        destinos.push(new Array(<%= destino.id %>, "<%=h destino.nombre %>"));
+    <% end %>
+    
+
+    /* $.validator.addMethod("contarDetalle", function (value, element, param) {   
+            if ($('#list >tbody >tr').length == 0){
+              alert ( "Debe existir al menos un producto en el detalle del pedido. " );
+              return false;
+           }
+           else return true;
        }, "Debe existir al menos un producto en el detalle del pedido."); */
 
 
@@ -119,24 +131,21 @@
         $('#obs').hide();
         $('#ocultar_obs').hide();
         $('#error_detalle').hide();
-        $('#deposito_id').change(limpiar_detalle);
+        $('#deposito_id').change(cargar_dep_destino); 
+        $('#deposito_destino_id').change(eliminar_detalle); 
         $('#numero').attr('readonly', true);
         $("#comprobante").validate({
              rules: {
              "numero":{required:true, digits:true},
              "deposito_id": {required:true},
-             "cantidad": {number:true},
-             contarDetalle:true  
+             "deposito_destino_id": {required:true},
+             "cantidad": {number:true}
              }
         });
-
-
-
-
-
+        cargar_dep_destino();        
     });
 
-    
+
     //INICIO AUTOCOMPLETAR.....
 
        $('#producto').autocomplete('<%= todos_productos_path %>', {
@@ -320,7 +329,23 @@ $("#detalle").on("change", "input", function() {
       $('#total_gral').text(total) ;
       $('#cant_total').val(total) ;
 
-   }   
+   }  
+
+
+   function cargar_dep_destino() {
+      alert ('ddddd golll'+ $('#deposito_id').val() );
+      origen_id = $('#deposito_id').val();
+      $('#deposito_destino_id').empty();
+      $('#deposito_destino_id').append(selec='<option></option>');
+        destinos.forEach(function(destino){
+            if (destino[0] != origen_id){
+              $('#deposito_destino_id').append(selec='<option value="'+ destino[0] +'">'+destino[1]+'</option>');
+            }
+        });
+       eliminar_detalle(); 
+   }
+
+
 
 </script>
 

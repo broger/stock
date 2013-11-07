@@ -3,7 +3,6 @@ class Estado < ActiveRecord::Base
 	has_many :tipo_comprobantes
 	has_many :clientes
     has_many :localidades
+    has_many :tipo_comprobantes
 	
-	
-
 end

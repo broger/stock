@@ -1,6 +1,5 @@
 class VentasController < ApplicationController
 	 
-
   def index
     @ventas = Comprobante.venta.find(:all, :order=>'created_at DESC')
     @ventas = @ventas.paginate :per_page => 24, :page => params[:page]
@@ -80,9 +79,6 @@ class VentasController < ApplicationController
      end
 
  end
-
-
-
 
 
  def guardar

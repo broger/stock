@@ -1,0 +1,202 @@
+<div id="titulo"  >
+  <div class="container" ><h3 ><%= link_to 'Nuevo Ajuste (+)', ajuste_positivo_inventarios_path(), :style=>'color: white;text-decoration: none'  %></h3></div>  </div>
+<div class ="container">
+  <div class="row" >
+      <div id="menu_izquierdo"  class="col-sm-2" >
+       <!-- ACORDENON -->
+       <div class="panel-group" id="accordion">
+           <div class="panel panel-default">
+               <div class="panel-heading">
+                    <h5 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Registros</a></h5>
+               </div>
+               <div id="collapseOne" class="panel-collapse collapse in">
+               </div>
+        </div>
+           <div class="panel panel-default">
+             <div class="panel-heading" style="background-color:#2197C9">
+              <h5 class="panel-title" style="background-color:#2197C9" ><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Reportes</a></h5>
+             </div>
+             <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body"> - Todos   </div>
+             </div>
+           </div>
+           <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    Tablas Relacionadas
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                 - ajustes
+                 - Productos              
+                </div>
+              </div>
+            </div>
+      </div>
+     </div>
+        <div id="contenido" class= "col-sm-10" >
+          <div id="comprobante" class= "col-sm-14" >
+              <div id="cabezera">
+                  <div class= "datos" style="width:90px"><%= label_tag  :a, "Nº:" %><%= @ajuste.numero %></div>
+                  <div class= "datos" style="width:120px"><%= label_tag  :a, "Nº:" %><%= @ajuste.concepto_operacion.nombre %></div>
+                  <div class= "datos" style="width:220px"><%= label_tag  :a, "deposito:" %><%= @ajuste.sucursal.nombre %></div>
+                  <div class= "datos" style="width:200px"><%= label_tag  :a, "fecha:" %><%= "#{@ajuste.created_at.strftime("%d-%m-%Y %H:%M" )} hs."%></div>
+                  <div class= "datos" style="width:220px"><%= label_tag  :a, "usuario:" %><%= @ajuste.user.name %></div>
+                  <% unless @ajuste.observaciones.blank? %>
+                      <div class= "datos" id ="obs"><%= label_tag  :a, "observaciones:" %><%=  @ajuste.observaciones %></div>                            
+                  <% end %>    
+              </div>             
+              <div id="detalle">
+                  <table  class="tabla_cab_detalle">
+                                <tr style="text-align:left">
+                                  <th style="width:100px;padding:4px 0 4px 0">c&oacute;digo</th>
+                                  <th style="width:320px">nombre</th>
+                                  <th style="width:80px">unidad</th>
+                                  <th style="width:120px">cantidad Agregada</th>
+                                  <th style="width:300px"></th>
+                                </tr> 
+                    </table>
+                    <table id="list" class="tabla_detalle">    
+                    <% @detalle.each do |mov| %>
+                          <tr>
+                              <td style='width:100px'><%= mov.producto.codigo %></td>
+                              <td style='width:320px'><%= mov.producto.nombre %></td>  
+                              <td style='width:80px' ><%= mov.producto.unidad.nombre %></td>  
+                              <td style='width:80px'><%= mov.cantidad %></td>
+                              <td></td>
+                          </tr> 
+                     <% end %>
+                    </table> 
+                    <div id= "botonera" >
+                         <div id="paginate"><%= will_paginate @detalle, :previous_label => '<< Anterior', :next_label => 'Siguiente >>'%></div>
+                         <button  type="button" onclick=location.href='<%= inventarios_path%>' class="btn btn-primary btn-sm"  style="font-size:11px; border-radius:1px">volver</button> 
+                         <button  type="button" onclick=location.href='<%= inventarios_path%>' class="btn btn-primary btn-sm"  style="font-size:11px; border-radius:1px">editar</button> 
+                         <button  type="button" onclick=location.href='<%= inventarios_path%>' class="btn btn-primary btn-sm"  style="font-size:11px; border-radius:1px">enviar mail</button> 
+                         <button  type="button" onclick=location.href='<%= inventarios_path%>' class="btn btn-primary btn-sm"  style="font-size:11px; border-radius:1px">imprimir</button> 
+                    </div>  
+              </div>
+            </div>  
+     </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+
+
+<style type="text/css">
+
+
+    #menu_izquierdo{
+      float: left;
+      padding: 12px 0 0 18px;
+      /* background-color:green; */
+    }
+
+    #contenido{
+      /*background-color:white; */
+      padding: 12px 0 0 20px;
+      float: left;
+      display: inline;
+    }
+     
+    #titulo{
+        height:80px;
+        width:100%;
+        background-color:#53B9E9;
+     }
+
+     #titulo h3{
+        padding: 8px 0 0 56px;
+        color: #ffffff
+     }
+
+
+     #cabezera {
+        padding: 12px 20px 4px 20px;
+        background-color: #EBEBEB;
+        border-radius: 1px;
+    } 
+    
+
+    #obs{
+          display: block;
+          width: 100%;
+    }
+
+
+    #detalle{
+      padding: 4px 20px 10px 20px;
+      background-color: #EBEBEB;
+      width: 100%;
+      border-radius: 1px;
+    }
+
+    #buscar_productos {
+      padding: 8px 20px 0px 20px;
+      margin-top: 1px;
+      background-color: #EBEBEB;
+      border-radius: 1px;
+      height: 46px
+    }
+
+    .tabla_cab_detalle{
+        padding:2px 20px 2px 10px;
+        background-color:#DBDBDB;
+        color:#5A5A5A;
+        font-size:12px;
+        width:100%;
+        display:block
+    }
+    
+    .tabla_detalle{
+       padding:6px 20px 6px 10px;
+       background-color:white;
+       font-size:11px;
+       width:100%;
+       height: 240px;
+       display:block
+    }
+
+    #botonera{
+      width:100%;
+      height:60px;
+      margin-right:20px;
+      text-align:left;
+      padding: 16px 10px 16px 10px;
+    }
+
+
+
+    /*  DATOS */
+
+
+  .datos{
+      display: inline-block;
+      text-align: left;
+      padding: 4px 0 4px 0;
+      /*background-color: #4478aa;  */
+  }
+
+
+    .datos label{
+      padding: 0 6px;
+      font-size: 11px 
+    }
+
+    .datos input{
+      display: inline;
+      font-size: 11px 
+    }
+
+
+
+</style>
+   
+
+
+      
