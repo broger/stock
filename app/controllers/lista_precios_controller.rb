@@ -8,7 +8,6 @@ class ListaPreciosController < ApplicationController
        @listas = ListaPrecio.paginate(:page => params[:page],:per_page => 6,:conditions=> ['lower(nombre) like lower(?)','%'+params[:txtbuscar]+'%'],:order => "nombre")
     end
 
-
     respond_to do |format|
       format.html 
       format.xml  { render :xml => @listas }

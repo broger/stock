@@ -3,7 +3,7 @@ class ProductoListaPreciosController < ApplicationController
   # GET /producto_lista_precios.xml
   def index
     @producto_lista_precios = ProductoListaPrecio.all
-
+     
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @producto_lista_precios }
@@ -85,40 +85,51 @@ class ProductoListaPreciosController < ApplicationController
 
  def editar_x_producto
 
-        filtros =  " "
+    @lista_precio_id = params[:lista_precio_id]
+
+    filtros =  " "
     unless params[:rubro_id].blank?
-      filtros += " AND rubro_id = #{params[:rubro_id]}"
+      filtros += " AND p.rubro_id = #{params[:rubro_id]}"
     end
 
     unless params[:seccion_id].blank?
-      filtros += " AND seccion_id = #{params[:seccion_id]}"
+      filtros += " AND p.seccion_id = #{params[:seccion_id]}"
     end
 
     unless params[:categoria_id].blank?
-      filtros += " AND categoria_id = #{params[:categoria_id]}"
+      filtros += " AND p.categoria_id = #{params[:categoria_id]}"
     end
 
     unless params[:marca_id].blank?
-      filtros += " AND marca_id = #{params[:marca_id]}"
+      filtros += " AND p.marca_id = #{params[:marca_id]}"
     end
 
     unless params[:proveedor_id].blank?
-      filtros += " AND marca_id = #{params[:proveedor_id]}"
+      filtros += " AND p.marca_id = #{params[:proveedor_id]}"
     end
 
-
-      if params[:txtbuscar].blank? && filtros == " "
-         @producto_listas = ProductoListaPrecio.all(:limit=> 50)
+    if params[:txtbuscar].blank? && filtros == " "
+         @producto_listas = nil
       else
       
           if params[:txtbuscar].blank?
-              # @producto_listas = Producto.find_by_sql("SELECT * FROM productos p where id > 0 #{filtros}")
 
+              sql = "SELECT p.codigo      as codigo,
+                                                                                p.nombre      as nombre,
+                                                                                u.nombre      as unidad,
+                                                                                plp.precio    as precio,
+                                                                                plp.descuento as descuento
+                                                                         FROM producto_lista_precios plp 
+                                                                         inner join productos p  ON plp.producto_id = p.id 
+                                                                         inner join unidades  u  ON p.unidad_id = u.id 
+                                                                         where p.estado_id =1 AND plp.lista_precio_id = #{@lista_precio_id} #{filtros} LIMIT 10"
+
+
+               @producto_listas = ActiveRecord::Base.connection.execute(sql)
+          
           else
-                if /^\d{1,10}$/.match(params[:txtbuscar].strip)
-               #     @producto_listas = Producto.find_by_sql("SELECT * FROM productos p where p.codigo ilike '%#{params[:txtbuscar].strip}%' #{filtros}")
-                else
-                #    @producto_listas = Producto.find_by_sql("#{sql_descripcion('productos','nombre',params[:txtbuscar],30,false,filtros)}")
+                
+                if @producto_listas.blank?
                 end
           end 
       end     
@@ -134,7 +145,7 @@ class ProductoListaPreciosController < ApplicationController
 
  def actualizar_x_producto
 
-        raise "entro"
+        raise "acccctuallllizzzzarrr"
 
 
 

@@ -12,7 +12,7 @@ class Comprobante < ActiveRecord::Base
 	named_scope :compra,          :conditions => { :tipo_comprobante_id =>2 } 
 	named_scope :venta,           :conditions => { :tipo_comprobante_id =>3 } 
 	named_scope :ajuste_positivo, :conditions => { :tipo_comprobante_id =>4 } 
-	amed_scope :ajuste_negativo,  :conditions => { :tipo_comprobante_id =>5 } 
+	named_scope :ajuste_negativo,  :conditions => { :tipo_comprobante_id =>5 } 
 	
 
 

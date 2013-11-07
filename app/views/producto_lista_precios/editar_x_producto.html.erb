@@ -1,5 +1,4 @@
 
-<%#= form_tag(editar_x_producto_producto_lista_precios_path, :method => 'get',:id=>'buscar') %>
 
 <div id="titulo" style="width:100%; background-color:#53B9E9; color: #ffffff" >
     <div class="container" ><h3>Editar Lista de Precios</h3></div>  
@@ -41,13 +40,13 @@
               </div>
             </div>
       </div>
-
-
      </div>
-     <div  id="contenido"  class="col-sm-10"  >
 
+     <div  id="contenido"  class="col-sm-10"  >
           <div id="buscador" >
-              <div id="cargando"   style="display: none; float:left">&nbsp;<%= image_tag('iconos/loader.gif')%></div>
+             <% form_tag(editar_x_producto_producto_lista_precios_path, :method => 'get',:id=>'buscar') do -%>
+                  <%= hidden_field_tag :lista_precio_id, @lista_precio_id %>   
+                  <div id="cargando"   style="display: none; float:left">&nbsp;<%= image_tag('iconos/loader.gif')%></div>
                   <div class="filtros" >
                           <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Rubro &nbsp; <%= select_tag :rubro_id,'<option></option>' + options_from_collection_for_select(Rubro.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
                           <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Secci&oacute;n  &nbsp; <%= select_tag :seccion_id,'<option></option>' + options_from_collection_for_select(Seccion.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
@@ -55,11 +54,16 @@
                           <div style="font-size:10px; text-align: center; float: left; margin-right: 10px" >Marca &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Marca.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
                           <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" >Proveedor &nbsp; <%= select_tag :marca_id,'<option></option>' + options_from_collection_for_select(Proveedor.find(:all, :order => "nombre"),'id','nombre'), :class=> 'filtros_select' %></div>
                           <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" ><%#= submit_tag "Buscar" , :class=>"btn btn-xs btn-default", :style=> "display:inline"%></div>
-                          <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" ><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>12, :placeholder => 'buscar ...', :class=>"form-control" , :style=> "display:inline"%>
-                        </div> 
-              </div>                                                                                  
-              <%= render :partial => 'result_x_prod' %>       
-
+                          <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" ><%= text_field_tag :txtbuscar, params[:txtbuscar] ,:size=>12, :placeholder => 'buscar ...', :class=>"form-control" , :style=> "display:inline"%></div> 
+                          <div style="font-size:10px; text-align: center; float: left; margin-right: 10px; margin-bottom: 15px" ><%= submit_tag 'buscar' %></div> 
+                  </div>                                                                                  
+                <% end -%>
+                 
+                  <% form_tag({:action=>'actualizar_x_producto',:controller=>'producto_lista_precios'}, {:id=>'producto_lista'}) do%>
+                     <%= render :partial => 'result_x_prod' %>       
+                  <div style="text-align:center; margin-top:8px" ><%= submit_tag 'Actualizar', :class=>"btn btn-danger btn-xs" %> </div>
+                  <% end %>
+  
          </div>
      </div>
     </div>
